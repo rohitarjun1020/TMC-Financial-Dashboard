@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TMC SOP Hub | SRF Capital Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="https://srfcapital.studio/" target="_blank" class="nav-brand">
+      <span class="brand-icon"><i class="fa-solid fa-chart-line"></i></span>
+      <span class="brand-text">SRF Capital <span class="brand-accent">Studio</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#sop1">P&amp;L Proforma</a>
+      <a href="#sop2">Dashboard</a>
+      <a href="#sop3">Cashflow</a>
+    </div>
+    <div class="nav-badge">
+      <span class="badge-dot"></span> SOP v1.0
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-meta">
+      <span>Prepared by <a href="https://srfcapital.studio/" target="_blank" class="hero-link">SRF Capital Studio</a> for <a href="https://themigration.company/" target="_blank" class="hero-link hero-link-tmc">The Migration Company</a></span>
+    </div>
+    <h1 class="hero-title">Standard Operating<br/><span class="gradient-text">Procedures Hub</span></h1>
+    <p class="hero-sub">A comprehensive, interactive guide covering financial forecasting, dashboard management and cashflow analysis for TMC's Finance &amp; FP&amp;A operations.</p>
+    <div class="hero-pills">
+      <a href="#sop1" class="pill"><i class="fa-solid fa-table-columns"></i> P&amp;L Proforma</a>
+      <a href="#sop2" class="pill"><i class="fa-solid fa-gauge-high"></i> Looker Dashboard</a>
+      <a href="#sop3" class="pill"><i class="fa-solid fa-money-bill-trend-up"></i> Cashflow Forecast</a>
+    </div>
+    <div class="hero-cta">
+      <a href="#overview" class="btn-primary">Explore SOPs <i class="fa-solid fa-arrow-down"></i></a>
+    </div>
+    <div class="hero-meta-row">
+      <div class="meta-card"><i class="fa-regular fa-calendar"></i><div><span>Effective Date</span><strong>8th June 2026</strong></div></div>
+      <div class="meta-card"><i class="fa-solid fa-code-branch"></i><div><span>Version</span><strong>V1.0</strong></div></div>
+      <div class="meta-card"><i class="fa-solid fa-user-tie"></i><div><span>Prepared By</span><strong>Rohit Arjun Raj</strong></div></div>
+      <div class="meta-card"><i class="fa-solid fa-building"></i><div><span>Department</span><strong>Finance / FP&amp;A</strong></div></div>
+    </div>
+  </div>
+  <a href="#overview" class="hero-scroll"><i class="fa-solid fa-chevron-down"></i></a>
+</section>
+
+<!-- ─── CLIENT STRIP ─── -->
+<div class="client-strip">
+  <div class="strip-inner">
+    <div class="strip-item">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Financial Planning &amp; Analysis</span>
+    </div>
+    <div class="strip-divider"></div>
+    <div class="strip-item">
+      <i class="fa-solid fa-file-contract"></i>
+      <span>SOP Documentation</span>
+    </div>
+    <div class="strip-divider"></div>
+    <div class="strip-item">
+      <i class="fa-solid fa-magnifying-glass-chart"></i>
+      <span>Management Reporting</span>
+    </div>
+    <div class="strip-divider"></div>
+    <div class="strip-item">
+      <i class="fa-solid fa-building-columns"></i>
+      <span>SRF Capital Studio</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SOP OVERVIEW CARDS ─── -->
+<section class="section" id="overview">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Documentation</div>
+      <h2 class="section-title">Three Core SOPs</h2>
+      <p class="section-sub">Click any SOP card to jump directly to the detailed procedure</p>
+    </div>
+    <div class="sop-cards">
+
+      <a href="#sop1" class="sop-card sop-card-1">
+        <div class="sop-card-icon"><i class="fa-solid fa-table-columns"></i></div>
+        <div class="sop-card-number">01</div>
+        <h3>P&amp;L Proforma</h3>
+        <p>Standardized methodology for preparing, maintaining and reviewing the Profit &amp; Loss Pro Forma Forecast Model.</p>
+        <div class="sop-card-tags">
+          <span>Revenue Buildup</span><span>COGS</span><span>EBITDA</span>
+        </div>
+        <div class="sop-card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </a>
+
+      <a href="#sop2" class="sop-card sop-card-2">
+        <div class="sop-card-icon"><i class="fa-solid fa-chart-bar"></i></div>
+        <div class="sop-card-number">02</div>
+        <h3>Looker Studio Dashboard</h3>
+        <p>Real-time visibility into cash flows, burn rate, runway and expense allocation via Google Looker Studio.</p>
+        <div class="sop-card-tags">
+          <span>Google Sheets</span><span>Looker Studio</span><span>MIS</span>
+        </div>
+        <div class="sop-card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </a>
+
+      <a href="#sop3" class="sop-card sop-card-3">
+        <div class="sop-card-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+        <div class="sop-card-number">03</div>
+        <h3>Cashflow Forecast</h3>
+        <p>Monthly cash inflow/outflow forecasting model covering B2B, RTD revenue, payroll, expenses and runway analysis.</p>
+        <div class="sop-card-tags">
+          <span>B2B Revenue</span><span>RTD</span><span>Runway</span>
+        </div>
+        <div class="sop-card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SOP 1 — P&L PROFORMA
+════════════════════════════════════════════════ -->
+<section class="section sop-section" id="sop1">
+  <div class="sop-section-header sop-header-1">
+    <div class="container">
+      <div class="sop-header-inner">
+        <div class="sop-num-badge">SOP 01</div>
+        <div>
+          <h2>P&amp;L Proforma Forecasting</h2>
+          <p>Standard Operating Procedure for building and maintaining TMC's monthly Profit &amp; Loss forecast</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Doc Info -->
+    <div class="doc-info-grid">
+      <div class="doc-info-card"><span class="label">Document Title</span><strong>P&amp;L Pro Forma Forecasting SOP</strong></div>
+      <div class="doc-info-card"><span class="label">Company</span><strong>The Migration Company</strong></div>
+      <div class="doc-info-card"><span class="label">Department</span><strong>Finance / FP&amp;A</strong></div>
+      <div class="doc-info-card"><span class="label">Prepared By</span><strong>Mr. Rohit Arjun Raj</strong></div>
+      <div class="doc-info-card"><span class="label">Reviewed By</span><strong>Mr. Vinay</strong></div>
+      <div class="doc-info-card"><span class="label">Approved By</span><strong>Mr. Karthik</strong></div>
+      <div class="doc-info-card"><span class="label">Effective Date</span><strong>8th June 2026</strong></div>
+      <div class="doc-info-card"><span class="label">Version</span><strong>V1.0</strong></div>
+    </div>
+
+    <!-- Purpose & Scope -->
+    <div class="content-grid-2">
+      <div class="info-block">
+        <div class="info-block-icon gold"><i class="fa-solid fa-bullseye"></i></div>
+        <h3>Purpose</h3>
+        <p>This SOP establishes a standardized methodology for preparing, maintaining, updating, and reviewing the Profit &amp; Loss (P&amp;L) Pro Forma Forecast Model.</p>
+        <ul class="check-list">
+          <li><i class="fa-solid fa-check"></i> Consistent forecasting methodology</li>
+          <li><i class="fa-solid fa-check"></i> Reliable financial projections</li>
+          <li><i class="fa-solid fa-check"></i> Transparency of assumptions</li>
+          <li><i class="fa-solid fa-check"></i> Improved decision making</li>
+          <li><i class="fa-solid fa-check"></i> Standardized reporting across stakeholders</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-block-icon blue"><i class="fa-solid fa-users"></i></div>
+        <h3>Scope &amp; Stakeholders</h3>
+        <p>This SOP applies to all teams involved in financial planning and analysis:</p>
+        <ul class="check-list">
+          <li><i class="fa-solid fa-circle-dot"></i> Financial Planning &amp; Analysis (FP&amp;A)</li>
+          <li><i class="fa-solid fa-circle-dot"></i> Finance Team</li>
+          <li><i class="fa-solid fa-circle-dot"></i> Management Team</li>
+          <li><i class="fa-solid fa-circle-dot"></i> Department Heads (operational input)</li>
+          <li><i class="fa-solid fa-circle-dot"></i> External Consultants (forecasting support)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Key Drivers -->
+    <div class="subsection-title"><i class="fa-solid fa-sliders"></i> Key Forecast Drivers</div>
+    <div class="drivers-grid">
+      <div class="driver-card revenue">
+        <div class="driver-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+        <h4>Revenue Drivers</h4>
+        <ul>
+          <li>B2B Revenue <span class="tag">Language Training Courses</span></li>
+          <li>RTD Revenue <span class="tag">Recruitment Training &amp; Deployment</span></li>
+        </ul>
+      </div>
+      <div class="driver-card cogs">
+        <div class="driver-icon"><i class="fa-solid fa-receipt"></i></div>
+        <h4>Cost Drivers (COGS)</h4>
+        <ul>
+          <li>B2B COGS <span class="tag">Teacher Consultants</span></li>
+          <li>RTD COGS <span class="tag">Channel Partners, Sourcing Companies</span></li>
+        </ul>
+      </div>
+      <div class="driver-card opex">
+        <div class="driver-icon"><i class="fa-solid fa-building-columns"></i></div>
+        <h4>Operating Expense Drivers</h4>
+        <ul>
+          <li>Operational Salaries</li>
+          <li>OPEX — G&amp;A + S&amp;M</li>
+          <li>Technology Subscriptions</li>
+          <li>Other G&amp;A Overheads</li>
+          <li>Professional Charges</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- P&L Waterfall Chart -->
+    <div class="subsection-title"><i class="fa-solid fa-chart-waterfall"></i> P&amp;L Structure — How the Numbers Flow</div>
+    <div class="chart-container">
+      <canvas id="plWaterfall" height="100"></canvas>
+    </div>
+
+    <!-- Sheet Tabs -->
+    <div class="subsection-title"><i class="fa-solid fa-layer-group"></i> Sheet-Wise Preparation</div>
+    <div class="tab-container">
+      <div class="tab-nav" id="plTabs">
+        <button class="tab-btn active" data-target="pl-revenue">Revenue Buildup</button>
+        <button class="tab-btn" data-target="pl-cogs">COGS Buildup</button>
+        <button class="tab-btn" data-target="pl-manpower">Manpower</button>
+        <button class="tab-btn" data-target="pl-expenses">Expenses</button>
+        <button class="tab-btn" data-target="pl-final">Final P&amp;L</button>
+      </div>
+
+      <div class="tab-panel active" id="pl-revenue">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-coins"></i> Revenue Buildup Sheet</h4>
+            <p>The <strong>first sheet</strong> to build. It captures all revenue generated in a particular month.</p>
+            <div class="step-list">
+              <div class="step"><span class="step-num">1</span><div><strong>Source Data:</strong> Pull batch info from <em>Operational MIS → 2026 Batches sheet</em> — batch name, client, start/end dates, learner count, fees.</div></div>
+              <div class="step"><span class="step-num">2</span><div><strong>Filter Active Courses:</strong> Include only batches ending after the current month's start date to capture ongoing + starting courses.</div></div>
+              <div class="step"><span class="step-num">3</span><div><strong>RTD Revenue:</strong> Include RTD Pipeline revenue — ensure corresponding COGS is also captured in COGS sheet.</div></div>
+              <div class="step"><span class="step-num">4</span><div><strong>Working Days Calculation:</strong> Use <code>=NETWORKDAYS(start, end)</code> for total course workdays.</div></div>
+              <div class="step"><span class="step-num">5</span><div><strong>Monthly Proration:</strong> <code>Month Workdays ÷ Total Course Workdays = % of Revenue for the Month</code></div></div>
+              <div class="step"><span class="step-num">6</span><div><strong>Currency:</strong> If fees are in USD, convert to INR using the prevailing rate.</div></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="formula-card">
+              <div class="formula-label">Revenue Proration Formula</div>
+              <div class="formula">
+                <div class="f-part">Month Workdays</div>
+                <div class="f-divider">÷</div>
+                <div class="f-part">Total Course Workdays</div>
+                <div class="f-eq">×</div>
+                <div class="f-part">Total Course Fee</div>
+                <div class="f-result">= Monthly Revenue</div>
+              </div>
+            </div>
+            <div class="note-card"><i class="fa-solid fa-lightbulb"></i> <strong>Key Note:</strong> Only payroll teachers are excluded from COGS — their cost is captured in Operational Salaries instead.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pl-cogs">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-calculator"></i> COGS Buildup Sheet</h4>
+            <p>All courses from the Revenue sheet appear here too — but <strong>payroll teachers are excluded</strong> from COGS as their cost is in Operational Salaries.</p>
+            <div class="step-list">
+              <div class="step"><span class="step-num">1</span><div><strong>Data Source:</strong> Get teacher name, course, teaching hours and cost/hour from <em>Operational MIS → Teachers sheet</em>.</div></div>
+              <div class="step"><span class="step-num">2</span><div><strong>Monthly Teaching Hours:</strong> <code>Teaching Hours ÷ Total Workdays × Month Workdays</code></div></div>
+              <div class="step"><span class="step-num">3</span><div><strong>Monthly COGS:</strong> <code>Monthly Teaching Hours × Cost Per Hour</code></div></div>
+              <div class="step"><span class="step-num">4</span><div><strong>Remember:</strong> Payroll teachers' cost goes to Manpower sheet as Operational Salaries, not here.</div></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="formula-card">
+              <div class="formula-label">COGS Calculation</div>
+              <div class="formula">
+                <div class="f-part">Teaching Hours (course)</div>
+                <div class="f-divider">÷</div>
+                <div class="f-part">Total Workdays</div>
+                <div class="f-eq">×</div>
+                <div class="f-part">Month Workdays</div>
+                <div class="f-eq">×</div>
+                <div class="f-part">Cost Per Hour</div>
+                <div class="f-result">= Monthly COGS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pl-manpower">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-users-gear"></i> Manpower Sheet</h4>
+            <p>Covers payroll for <strong>all TMC employees</strong> across three categories. Data sourced from <em>TMC Payroll FY 26-27 Google Sheet</em>.</p>
+            <div class="category-cards">
+              <div class="cat-card cat-ops"><div class="cat-icon"><i class="fa-solid fa-chalkboard-user"></i></div><h5>Operations Salaries</h5><p>Teachers on payroll — cost NOT in COGS</p></div>
+              <div class="cat-card cat-ga"><div class="cat-icon"><i class="fa-solid fa-briefcase"></i></div><h5>G&amp;A Salaries</h5><p>Management &amp; admin staff salaries</p></div>
+              <div class="cat-card cat-sm"><div class="cat-icon"><i class="fa-solid fa-bullhorn"></i></div><h5>S&amp;M Salaries</h5><p>Sales &amp; marketing team salaries</p></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="note-card"><i class="fa-solid fa-database"></i> <strong>Data Source:</strong> TMC Payroll FY 26-27 Google Sheet on TMC Drive.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pl-expenses">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-file-invoice-dollar"></i> Expenses Sheet</h4>
+            <p>Divided into 3 main expense categories. Most figures are sourced from the <strong>Cashflow Forecast file</strong>.</p>
+            <div class="expense-items">
+              <div class="exp-item"><span class="exp-dot gold"></span><strong>Professional Charges</strong> — Assumed based on the cash flow data</div>
+              <div class="exp-item"><span class="exp-dot blue"></span><strong>S&amp;M Charges</strong> — Software, travel, other S&amp;M expenses (from cashflow)</div>
+              <div class="exp-item"><span class="exp-dot green"></span><strong>G&amp;A Overheads</strong> — Courier, telephone, printing, internet, office rent, misc (from cashflow)</div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <canvas id="expenseDonut" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pl-final">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-flag-checkered"></i> Final P&amp;L Sheet</h4>
+            <p>Consolidates all prior sheets into the complete Profit &amp; Loss statement.</p>
+            <div class="pl-flow">
+              <div class="pl-row revenue-row"><span>B2B Revenue + RTD Revenue</span><span class="pl-tag">Revenue</span></div>
+              <div class="pl-row deduct"><span>— B2B COGS — RTD COGS</span><span class="pl-tag red">Deduct</span></div>
+              <div class="pl-row result"><span>= Contribution Margin</span></div>
+              <div class="pl-row deduct"><span>— Operational Salaries</span><span class="pl-tag red">Deduct</span></div>
+              <div class="pl-row result"><span>= Gross Profit</span></div>
+              <div class="pl-row deduct"><span>— OPEX (S&amp;M + G&amp;A)</span><span class="pl-tag red">Deduct</span></div>
+              <div class="pl-row result highlight-row"><span>= EBITDA</span><i class="fa-solid fa-star"></i></div>
+              <div class="pl-row burn"><span>Total Burn = COGS + Op. Salaries + Total OPEX</span></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="note-card gold"><i class="fa-solid fa-star"></i> <strong>EBITDA</strong> is the primary management metric. Total Burn tracks the cash consumed each month.</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-container -->
+
+    <!-- Workflow -->
+    <div class="subsection-title"><i class="fa-solid fa-diagram-project"></i> Workflow Process</div>
+    <div class="workflow-flow">
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-database"></i></div><div class="wf-label">Extract Data</div><div class="wf-sub">Operational MIS, Payroll, Teachers Sheet</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div><div class="wf-label">Validate Sources</div><div class="wf-sub">Check data integrity</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-sliders"></i></div><div class="wf-label">Update Assumptions</div><div class="wf-sub">Refresh where required</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-coins"></i></div><div class="wf-label">Forecast Revenue</div><div class="wf-sub">B2B + RTD proration</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-receipt"></i></div><div class="wf-label">Forecast COGS</div><div class="wf-sub">Teacher hours × rate</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-file-invoice"></i></div><div class="wf-label">OPEX Forecast</div><div class="wf-sub">Salaries + S&amp;M + G&amp;A</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-table"></i></div><div class="wf-label">Generate P&amp;L</div><div class="wf-sub">Final output sheet</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-user-check"></i></div><div class="wf-label">Review &amp; Approve</div><div class="wf-sub">Management sign-off</div></div>
+    </div>
+
+    <!-- Version & Maintenance -->
+    <div class="bottom-info-grid">
+      <div class="bottom-info-card">
+        <h4><i class="fa-solid fa-code-branch"></i> Version Control</h4>
+        <table class="version-table">
+          <thead><tr><th>Version</th><th>Date</th><th>Description</th><th>Owner</th></tr></thead>
+          <tbody><tr><td>V1.0</td><td>8 Jun 2026</td><td>Initial Release</td><td>Rohit Arjun</td></tr></tbody>
+        </table>
+      </div>
+      <div class="bottom-info-card">
+        <h4><i class="fa-solid fa-folder-open"></i> File Management</h4>
+        <div class="file-info"><span class="fi-label">Naming</span><code>TMC_PnL_ProForma_2026/06_Version.xlsx</code></div>
+        <div class="file-info"><span class="fi-label">Frequency</span><span>Monthly update</span></div>
+        <div class="file-info"><span class="fi-label">Owner</span><span>Finance Team</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SOP 2 — LOOKER DASHBOARD
+════════════════════════════════════════════════ -->
+<section class="section sop-section" id="sop2">
+  <div class="sop-section-header sop-header-2">
+    <div class="container">
+      <div class="sop-header-inner">
+        <div class="sop-num-badge">SOP 02</div>
+        <div>
+          <h2>Looker Studio Dashboard</h2>
+          <p>Standard Operating Procedure for managing TMC's Google Looker Studio financial dashboard</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="doc-info-grid">
+      <div class="doc-info-card"><span class="label">Document Name</span><strong>TMC Cash Flow Dashboard SOP</strong></div>
+      <div class="doc-info-card"><span class="label">Platform</span><strong>Google Looker Studio</strong></div>
+      <div class="doc-info-card"><span class="label">Data Source</span><strong>Google Sheets</strong></div>
+      <div class="doc-info-card"><span class="label">Prepared By</span><strong>Mr. Rohit Arjun</strong></div>
+      <div class="doc-info-card"><span class="label">Reviewed By</span><strong>Mr. Vinay</strong></div>
+      <div class="doc-info-card"><span class="label">Approved By</span><strong>Mr. Karthik</strong></div>
+      <div class="doc-info-card"><span class="label">Effective Date</span><strong>8th June 2026</strong></div>
+      <div class="doc-info-card"><span class="label">Version</span><strong>V1.0</strong></div>
+    </div>
+
+    <!-- Purpose -->
+    <div class="content-grid-2">
+      <div class="info-block">
+        <div class="info-block-icon green"><i class="fa-solid fa-gauge-high"></i></div>
+        <h3>Purpose</h3>
+        <p>The dashboard provides management with <strong>real-time visibility</strong> into the company's financial health.</p>
+        <ul class="check-list">
+          <li><i class="fa-solid fa-check"></i> Cash management &amp; liquidity monitoring</li>
+          <li><i class="fa-solid fa-check"></i> Expense tracking &amp; budget control</li>
+          <li><i class="fa-solid fa-check"></i> Financial planning &amp; management reporting</li>
+          <li><i class="fa-solid fa-check"></i> Real-time cash inflow/outflow visibility</li>
+          <li><i class="fa-solid fa-check"></i> Burn rate &amp; runway measurement</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-block-icon purple"><i class="fa-solid fa-diagram-project"></i></div>
+        <h3>System Architecture</h3>
+        <div class="arch-flow">
+          <div class="arch-node"><i class="fa-solid fa-file-excel"></i><span>Cashflow Forecast (Excel)</span></div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node"><i class="fa-brands fa-google-drive"></i><span>CF Dash Looker (Google Sheet)</span></div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node highlight-arch"><i class="fa-solid fa-chart-bar"></i><span>Google Looker Studio Dashboard</span></div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node"><i class="fa-solid fa-user-tie"></i><span>Management (Mr. Varun)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Sources Table -->
+    <div class="subsection-title"><i class="fa-solid fa-database"></i> Data Sources</div>
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr><th>Sheet Name</th><th>Source File</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>CF Summary</code></td><td>CF Dash Looker</td><td>Consolidated transactions overview</td></tr>
+          <tr><td><code>CF Inflows</code></td><td>CF Dash Looker</td><td>Cash receipts detail</td></tr>
+          <tr><td><code>CF Outflows</code></td><td>CF Dash Looker</td><td>Cash payments detail</td></tr>
+          <tr><td><code>CF Expenses</code></td><td>CF Dash Looker</td><td>Expense categorization</td></tr>
+          <tr><td><code>CF Salaries</code></td><td>CF Dash Looker</td><td>Employee costs &amp; department allocation</td></tr>
+          <tr><td><code>CF Exp Detailed</code></td><td>CF Dash Looker</td><td>Ledger-level cost breakdown</td></tr>
+          <tr><td><code>MIS Summary</code></td><td>CF Dash Looker</td><td>P&amp;L summary data (Revenue, COGS, EBITDA)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Connect Instructions -->
+    <div class="subsection-title"><i class="fa-brands fa-google"></i> How to Connect a Sheet to the Dashboard</div>
+    <div class="connect-steps">
+      <div class="cs-step"><span class="cs-num">1</span><div class="cs-content"><strong>Click "Add Data"</strong> at the top of the Looker Studio dashboard</div></div>
+      <div class="cs-step"><span class="cs-num">2</span><div class="cs-content"><strong>Select "Google Sheets"</strong> from the data source options dropdown</div></div>
+      <div class="cs-step"><span class="cs-num">3</span><div class="cs-content"><strong>Choose the file</strong> — ensure it's in the Google Drive of the <em>same account</em> as the dashboard</div></div>
+      <div class="cs-step"><span class="cs-num">4</span><div class="cs-content"><strong>Select the specific sheet</strong> tab you want to connect (e.g., CF Summary, CF Inflows, etc.)</div></div>
+      <div class="cs-step reconnect"><span class="cs-num"><i class="fa-solid fa-rotate"></i></span><div class="cs-content"><strong>To Reconnect:</strong> Click the section → Setup → Data Source icon → Edit Connection → Reconnect. Change the sheet connection before reconnecting if needed.</div></div>
+      <div class="cs-step refresh"><span class="cs-num"><i class="fa-solid fa-arrows-rotate"></i></span><div class="cs-content"><strong>Refresh Data:</strong> If changes in Google Sheet aren't reflected, click the three-dot menu (top right) → Refresh. If that doesn't work, reconnect the sheet and refresh the webpage.</div></div>
+    </div>
+
+    <!-- Dashboard Sheets Tabs -->
+    <div class="subsection-title"><i class="fa-solid fa-window-restore"></i> Dashboard Structure — 3 Sheets</div>
+    <div class="tab-container">
+      <div class="tab-nav" id="dashTabs">
+        <button class="tab-btn active" data-target="dash-sheet1">Sheet 1: MIS Dashboard</button>
+        <button class="tab-btn" data-target="dash-sheet2">Sheet 2: CF Monthly</button>
+        <button class="tab-btn" data-target="dash-sheet3">Sheet 3: CF Trends</button>
+      </div>
+
+      <div class="tab-panel active" id="dash-sheet1">
+        <div class="dash-sections-grid">
+          <div class="dash-section-card"><div class="ds-num">§1</div><h5>Revenue Trend</h5><p>Bar chart showing monthly revenue trend. Each bar = 1 month. Number of bars is configurable.</p><div class="ds-source">Source: MIS Summary Sheet</div></div>
+          <div class="dash-section-card"><div class="ds-num">§2</div><h5>Concise P&amp;L</h5><p>Key metrics at a glance: Revenue, COGS, Gross Profit, S&amp;M, G&amp;A, and EBITDA.</p><div class="ds-source">Source: MIS Summary Sheet</div></div>
+          <div class="dash-section-card"><div class="ds-num">§3</div><h5>Detailed Breakup</h5><p>Deeper cost breakdown for clearer understanding of expense composition.</p><div class="ds-source">Source: MIS Summary Sheet</div></div>
+          <div class="dash-section-card"><div class="ds-num">§4</div><h5>Expense Trend</h5><p>Bar graph comparing 3 expense categories: COGS, G&amp;A, and S&amp;M side-by-side.</p><div class="ds-source">Source: MIS Summary Sheet</div></div>
+          <div class="dash-section-card"><div class="ds-num">§5</div><h5>Ledger Level Breakup</h5><p>Interactive: Select any month to view all costs incurred in that period.</p><div class="ds-source">Source: MIS Expenses Sheet</div></div>
+          <div class="dash-section-card"><div class="ds-num">§6</div><h5>Salaries Breakup</h5><p>Detailed view of salary expenses for the selected month.</p><div class="ds-source">Source: MIS Salaries Sheet</div></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="dash-sheet2">
+        <div class="dash-sections-grid">
+          <div class="dash-section-card"><div class="ds-num">§1</div><h5>Summary CF of the Month</h5><p>Overview of cash flows for the selected month — opening balance, receipts, payments, closing balance.</p><div class="ds-source">Source: CF Summary</div></div>
+          <div class="dash-section-card"><div class="ds-num">§2</div><h5>Inflows &amp; Outflows Detail</h5><p>Detailed breakdown of cash inflows and outflows for the selected month.</p><div class="ds-source">Source: CF Inflows + CF Expenses</div></div>
+          <div class="dash-section-card"><div class="ds-num">§3</div><h5>Expense Type Pie Chart</h5><p>Visual pie chart showing which cost category contributes the most to total expenditure.</p><div class="ds-source">Source: CF Exp Detailed</div></div>
+          <div class="dash-section-card"><div class="ds-num">§4</div><h5>COGS / G&amp;A / S&amp;M Pie</h5><p>Interactive — select a category to drill down into all individual costs within it.</p><div class="ds-source">Source: CF Exp Detailed</div></div>
+          <div class="dash-section-card"><div class="ds-num">§5</div><h5>Expense Breakup</h5><p>Software, marketing, general and consultant expenses — all in one consolidated view.</p><div class="ds-source">Source: CF Exp Detailed</div></div>
+          <div class="dash-section-card"><div class="ds-num">§6</div><h5>Salaries Breakup</h5><p>Salary expenses for the selected month with full employee-level detail.</p><div class="ds-source">Source: CF Salaries</div></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="dash-sheet3">
+        <div class="dash-sections-grid">
+          <div class="dash-section-card wide-card"><div class="ds-num">§1</div><h5>Receipts vs Outflows</h5><p>Bar graph comparing cash inflows and outflows across multiple months. The number of months shown is configurable. Instantly highlights months where outflows exceed inflows.</p><div class="ds-source">Source: CF Summary</div></div>
+          <div class="dash-section-card wide-card"><div class="ds-num">§2</div><h5>Net Burn with Runway</h5><p>A combination chart: <strong>Bar graph</strong> shows Net Burn per month. <strong>Line graph</strong> overlaid shows the forecasted Runway (months of cash remaining).</p>
+            <div class="formula-mini">
+              <span><strong>Net Burn</strong> = Outflows − Inflows</span>
+              <span><strong>Runway</strong> = Closing Cash Balance ÷ Avg Monthly Net Burn</span>
+            </div>
+            <div class="ds-source">Source: CF Summary</div>
+          </div>
+        </div>
+        <div style="margin-top:24px"><canvas id="burnRunwayChart" height="120"></canvas></div>
+      </div>
+    </div><!-- /tab-container -->
+
+    <!-- Dashboard Workflow -->
+    <div class="subsection-title"><i class="fa-solid fa-diagram-project"></i> Dashboard Update Workflow</div>
+    <div class="workflow-flow">
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-upload"></i></div><div class="wf-label">Upload Files</div><div class="wf-sub">CF Forecast, MIS &amp; Dash Looker to Claude</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon ai-icon"><i class="fa-solid fa-robot"></i></div><div class="wf-label">Ask Claude</div><div class="wf-sub">Extract numbers &amp; fill Dash Looker sheet</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-file-excel"></i></div><div class="wf-label">Convert to GSheets</div><div class="wf-sub">If output is Excel, convert to Google Sheets</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-brands fa-google-drive"></i></div><div class="wf-label">Copy to Dash Looker</div><div class="wf-sub">Paste into original source file</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-arrows-rotate"></i></div><div class="wf-label">Refresh Dashboard</div><div class="wf-sub">Updated values appear instantly</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-flask"></i></div><div class="wf-label">Stress Test</div><div class="wf-sub">Review &amp; validate all sections</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-paper-plane"></i></div><div class="wf-label">Send to Mr. Varun</div><div class="wf-sub">Final delivery to client</div></div>
+    </div>
+
+    <div class="bottom-info-grid">
+      <div class="bottom-info-card">
+        <h4><i class="fa-solid fa-code-branch"></i> Version Control</h4>
+        <table class="version-table">
+          <thead><tr><th>Version</th><th>Date</th><th>Description</th><th>Owner</th></tr></thead>
+          <tbody><tr><td>V1.0</td><td>8 Jun 2026</td><td>Initial Release</td><td>Rohit Arjun</td></tr></tbody>
+        </table>
+      </div>
+      <div class="bottom-info-card">
+        <h4><i class="fa-solid fa-link"></i> Dashboard Link</h4>
+        <div class="file-info"><span class="fi-label">Naming</span><code>TMC-Dashboard-2026/06-V1</code></div>
+        <div class="file-info"><span class="fi-label">Trigger</span><span>Every cashflow update or new forecast share</span></div>
+        <div class="file-info"><span class="fi-label">Frequency</span><span>Monthly update</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SOP 3 — CASHFLOW FORECAST
+════════════════════════════════════════════════ -->
+<section class="section sop-section" id="sop3">
+  <div class="sop-section-header sop-header-3">
+    <div class="container">
+      <div class="sop-header-inner">
+        <div class="sop-num-badge">SOP 03</div>
+        <div>
+          <h2>Cashflow Forecast</h2>
+          <p>Standard Operating Procedure for building and maintaining TMC's monthly cashflow model (forecast to March 2027)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="doc-info-grid">
+      <div class="doc-info-card"><span class="label">Document Name</span><strong>TMC Cash Flow Forecast SOP</strong></div>
+      <div class="doc-info-card"><span class="label">Platform</span><strong>Excel</strong></div>
+      <div class="doc-info-card"><span class="label">Data Sources</span><strong>Google Sheets / Client Meetings</strong></div>
+      <div class="doc-info-card"><span class="label">Prepared By</span><strong>Mr. Rohit Arjun</strong></div>
+      <div class="doc-info-card"><span class="label">Reviewed By</span><strong>Mr. Vinay</strong></div>
+      <div class="doc-info-card"><span class="label">Approved By</span><strong>Mr. Karthik</strong></div>
+      <div class="doc-info-card"><span class="label">Forecast Horizon</span><strong>Until March 2027</strong></div>
+      <div class="doc-info-card"><span class="label">Version</span><strong>V1.0</strong></div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+      <div class="exec-icon"><i class="fa-solid fa-file-contract"></i></div>
+      <div class="exec-text">
+        <h3>Executive Summary</h3>
+        <p>The TMC Cash Flow Forecasting Model provides management with visibility into future cash movements, liquidity position, operational cash requirements, burn rate, and cash runway. The model consolidates operational, payroll, recruitment, sales, and overhead data to forecast monthly cash inflows and outflows — visualized through a Looker Studio dashboard.</p>
+        <div class="exec-objectives">
+          <span><i class="fa-solid fa-check-circle"></i> Forecast monthly cash position</span>
+          <span><i class="fa-solid fa-check-circle"></i> Monitor liquidity availability</span>
+          <span><i class="fa-solid fa-check-circle"></i> Track cash burn &amp; runway</span>
+          <span><i class="fa-solid fa-check-circle"></i> Support budgeting &amp; planning</span>
+          <span><i class="fa-solid fa-check-circle"></i> Support management decision-making</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Collection -->
+    <div class="subsection-title"><i class="fa-solid fa-inbox"></i> Data Collection Sources</div>
+    <div class="data-sources-grid">
+      <div class="ds-card"><div class="ds-icon"><i class="fa-solid fa-landmark"></i></div><h5>Bank Statements</h5><p><strong>Axis Bank</strong> — primary account, all revenue credited here. Statement from Ms. Brinda (with password).</p><p><strong>HSBC</strong> — majority of expenses. From Zoho Books: Reports → Bank Transactions → Export.</p></div>
+      <div class="ds-card"><div class="ds-icon"><i class="fa-solid fa-users"></i></div><h5>Payroll Records</h5><p>TMC Payroll Google Sheet for salary data across all three categories (Operations, G&amp;A, S&amp;M).</p></div>
+      <div class="ds-card"><div class="ds-icon"><i class="fa-solid fa-handshake"></i></div><h5>Sales Pipeline</h5><p>From internal meetings with TMC team — both confirmed and pipeline B2B + RTD opportunities.</p></div>
+      <div class="ds-card"><div class="ds-icon"><i class="fa-brands fa-salesforce"></i></div><h5>Vendor Schedules</h5><p>Contracts from Zoho Books for vendor payment schedules and recurring expense commitments.</p></div>
+      <div class="ds-card"><div class="ds-icon"><i class="fa-solid fa-file-csv"></i></div><h5>B2B Data Template</h5><p>Cashflow Data Template.xlsx from SRF TMC Drive — filled by TMC employees for B2B revenue details.</p></div>
+    </div>
+
+    <!-- Sheet Tabs -->
+    <div class="subsection-title"><i class="fa-solid fa-layer-group"></i> Sheet-Wise Preparation</div>
+    <div class="tab-container">
+      <div class="tab-nav" id="cfTabs">
+        <button class="tab-btn active" data-target="cf-payroll">Payroll</button>
+        <button class="tab-btn" data-target="cf-consultant">Consultant</button>
+        <button class="tab-btn" data-target="cf-reimburse">Reimbursements</button>
+        <button class="tab-btn" data-target="cf-bank">Bank Balance</button>
+        <button class="tab-btn" data-target="cf-expense">Expense Breakup</button>
+        <button class="tab-btn" data-target="cf-b2b">B2B Revenue</button>
+        <button class="tab-btn" data-target="cf-rtd">RTD Revenue</button>
+        <button class="tab-btn" data-target="cf-main">Cashflow Sheet</button>
+      </div>
+
+      <div class="tab-panel active" id="cf-payroll">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-id-badge"></i> Payroll Sheet</h4>
+            <p>Contains <strong>all TMC employees</strong> across 3 categories with forecasted salaries through March 2027.</p>
+            <div class="category-cards">
+              <div class="cat-card cat-ops"><div class="cat-icon"><i class="fa-solid fa-chalkboard-user"></i></div><h5>Operations</h5><p>Teaching staff</p></div>
+              <div class="cat-card cat-ga"><div class="cat-icon"><i class="fa-solid fa-briefcase"></i></div><h5>G&amp;A</h5><p>Management team</p></div>
+              <div class="cat-card cat-sm"><div class="cat-icon"><i class="fa-solid fa-bullhorn"></i></div><h5>S&amp;M</h5><p>Sales &amp; Marketing</p></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="alert-card orange"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical Note — Salary Timing:</strong> Salaries are paid in the same month <em>only if the month-end is a working day</em>. If the last day is a weekend or public holiday, salaries are paid on the first working day of the next month.<br/><br/>Example: May's salary was credited in June because the last working day of May fell on a Sunday.</div></div>
+            <div class="note-card"><i class="fa-solid fa-check-double"></i> <strong>Verification:</strong> Cross-check salary amounts against bank statements AND the TMC Payroll Google Sheet.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="cf-consultant">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-user-tie"></i> Consultant Sheet</h4>
+            <p>All G&amp;A and S&amp;M consultants of TMC, including legal fee arrangements.</p>
+            <div class="step-list">
+              <div class="step"><span class="step-num">1</span><div>Includes all consultancy costs for G&amp;A and S&amp;M departments</div></div>
+              <div class="step"><span class="step-num">2</span><div>Legal fees are included — review contracts for amounts and timing</div></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="alert-card blue"><i class="fa-solid fa-info-circle"></i><div><strong>Sahil (Consultant) — Special Rule:</strong> Sahil is paid ₹10,000/month as consultant fees. Any <em>additional</em> amount credited to him is TDS — this must be accounted separately in the Expense Breakup sheet, not here.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="cf-reimburse">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-file-invoice"></i> Reimbursement Sheet</h4>
+            <p>All employee reimbursements categorized and tracked here.</p>
+            <div class="step-list">
+              <div class="step"><span class="step-num">1</span><div>Reimbursement amounts found in <strong>TMC Payroll Google Sheet</strong> with attached invoices</div></div>
+              <div class="step"><span class="step-num">2</span><div>Open each invoice and categorize: food, travel, internet, etc.</div></div>
+              <div class="step"><span class="step-num">3</span><div>Categorized items feed into the <strong>Expense Breakup sheet</strong></div></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="alert-card green"><i class="fa-solid fa-robot"></i><div><strong>Claude Tip — Large Invoice Volumes:</strong> If there are many invoices, download them all to a folder, give Claude folder access + reimbursement sheet. Claude will categorize all invoices into existing categories.<br/><br/>Always <strong>recheck the total</strong> Claude gives against the reimbursement sheet total.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="cf-bank">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-building-columns"></i> Bank Balance Working Sheet</h4>
+            <p>Reconciles the two TMC bank accounts to verify closing balances.</p>
+            <div class="bank-cards">
+              <div class="bank-card axis"><div><i class="fa-solid fa-university"></i></div><h5>Axis Bank</h5><p>Primary account — all revenue credited here. Statement obtained from <strong>Ms. Brinda</strong> (with password).</p></div>
+              <div class="bank-card hsbc"><div><i class="fa-solid fa-university"></i></div><h5>HSBC</h5><p>Majority of expenses paid from here. Statement from <strong>Zoho Books</strong> → Reports → Bank Transactions → Custom Dates → Export.</p></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="alert-card blue"><i class="fa-solid fa-currency-exchange"></i><div><strong>Foreign Currency Note:</strong> Bills may be in USD/EUR/other currencies, but bank statements show the amount in <strong>INR</strong> (bank auto-converts). The original foreign currency amount is visible in the transaction description.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="cf-expense">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-list-check"></i> Expense Breakup Sheet</h4>
+            <p>All expenses categorized and tracked monthly.</p>
+            <div class="expense-items">
+              <div class="exp-item"><span class="exp-dot gold"></span><strong>Software Expenses</strong></div>
+              <div class="exp-item"><span class="exp-dot blue"></span><strong>Courier / Telephone / Printing / Internet</strong></div>
+              <div class="exp-item"><span class="exp-dot green"></span><strong>Salary Arrears</strong></div>
+              <div class="exp-item"><span class="exp-dot red"></span><strong>Travel</strong> — Ad hoc travels by Mr. Varun for business visits</div>
+              <div class="exp-item"><span class="exp-dot purple"></span><strong>Other G&amp;A</strong> — Food, rent, misc</div>
+              <div class="exp-item"><span class="exp-dot orange"></span><strong>Deposit Lock / Marketing / Assets</strong> (Laptop etc.)</div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="alert-card orange"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Expense Timing — Same as Salary Rule:</strong> Current month expenses are <em>paid in the next month</em>. Example: May expenses were recorded in June alongside June's expenses.</div></div>
+            <div class="note-card" style="margin-top:12px"><i class="fa-solid fa-info-circle"></i> <strong>Rent Note:</strong> Rent is variable — it depends on the number of people working in the co-working office space each month.</div>
+            <div class="note-card" style="margin-top:8px"><i class="fa-solid fa-info-circle"></i> <strong>Marketing:</strong> One-time annual expense. Not monthly recurring.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="cf-b2b">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-handshake"></i> B2B Revenue Sheet</h4>
+            <p>Language training revenue — two sections: <strong>Confirmed</strong> and <strong>Pipeline</strong>.</p>
+            <p><strong>Key contacts:</strong> Ms. Nikhitha Joshi &amp; Mr. Sidhant</p>
+            <div class="step-list">
+              <div class="step"><span class="step-num">C</span><div><strong>Confirmed Revenue:</strong> Active courses. Dates and course data from Operational MIS. Teacher allocated by TMC (visible in Teachers sheet).</div></div>
+              <div class="step"><span class="step-num">P</span><div><strong>Pipeline Revenue:</strong> Expected future batches. Assumption: <strong>60% conversion rate</strong> from pipeline to confirmed.</div></div>
+            </div>
+            <div class="formula-card" style="margin-top:16px">
+              <div class="formula-label">B2B Revenue Formula</div>
+              <div class="formula-text"><code>=15 × 270 × 50% × 93</code></div>
+              <div class="formula-breakdown">
+                <span><strong>15</strong> = Batch size (students)</span>
+                <span><strong>270</strong> = Fee per student (USD)</span>
+                <span><strong>50%</strong> = First payment (50% upfront)</span>
+                <span><strong>93</strong> = USD → INR conversion</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="payment-model">
+              <div class="pm-title">Payment Models</div>
+              <div class="pm-item"><div class="pm-icon monthly"><i class="fa-solid fa-calendar-days"></i></div><div><strong>Monthly Payment</strong><br/>Consultant teachers paid monthly. Formula: <code>=16 × 1000 × 90%</code> (hours × rate × 90% after 10% TDS)</div></div>
+              <div class="pm-item"><div class="pm-icon fifty"><i class="fa-solid fa-percent"></i></div><div><strong>50-50 Model</strong><br/>50% on course start, 50% on completion. Both revenue receipt and cost payment follow this model.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="cf-rtd">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-user-nurse"></i> RTD Revenue Sheet</h4>
+            <p><strong>Recruitment, Training &amp; Deployment</strong> — two sections: Confirmed and Pipeline.</p>
+            <p><strong>Key contact:</strong> Ms. Priyansha</p>
+            <div class="formula-card">
+              <div class="formula-label">RTD Revenue Formula</div>
+              <div class="formula-text"><code>=8 × 100,000 × 50%</code></div>
+              <div class="formula-breakdown">
+                <span><strong>8</strong> = Number of nurses required by client</span>
+                <span><strong>₹1,00,000</strong> = Fee charged per nurse</span>
+                <span><strong>50%</strong> = First payment (50% upfront when process starts)</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <div class="note-card"><i class="fa-solid fa-file-invoice"></i> <strong>RTD Costs:</strong> Consultant costs associated with RTD courses (including pipeline costs) are captured in the RTD Payments sheet.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="cf-main">
+        <div class="tab-content-grid">
+          <div class="tab-text">
+            <h4><i class="fa-solid fa-table-cells"></i> Main Cashflow Sheet</h4>
+            <p>The consolidated cashflow statement. Top-left toggle to switch between <strong>With Pipeline</strong> or <strong>Without Pipeline</strong> scenarios.</p>
+            <div class="cf-structure">
+              <div class="cf-row opening"><i class="fa-solid fa-wallet"></i> Opening Balance <span>(= Prior Month Closing Balance)</span></div>
+              <div class="cf-row inflow"><i class="fa-solid fa-arrow-down"></i> + Receipts <span>Investments + B2B Revenue + RTD Collections + Other Income (interest)</span></div>
+              <div class="cf-row outflow"><i class="fa-solid fa-arrow-up"></i> − Payments <span>B2B Costs + RTD Costs + Payroll + Travel + Software + G&amp;A + Telecom + Courier + Consultants + Printing + Professional/Legal</span></div>
+              <div class="cf-row calc"><i class="fa-solid fa-equals"></i> Closing Balance <span>= Opening + Inflows − Outflows ± Adjustments</span></div>
+              <div class="cf-row check"><i class="fa-solid fa-check-double"></i> Check Row <span>Closing Balance − Bank Balance = <strong>Must be ZERO</strong></span></div>
+              <div class="cf-row burn"><i class="fa-solid fa-fire"></i> Gross Burn <span>= Total Outflows</span></div>
+              <div class="cf-row burn"><i class="fa-solid fa-fire-flame-curved"></i> Net Burn <span>= Opening Balance − Closing Balance</span></div>
+            </div>
+          </div>
+          <div class="tab-visual">
+            <canvas id="cfChart" height="260"></canvas>
+          </div>
+        </div>
+      </div>
+    </div><!-- /cfTabs -->
+
+    <!-- Workflow -->
+    <div class="subsection-title"><i class="fa-solid fa-diagram-project"></i> Forecasting Workflow</div>
+    <div class="workflow-flow">
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-landmark"></i></div><div class="wf-label">Bank Statements</div><div class="wf-sub">Axis (Ms. Brinda) + HSBC (Zoho)</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-users"></i></div><div class="wf-label">Payroll &amp; HR</div><div class="wf-sub">TMC Payroll Google Sheet</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-handshake"></i></div><div class="wf-label">Sales Pipeline</div><div class="wf-sub">Internal TMC meetings</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-table"></i></div><div class="wf-label">Update Sheets</div><div class="wf-sub">Payroll → Consultant → Reimbursement → Bank → Expenses → B2B → RTD</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-check-double"></i></div><div class="wf-label">Reconcile</div><div class="wf-sub">Check row = 0 (Closing = Bank Balance)</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-chart-bar"></i></div><div class="wf-label">Update Dashboard</div><div class="wf-sub">Push to Looker Studio</div></div>
+      <div class="wf-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="wf-step"><div class="wf-icon"><i class="fa-solid fa-paper-plane"></i></div><div class="wf-label">Share with TMC</div><div class="wf-sub">Final delivery to Mr. Varun</div></div>
+    </div>
+
+    <div class="bottom-info-grid">
+      <div class="bottom-info-card">
+        <h4><i class="fa-solid fa-code-branch"></i> Version Control</h4>
+        <table class="version-table">
+          <thead><tr><th>Version</th><th>Date</th><th>Description</th><th>Owner</th></tr></thead>
+          <tbody><tr><td>V1.0</td><td>8 Jun 2026</td><td>Initial Release</td><td>Rohit Arjun</td></tr></tbody>
+        </table>
+      </div>
+      <div class="bottom-info-card">
+        <h4><i class="fa-solid fa-folder-open"></i> File Management</h4>
+        <div class="file-info"><span class="fi-label">Platform</span><span>Excel (local)</span></div>
+        <div class="file-info"><span class="fi-label">Frequency</span><span>Monthly + on cashflow change</span></div>
+        <div class="file-info"><span class="fi-label">Owner</span><span>Finance Team (Rohit)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="https://srfcapital.studio/" target="_blank" class="footer-logo">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>SRF Capital <strong>Studio</strong></span>
+      </a>
+      <p>Financial Planning &amp; Analysis • FP&amp;A • Management Consulting</p>
+    </div>
+    <div class="footer-client">
+      <div class="footer-client-label">Prepared for</div>
+      <a href="https://themigration.company/" target="_blank" class="footer-tmc">
+        <i class="fa-solid fa-globe"></i>
+        <span>The Migration Company</span>
+      </a>
+      <p>Global Mobility &amp; Immigration Solutions</p>
+    </div>
+    <div class="footer-meta">
+      <div class="footer-meta-item"><span>Version</span><strong>V1.0</strong></div>
+      <div class="footer-meta-item"><span>Effective</span><strong>8 June 2026</strong></div>
+      <div class="footer-meta-item"><span>Prepared By</span><strong>Mr. Rohit Arjun Raj</strong></div>
+      <div class="footer-meta-item"><span>Approved By</span><strong>Mr. Karthik</strong></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 SRF Capital Studio. All rights reserved. | Confidential SOP Document for TMC Internal Use.</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
