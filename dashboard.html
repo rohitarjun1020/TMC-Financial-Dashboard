@@ -380,7 +380,7 @@ canvas{display:block;max-width:100%}
       <div class="section-header">Inflows Detailed</div>
       <div class="card-body">
         <table class="data-table" id="cf-inflows-table">
-          <thead><tr><th>#</th><th onclick="sortTable('cf-inflows-table',1)">Particulars</th><th onclick="sortTable('cf-inflows-table',2)">Client</th><th onclick="sortTable('cf-inflows-table',3)">Inflow Value</th></tr></thead>
+          <thead><tr><th>#</th><th onclick="sortTable('cf-inflows-table',1)">Particulars</th><th onclick="sortTable('cf-inflows-table',2)">Inflow Value</th></tr></thead>
           <tbody id="cf-inflows-body"></tbody>
         </table>
         <div class="pagination" id="cf-inflows-page"></div>
@@ -795,10 +795,9 @@ function renderCF(){
   renderPaged('cf-inflows-body','cf-inflows-page',inflowRows,(r,i)=>`<tr>
     <td>${i+1}.</td>
     <td>${r.p}</td>
-    <td style="color:var(--text2)">${r.c}</td>
     <td class="num-cell pos">${fmt(r.a)}</td>
   </tr>`,10);
-  setTimeout(()=>{const tb=document.getElementById('cf-inflows-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;},0);
+  setTimeout(()=>{const tb=document.getElementById('cf-inflows-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="2">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;},0);
 
   // ── Outflows ──
   const outRows=TMC_DATA.cfExpenses.filter(r=>r.m===sel&&r.a>0);
