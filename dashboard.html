@@ -779,11 +779,14 @@ function renderCF(){
   const sumRows=TMC_DATA.cfSummary.filter(r=>r.m===sel);
   const orderMap={'Opening balance':1,'Receipts':2,'Outflows':3,'Adjustments':4,'Closing Balance':5,'Gross Burn':6,'Net Burn':7,'Runway':8};
   sumRows.sort((a,b)=>(orderMap[a.p]||99)-(orderMap[b.p]||99));
-  document.getElementById('cf-summary-body').innerHTML=sumRows.map((r,i)=>`<tr>
+  document.getElementById('cf-summary-body').innerHTML=sumRows.map((r,i)=>{
+    const disp=(r.p==='Net Burn'||r.p==='Runway')?-r.a:r.a;
+    return `<tr>
     <td>${i+1}.</td>
     <td>${r.p}</td>
-    <td class="num-cell ${colorNum(r.a)}">${r.p==='Runway'?r.a.toFixed(1)+' mo':fmt(r.a)}</td>
-  </tr>`).join('');
+    <td class="num-cell ${colorNum(disp)}">${r.p==='Runway'?disp.toFixed(1)+' mo':fmt(disp)}</td>
+  </tr>`;
+  }).join('');
 
   // ── Inflows ──
   const inflowRows=TMC_DATA.cfInflows.filter(r=>r.m===sel&&r.a>0);
@@ -921,7 +924,7 @@ function renderCFTrends(){
         {
           type:'bar',label:'Net Burn',
           data:data.map(r=>r.nb),
-          backgroundColor:data.map(r=>r.nb<0?C.red+'cc':C.darkTeal+'cc'),
+          backgroundColor:data.map(r=>r.nb>0?C.red+'cc':C.darkTeal+'cc'),
           borderRadius:4,yAxisID:'y'
         },
         {
