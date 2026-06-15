@@ -654,6 +654,24 @@ function changePage(cid,pid,dir,total,size){
 }
 
 // ════════════════════════════════════════════════════════════
+//  FULL CF HORIZONTAL DATA (cfHorizontal + cfSummary months)
+// ════════════════════════════════════════════════════════════
+function buildFullCFData(){
+  const hSet=new Set(TMC_DATA.cfHorizontal.map(r=>r.m));
+  const full=[...TMC_DATA.cfHorizontal];
+  const allM=[...new Set(TMC_DATA.cfSummary.map(r=>r.m))];
+  allM.forEach(m=>{
+    if(hSet.has(m)) return;
+    const rows=TMC_DATA.cfSummary.filter(r=>r.m===m);
+    const get=p=>(rows.find(r=>r.p===p)||{a:0}).a;
+    full.push({m,ob:get('Opening balance'),rcpt:get('Receipts'),out:get('Outflows'),
+      adj:get('Adjustments'),cb:get('Closing Balance'),gb:get('Gross Burn'),
+      nb:get('Net Burn'),rwy:get('Runway')});
+  });
+  return full;
+}
+
+// ════════════════════════════════════════════════════════════
 //  POPULATE FILTER DROPDOWNS
 // ════════════════════════════════════════════════════════════
 function populateFilters(){
@@ -673,14 +691,15 @@ function populateFilters(){
   // Default: select first actual month
   if(cfMonths.length) cfEl.value=cfMonths[0];
 
-  // CF Trends range filter
+  // CF Trends range filter — use full dataset including months beyond cfHorizontal
   const ctFrom=document.getElementById('ct-from');
   const ctTo=document.getElementById('ct-to');
   if(ctFrom&&ctTo){
-    TMC_DATA.cfHorizontal.forEach((r,i)=>{
+    const fullCF=buildFullCFData();
+    fullCF.forEach((r,i)=>{
       const lbl=r.m.replace('-20','\'');
       ctFrom.innerHTML+=`<option value="${i}">${lbl}</option>`;
-      ctTo.innerHTML+=`<option value="${i}"${i===TMC_DATA.cfHorizontal.length-1?' selected':''}>${lbl}</option>`;
+      ctTo.innerHTML+=`<option value="${i}"${i===fullCF.length-1?' selected':''}>${lbl}</option>`;
     });
   }
 }
@@ -993,7 +1012,7 @@ function renderCF(){
 //  PAGE 3 — CF TRENDS
 // ════════════════════════════════════════════════════════════
 function resetTrendsFilter(){
-  const all=TMC_DATA.cfHorizontal;
+  const all=buildFullCFData();
   const f=document.getElementById('ct-from');
   const t=document.getElementById('ct-to');
   if(f) f.value=0;
@@ -1002,7 +1021,7 @@ function resetTrendsFilter(){
 }
 
 function renderCFTrends(){
-  const all=TMC_DATA.cfHorizontal;
+  const all=buildFullCFData();
   const fi=parseInt(document.getElementById('ct-from')?.value??0);
   const ti=parseInt(document.getElementById('ct-to')?.value??(all.length-1));
   const data=all.slice(fi,ti+1);
@@ -1064,12 +1083,13 @@ function renderCFTrends(){
       meta.data.forEach((bar,i)=>{
         const d=data[i];
         if(d.rwy===null||d.rwy===undefined||isNaN(d.rwy)) return;
-        const text=d.rwy.toFixed(1)+' mo';
+        const dispRwy=-d.rwy;
+        const text=dispRwy.toFixed(1)+' mo';
         const tw=c2.measureText(text).width;
         const pw=tw+10,ph=16;
         const bx=bar.x-pw/2;
-        const by=d.nb>=0?bar.y-ph-4:bar.y+4;
-        const isNeg=d.rwy<0;
+        const by=d.nb<=0?bar.y-ph-4:bar.y+4;
+        const isNeg=dispRwy<0;
         c2.fillStyle=isNeg?'rgba(239,68,68,0.18)':'rgba(78,205,196,0.18)';
         c2.beginPath();
         c2.roundRect(bx,by,pw,ph,4);
@@ -1095,8 +1115,8 @@ function renderCFTrends(){
       labels,
       datasets:[{
         label:'Net Burn',
-        data:data.map(r=>r.nb),
-        backgroundColor:data.map(r=>r.nb>0?'rgba(239,68,68,0.7)':'rgba(42,157,143,0.7)'),
+        data:data.map(r=>-r.nb),
+        backgroundColor:data.map(r=>r.nb>0?'rgba(239,68,68,0.7)':'rgba(42,157,143,0.72)'),
         borderColor:data.map(r=>r.nb>0?C.red:C.midTeal),
         borderWidth:1,
         borderRadius:4,
@@ -1118,7 +1138,7 @@ function renderCFTrends(){
         },
         tooltip:{callbacks:{
           label:c=>' Net Burn: '+fmt(c.raw),
-          afterLabel:c=>{const rwy=data[c.dataIndex].rwy;return rwy!=null?' Runway: '+rwy.toFixed(1)+' mo':'';}
+          afterLabel:c=>{const rwy=data[c.dataIndex].rwy;return rwy!=null?' Runway: '+(-rwy).toFixed(1)+' mo':'';}
         }}
       },
       scales:{
