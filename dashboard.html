@@ -968,7 +968,7 @@ function renderCFTrends(){
   const data=TMC_DATA.cfHorizontal;
   const labels=data.map(r=>r.m.replace('-20','\''));
 
-  // ── Receipts vs Outflows ──
+  // ── Receipts vs Outflows — diverging bar (inflows up, outflows down) ──
   destroyChart('rcpt-out');
   const ctx3=document.getElementById('rcpt-out-chart').getContext('2d');
   charts['rcpt-out']=new Chart(ctx3,{
@@ -976,53 +976,118 @@ function renderCFTrends(){
     data:{
       labels,
       datasets:[
-        {label:'Receipts',data:data.map(r=>r.rcpt),backgroundColor:C.darkTeal,borderRadius:4},
-        {label:'Outflows',data:data.map(r=>r.out),backgroundColor:C.ltCyan,borderRadius:4},
+        {
+          label:'Receipts (Inflows)',
+          data:data.map(r=>r.rcpt),
+          backgroundColor:'rgba(42,157,143,0.65)',
+          borderColor:'#2a9d8f',
+          borderWidth:1,
+          borderRadius:4,
+          stack:'combined',
+        },
+        {
+          label:'Outflows',
+          data:data.map(r=>-r.out),
+          backgroundColor:'rgba(239,68,68,0.6)',
+          borderColor:'#ef4444',
+          borderWidth:1,
+          borderRadius:4,
+          stack:'combined',
+        }
       ]
     },
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'top',labels:{boxWidth:12,padding:20,color:'#94a3b8'}},
-        tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.raw)}}},
+      plugins:{
+        legend:{position:'top',labels:{boxWidth:12,padding:20,color:'#94a3b8'}},
+        tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(Math.abs(c.raw))}}
+      },
       scales:{
-        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:11}}},
-        y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:v=>fmtShort(v)}}
+        x:{stacked:true,grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:11}}},
+        y:{
+          stacked:true,
+          grid:{color:sc=>sc.tick.value===0?'rgba(255,255,255,0.28)':'rgba(255,255,255,0.05)'},
+          ticks:{callback:v=>fmtShort(Math.abs(v))}
+        }
       }
     }
   });
 
-  // ── Net Burn with Runway (combo) ──
+  // ── Net Burn with Runway pill labels ──
+  const runwayPlugin={
+    id:'runwayLabels',
+    afterDatasetsDraw(chart){
+      const {ctx:c2}=chart;
+      const meta=chart.getDatasetMeta(0);
+      c2.save();
+      c2.font='600 10px Inter,sans-serif';
+      meta.data.forEach((bar,i)=>{
+        const d=data[i];
+        if(d.rwy===null||d.rwy===undefined||isNaN(d.rwy)) return;
+        const text=d.rwy.toFixed(1)+' mo';
+        const tw=c2.measureText(text).width;
+        const pw=tw+10,ph=16;
+        const bx=bar.x-pw/2;
+        const by=d.nb>=0?bar.y-ph-4:bar.y+4;
+        const isNeg=d.rwy<0;
+        c2.fillStyle=isNeg?'rgba(239,68,68,0.18)':'rgba(78,205,196,0.18)';
+        c2.beginPath();
+        c2.roundRect(bx,by,pw,ph,4);
+        c2.fill();
+        c2.strokeStyle=isNeg?'rgba(239,68,68,0.45)':'rgba(78,205,196,0.45)';
+        c2.lineWidth=1;
+        c2.stroke();
+        c2.fillStyle=isNeg?'#ef4444':'#4ecdc4';
+        c2.textAlign='center';
+        c2.textBaseline='middle';
+        c2.fillText(text,bar.x,by+ph/2);
+      });
+      c2.restore();
+    }
+  };
+
   destroyChart('burn-rwy');
   const ctx4=document.getElementById('burn-rwy-chart').getContext('2d');
   charts['burn-rwy']=new Chart(ctx4,{
     type:'bar',
+    plugins:[runwayPlugin],
     data:{
       labels,
-      datasets:[
-        {
-          type:'bar',label:'Net Burn',
-          data:data.map(r=>r.nb),
-          backgroundColor:data.map(r=>r.nb>0?C.red+'cc':C.darkTeal+'cc'),
-          borderRadius:4,yAxisID:'y'
-        },
-        {
-          type:'line',label:'Runway (months)',
-          data:data.map(r=>r.rwy),
-          borderColor:C.ltCyan,backgroundColor:'rgba(78,205,196,0.12)',
-          borderWidth:2.5,pointRadius:5,pointHoverRadius:7,
-          pointBackgroundColor:C.ltCyan,fill:true,
-          tension:0.3,yAxisID:'y2'
-        },
-      ]
+      datasets:[{
+        label:'Net Burn',
+        data:data.map(r=>r.nb),
+        backgroundColor:data.map(r=>r.nb>0?'rgba(239,68,68,0.65)':'rgba(29,92,110,0.65)'),
+        borderColor:data.map(r=>r.nb>0?C.red:C.darkTeal),
+        borderWidth:1,
+        borderRadius:4,
+      }]
     },
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'top',labels:{boxWidth:12,padding:20,color:'#94a3b8'}},
-        tooltip:{callbacks:{label:c=>c.dataset.type==='line'?' Runway: '+c.raw.toFixed(1)+' mo':' Net Burn: '+fmt(c.raw)}}},
+      layout:{padding:{top:28,bottom:20}},
+      plugins:{
+        legend:{
+          position:'top',
+          labels:{
+            color:'#94a3b8',padding:18,boxWidth:12,
+            generateLabels:()=>[
+              {text:'Burning Cash (outflows > receipts)',fillStyle:'rgba(239,68,68,0.65)',strokeStyle:C.red,lineWidth:1,hidden:false},
+              {text:'Net Positive (receipts > outflows)',fillStyle:'rgba(29,92,110,0.65)',strokeStyle:C.darkTeal,lineWidth:1,hidden:false},
+              {text:'Runway shown as pill labels on bars',fillStyle:'rgba(78,205,196,0.18)',strokeStyle:'rgba(78,205,196,0.45)',lineWidth:1,hidden:false},
+            ]
+          }
+        },
+        tooltip:{callbacks:{
+          label:c=>' Net Burn: '+fmt(c.raw),
+          afterLabel:c=>' Runway: '+data[c.dataIndex].rwy.toFixed(1)+' mo'
+        }}
+      },
       scales:{
         x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:11}}},
-        y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:v=>fmtShort(v)},title:{display:true,text:'Net Burn',color:'#64748b',font:{size:11}}},
-        y2:{position:'right',grid:{display:false},ticks:{color:'#4ecdc4'},title:{display:true,text:'Runway (mo)',color:'#4ecdc4',font:{size:11}}}
+        y:{
+          grid:{color:sc=>sc.tick.value===0?'rgba(255,255,255,0.28)':'rgba(255,255,255,0.05)'},
+          ticks:{callback:v=>fmtShort(v)}
+        }
       }
     }
   });
