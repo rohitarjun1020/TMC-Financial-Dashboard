@@ -518,7 +518,8 @@ let _misTotalRev=1;
 let _misDetailFilter=null;
 let _misSalData=[];
 let _misSalFilter=null;
-const SAL_DEPTS=['COGS-Manpowers Cost','G&A-Manpower Costs','S&M-Manpower Costs'];
+let _misProfFeesData=[];
+const SAL_DEPTS=['COGS-Manpowers Cost','G&A-Manpower Costs','S&M-Manpower Costs','G&A-Professional Fees'];
 
 // ── TAB SWITCHING ────────────────────────────────────────────
 function switchTab(idx,btn){
@@ -563,14 +564,18 @@ function filterSalByDept(dept){
   });
   const hdr=document.getElementById('sal-breakup-header');
   if(hdr) hdr.textContent=_misSalFilter?'Salaries — '+_misSalFilter:'Salaries Breakup';
-  const src=_misSalFilter?_misSalData.filter(r=>r.d===_misSalFilter):_misSalData;
-  const map={};
-  src.forEach(r=>{
-    if(!map[r.e]) map[r.e]={e:r.e,d:r.d,a:0};
-    map[r.e].a+=r.a;
-  });
-  const rows=Object.values(map).filter(r=>r.a>0).sort((a,b)=>b.a-a.a);
-  const total=rows.reduce((s,r)=>s+r.a,0);
+  let rows,total;
+  if(_misSalFilter==='G&A-Professional Fees'){
+    const map={};
+    _misProfFeesData.forEach(r=>{if(!map[r.b])map[r.b]=0;map[r.b]+=r.a;});
+    rows=Object.entries(map).filter(([k,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([b,a])=>({e:b,d:'G&A-Professional Fees',a}));
+  } else {
+    const src=_misSalFilter?_misSalData.filter(r=>r.d===_misSalFilter):_misSalData;
+    const map={};
+    src.forEach(r=>{if(!map[r.e])map[r.e]={e:r.e,d:r.d,a:0};map[r.e].a+=r.a;});
+    rows=Object.values(map).filter(r=>r.a>0).sort((a,b)=>b.a-a.a);
+  }
+  total=rows.reduce((s,r)=>s+r.a,0);
   pageState['salary-body']={page:0};
   renderPaged('salary-body','salary-page',rows,(r,i)=>`<tr>
     <td>${i+1}.</td>
@@ -676,6 +681,7 @@ function renderMIS(){
   _misDetailFilter=null;
   _misSalData=salData;
   _misSalFilter=null;
+  _misProfFeesData=isAll?TMC_DATA.profFeesDetail:TMC_DATA.profFeesDetail.filter(r=>r.m===sel);
 
   // ── SCORECARDS ──
   const sc=document.getElementById('mis-scorecards');
