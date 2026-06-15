@@ -75,6 +75,10 @@ a{text-decoration:none;color:inherit}
 .tab-content{display:none;padding:24px 32px}
 .tab-content.active{display:block}
 
+/* ── P&L DRILL-DOWN ROWS ── */
+.pl-drill-row:hover{background:rgba(42,157,143,0.08);}
+.pl-row-active{background:rgba(42,157,143,0.18)!important;outline:1px solid rgba(42,157,143,0.4);}
+
 /* ── SECTION HEADER ── */
 .section-header{
   background:linear-gradient(90deg,var(--dark-teal),var(--mid-teal));
@@ -280,9 +284,10 @@ canvas{display:block;max-width:100%}
       <div class="card-body">
         <table class="data-table" id="concise-pl-table">
           <thead><tr>
-            <th onclick="sortTable('concise-pl-table',0)">Department</th>
-            <th onclick="sortTable('concise-pl-table',1)">Amount</th>
-            <th onclick="sortTable('concise-pl-table',2)">% of Rev</th>
+            <th>#</th>
+            <th onclick="sortTable('concise-pl-table',1)">Department</th>
+            <th onclick="sortTable('concise-pl-table',2)">Amount</th>
+            <th onclick="sortTable('concise-pl-table',3)">% of Rev</th>
           </tr></thead>
           <tbody id="concise-pl-body"></tbody>
         </table>
@@ -290,7 +295,7 @@ canvas{display:block;max-width:100%}
     </div>
     <!-- Detailed Breakup -->
     <div class="card">
-      <div class="section-header">Detailed Breakup</div>
+      <div class="section-header" id="detail-breakup-header">Detailed Breakup</div>
       <div class="card-body">
         <table class="data-table" id="detailed-breakup-table">
           <thead><tr>
@@ -507,11 +512,44 @@ const deptTag = d => {
 const charts={};
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 
+// ── MIS DRILL-DOWN STATE ─────────────────────────────────────
+let _misSumData=[];
+let _misTotalRev=1;
+let _misDetailFilter=null;
+
 // ── TAB SWITCHING ────────────────────────────────────────────
 function switchTab(idx,btn){
   document.querySelectorAll('.tab-content').forEach((el,i)=>el.classList.toggle('active',i===idx));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+}
+
+// ── MIS DETAIL DRILL-DOWN ────────────────────────────────────
+function filterDetailByDept(dept){
+  _misDetailFilter=(_misDetailFilter===dept)?null:dept;
+  // highlight active row
+  document.querySelectorAll('.pl-drill-row').forEach(tr=>{
+    tr.classList.toggle('pl-row-active', tr.dataset.dept===_misDetailFilter);
+  });
+  // update header
+  const hdr=document.getElementById('detail-breakup-header');
+  if(hdr) hdr.textContent=_misDetailFilter?'Breakup — '+_misDetailFilter:'Detailed Breakup';
+  // re-render detail table
+  const src=_misDetailFilter?_misSumData.filter(r=>r.d===_misDetailFilter):_misSumData;
+  const map={};
+  src.forEach(r=>{
+    const k=r.p+(r.c?' ('+r.c+')':'');
+    if(!map[k]) map[k]={p:r.p,c:r.c,a:0,d:r.d};
+    map[k].a+=r.a;
+  });
+  const rows=Object.values(map).filter(r=>r.a!==0).sort((a,b)=>b.a-a.a);
+  pageState['detailed-breakup-body']={page:0};
+  renderPaged('detailed-breakup-body','detailed-breakup-page',rows,(r,i)=>`<tr>
+    <td>${i+1}.</td>
+    <td>${r.p}${r.c?' <small style="color:var(--text3)">('+r.c+')</small>':''}</td>
+    <td class="num-cell ${colorNum(r.a)}">${fmt(r.a)}</td>
+    <td class="num-cell">${pctFmt(r.a,_misTotalRev)}</td>
+  </tr>`,15);
 }
 
 // ── SORT TABLE ───────────────────────────────────────────────
@@ -604,6 +642,9 @@ function renderMIS(){
     deptTotals[r.d]+=r.a;
   });
   const totalRev=deptTotals['Revenue']||1;
+  _misSumData=sumData;
+  _misTotalRev=totalRev;
+  _misDetailFilter=null;
 
   // ── SCORECARDS ──
   const sc=document.getElementById('mis-scorecards');
@@ -667,7 +708,7 @@ function renderMIS(){
   document.getElementById('concise-pl-body').innerHTML=plDepts.map((d,i)=>{
     const amt=deptTotals[d.key]||0;
     const pct=pctFmt(amt,totalRev);
-    return `<tr>
+    return `<tr class="pl-drill-row" data-dept="${d.key}" onclick="filterDetailByDept('${d.key}')" style="cursor:pointer" title="Click to drill down into ${d.label}">
       <td>${i+1}.</td>
       <td>${deptTag(d.label)}</td>
       <td class="num-cell ${colorNum(amt)}">${fmt(amt)}</td>
