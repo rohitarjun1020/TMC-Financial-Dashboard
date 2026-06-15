@@ -75,8 +75,8 @@ a{text-decoration:none;color:inherit}
 .tab-content{display:none;padding:24px 32px}
 .tab-content.active{display:block}
 
-/* ── P&L DRILL-DOWN ROWS ── */
-.pl-drill-row:hover{background:rgba(42,157,143,0.08);}
+/* ── DRILL-DOWN ROWS ── */
+.pl-drill-row:hover,.ledger-drill-row:hover{background:rgba(42,157,143,0.08);}
 .pl-row-active{background:rgba(42,157,143,0.18)!important;outline:1px solid rgba(42,157,143,0.4);}
 
 /* ── SECTION HEADER ── */
@@ -337,7 +337,7 @@ canvas{display:block;max-width:100%}
       </div>
     </div>
     <div class="card">
-      <div class="section-header">Salaries Breakup</div>
+      <div class="section-header" id="sal-breakup-header">Salaries Breakup</div>
       <div class="card-body">
         <table class="data-table" id="salary-table">
           <thead><tr>
@@ -516,6 +516,9 @@ function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];
 let _misSumData=[];
 let _misTotalRev=1;
 let _misDetailFilter=null;
+let _misSalData=[];
+let _misSalFilter=null;
+const SAL_DEPTS=['COGS-Manpowers Cost','G&A-Manpower Costs','S&M-Manpower Costs'];
 
 // ── TAB SWITCHING ────────────────────────────────────────────
 function switchTab(idx,btn){
@@ -550,6 +553,32 @@ function filterDetailByDept(dept){
     <td class="num-cell ${colorNum(r.a)}">${fmt(r.a)}</td>
     <td class="num-cell">${pctFmt(r.a,_misTotalRev)}</td>
   </tr>`,15);
+}
+
+// ── LEDGER → SALARY DRILL-DOWN ───────────────────────────────
+function filterSalByDept(dept){
+  _misSalFilter=(_misSalFilter===dept)?null:dept;
+  document.querySelectorAll('.ledger-drill-row').forEach(tr=>{
+    tr.classList.toggle('pl-row-active', tr.dataset.dept===_misSalFilter);
+  });
+  const hdr=document.getElementById('sal-breakup-header');
+  if(hdr) hdr.textContent=_misSalFilter?'Salaries — '+_misSalFilter:'Salaries Breakup';
+  const src=_misSalFilter?_misSalData.filter(r=>r.d===_misSalFilter):_misSalData;
+  const map={};
+  src.forEach(r=>{
+    if(!map[r.e]) map[r.e]={e:r.e,d:r.d,a:0};
+    map[r.e].a+=r.a;
+  });
+  const rows=Object.values(map).filter(r=>r.a>0).sort((a,b)=>b.a-a.a);
+  const total=rows.reduce((s,r)=>s+r.a,0);
+  pageState['salary-body']={page:0};
+  renderPaged('salary-body','salary-page',rows,(r,i)=>`<tr>
+    <td>${i+1}.</td>
+    <td>${r.e}</td>
+    <td>${deptTag(r.d)}</td>
+    <td class="num-cell">${fmt(r.a)}</td>
+  </tr>`,15);
+  setTimeout(()=>{const tb=document.getElementById('salary-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(total)}</td></tr>`;},0);
 }
 
 // ── SORT TABLE ───────────────────────────────────────────────
@@ -645,6 +674,8 @@ function renderMIS(){
   _misSumData=sumData;
   _misTotalRev=totalRev;
   _misDetailFilter=null;
+  _misSalData=salData;
+  _misSalFilter=null;
 
   // ── SCORECARDS ──
   const sc=document.getElementById('mis-scorecards');
@@ -773,12 +804,15 @@ function renderMIS(){
   const ledgerRows=Object.values(ledgerMap).filter(r=>r.a>0).sort((a,b)=>b.a-a.a);
   pageState['ledger-body']={page:0};
   const ledgerTotal=ledgerRows.reduce((s,r)=>s+r.a,0);
-  renderPaged('ledger-body','ledger-page',ledgerRows,(r,i)=>`<tr>
+  renderPaged('ledger-body','ledger-page',ledgerRows,(r,i)=>{
+    const isSalRow=SAL_DEPTS.includes(r.h);
+    return `<tr class="${isSalRow?'ledger-drill-row':''}" ${isSalRow?`data-dept="${r.h}" onclick="filterSalByDept('${r.h}')" style="cursor:pointer" title="Click to filter salaries by ${r.h}"`:''}">
     <td>${i+1}.</td>
     <td>${r.h}</td>
     <td style="color:var(--text2)">${r.l}</td>
     <td class="num-cell">${fmt(r.a)}</td>
-  </tr>`,15);
+  </tr>`;
+  },15);
   // append total
   setTimeout(()=>{
     const tb=document.getElementById('ledger-body');
