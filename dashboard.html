@@ -1137,7 +1137,8 @@ function renderCFTrends(){
         const bx=bar.x-pw/2;
         const zeroY=chart.scales.yBurn?.getPixelForValue(0)??chart.scales.y?.getPixelForValue(0)??0;
         const barTop=Math.min(bar.y,zeroY);
-        const by=barTop-ph-8;
+        const minY=chart.chartArea.top+2;
+        const by=Math.max(barTop-ph-8,minY);
         const isNeg=dispRwy<0;
         c2.fillStyle=isNeg?'rgba(239,68,68,0.42)':'rgba(78,205,196,0.42)';
         c2.beginPath();
