@@ -385,10 +385,10 @@ canvas{display:block;max-width:100%}
       <div class="section-header">Inflows Detailed</div>
       <div class="card-body">
         <table class="data-table" id="cf-inflows-table">
-          <thead><tr><th>#</th><th onclick="sortTable('cf-inflows-table',1)">Particulars</th><th onclick="sortTable('cf-inflows-table',2)">Inflow Value</th></tr></thead>
+          <thead><tr><th>#</th><th>Particulars</th><th>Client</th><th onclick="sortTable('cf-inflows-table',3)">Inflow Value</th></tr></thead>
           <tbody id="cf-inflows-body"></tbody>
         </table>
-        <div class="pagination" id="cf-inflows-page"></div>
+        <div id="cf-inflows-page"></div>
       </div>
     </div>
     <div class="card">
@@ -481,7 +481,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250616"></script>
+<script src="dashboard-data.js?v=20250616b"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -621,6 +621,15 @@ function sortTable(id,col){
     return asc?av.localeCompare(bv):bv.localeCompare(av);
   });
   rows.forEach(r=>tbody.insertBefore(r,tbody.querySelector('.total-row')));
+}
+
+// ── INFLOW DRILL-DOWN TOGGLE ─────────────────────────────────
+function toggleInflowDrilldown(id,btn){
+  const row=document.getElementById(id);
+  if(!row) return;
+  const open=row.style.display==='none';
+  row.style.display=open?'table-row':'none';
+  btn.textContent=open?'▼ batches':'▶ batches';
 }
 
 // ── PAGINATION HELPER ────────────────────────────────────────
@@ -917,13 +926,16 @@ function renderCF(){
   // ── Inflows ──
   const inflowRows=TMC_DATA.cfInflows.filter(r=>r.m===sel&&r.a>0);
   const inflowTotal=inflowRows.reduce((s,r)=>s+r.a,0);
-  pageState['cf-inflows-body']={page:0};
-  renderPaged('cf-inflows-body','cf-inflows-page',inflowRows,(r,i)=>`<tr>
-    <td>${i+1}.</td>
-    <td>${r.p}</td>
-    <td class="num-cell pos">${fmt(r.a)}</td>
-  </tr>`,10);
-  setTimeout(()=>{const tb=document.getElementById('cf-inflows-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="2">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;},0);
+  const inflowDetail=TMC_DATA.cfInflowsDetail||[];
+  const inflowBodyHtml=inflowRows.map((r,i)=>{
+    const details=inflowDetail.filter(d=>d.c===r.c&&d.m===r.m&&r.p==='Collections from B2B Invoices');
+    const hasDrill=details.length>0;
+    const rowId='ifd-'+r.c.replace(/\s/g,'-')+'-'+r.m.replace(/\s/g,'-');
+    const drillBtn=hasDrill?`<span class="drill-btn" onclick="toggleInflowDrilldown('${rowId}',this)" style="cursor:pointer;color:var(--gold);font-size:0.73em;margin-left:6px;user-select:none">▶ batches</span>`:'';
+    const drillRows=hasDrill?`<tr id="${rowId}" style="display:none;background:rgba(212,168,67,0.04)"><td colspan="4" style="padding:0 0 4px 28px"><table style="width:100%;font-size:0.82em">${details.map(d=>`<tr><td style="padding:3px 6px;color:#94a3b8">${d.batch}</td><td></td><td class="num-cell ${d.a<0?'neg':'pos'}" style="padding:3px 10px">${fmt(d.a)}</td></tr>`).join('')}</table></td></tr>`:'';
+    return `<tr><td>${i+1}.</td><td>${r.p}${drillBtn}</td><td style="color:${r.c?'#d4a843':'#64748b'};font-size:0.85em">${r.c||'—'}</td><td class="num-cell pos">${fmt(r.a)}</td></tr>${drillRows}`;
+  }).join('')+`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;
+  document.getElementById('cf-inflows-body').innerHTML=inflowBodyHtml;
 
   // ── Outflows ──
   const outRows=TMC_DATA.cfExpenses.filter(r=>r.m===sel&&r.a>0);
