@@ -481,7 +481,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250616b"></script>
+<script src="dashboard-data.js?v=20250616c"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1032,23 +1032,32 @@ function resetTrendsFilter(){
   renderCFTrends();
 }
 
+const trendsState={forecastOnly:false};
+
 function renderCFTrends(){
   const all=buildFullCFData();
   const fi=parseInt(document.getElementById('ct-from')?.value??0);
   const ti=parseInt(document.getElementById('ct-to')?.value??(all.length-1));
-  const data=all.slice(fi,ti+1);
-  const labels=data.map(r=>r.m.replace('-20','\''));
 
-  // Jun-2026 onwards = forecast
+  // Jun-2026 onwards = forecast (defined early so data filter can use it)
   const isFc=m=>{const [mn,yr]=m.split('-');const y=parseInt(yr);return y>2026||(y===2026&&['Jun','Jul','Aug','Sep','Oct','Nov','Dec'].includes(mn));};
+
+  let data=all.slice(fi,ti+1);
+  if(trendsState.forecastOnly) data=data.filter(r=>isFc(r.m));
+  const labels=data.map(r=>r.m.replace('-20','\''));
 
   // Always show in Lakhs (never Cr, never M)
   const fmtL=v=>v===0?'0':Math.round(v/100000)+'L';
 
-  // Click-to-solo: clicking a legend item shows ONLY that dataset; click again to restore all
+  // Click-to-solo: clicking a dataset legend item solos it; clicking Forecast filters data
   const soloClick=(e,item,legend)=>{
     const idx=item.datasetIndex;
-    if(idx===undefined) return;
+    if(idx===undefined){
+      // Forecast label — toggle forecast-only view and re-render both charts
+      trendsState.forecastOnly=!trendsState.forecastOnly;
+      renderCFTrends();
+      return;
+    }
     const chart=legend.chart;
     const alreadySolo=chart.data.datasets.every((_,i)=>chart.getDatasetMeta(i).hidden===(i!==idx));
     chart.data.datasets.forEach((_,i)=>{chart.getDatasetMeta(i).hidden=alreadySolo?false:i!==idx;});
@@ -1102,12 +1111,13 @@ function renderCFTrends(){
               {text:'Receipts — B2B / Ops',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1,fontColor:'#ffffff'},
               {text:'Investment',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1,fontColor:'#ffffff'},
               {text:'Outflows',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'},
-              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false,fontColor:'#94a3b8'},
+              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jun-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
             ]
           }
         },
         tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(Math.abs(c.raw))}}
       },
+      animation:{duration:650,easing:'easeInOutQuart'},
       scales:{
         x:{stacked:true,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#94a3b8',font:{size:11}}},
         y:{
@@ -1201,7 +1211,7 @@ function renderCFTrends(){
             generateLabels:chart=>[
               {text:'Net Burn',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1,fontColor:'#ffffff'},
               {text:'Closing Balance',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(147,197,253,0.35)',strokeStyle:'#93c5fd',lineWidth:2,fontColor:'#ffffff'},
-              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false,fontColor:'#94a3b8'},
+              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jun-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
             ]
           }
         },
@@ -1217,6 +1227,7 @@ function renderCFTrends(){
           }
         }}
       },
+      animation:{duration:650,easing:'easeInOutQuart'},
       scales:{
         x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#94a3b8',font:{size:11}}},
         yBurn:{
