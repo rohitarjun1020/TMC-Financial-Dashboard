@@ -1099,10 +1099,10 @@ function renderCFTrends(){
           labels:{
             boxWidth:12,padding:18,color:'#ffffff',
             generateLabels:chart=>[
-              {text:'Receipts — B2B / Ops',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1},
-              {text:'Investment',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1},
-              {text:'Outflows',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1},
-              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false},
+              {text:'Receipts — B2B / Ops',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1,fontColor:'#ffffff'},
+              {text:'Investment',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1,fontColor:'#ffffff'},
+              {text:'Outflows',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'},
+              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false,fontColor:'#94a3b8'},
             ]
           }
         },
@@ -1135,7 +1135,9 @@ function renderCFTrends(){
         const tw=c2.measureText(text).width;
         const pw=tw+10,ph=16;
         const bx=bar.x-pw/2;
-        const by=d.nb<=0?bar.y-ph-4:bar.y+4;
+        const zeroY=chart.scales.yBurn?.getPixelForValue(0)??chart.scales.y?.getPixelForValue(0)??0;
+        const barTop=Math.min(bar.y,zeroY);
+        const by=barTop-ph-8;
         const isNeg=dispRwy<0;
         c2.fillStyle=isNeg?'rgba(239,68,68,0.42)':'rgba(78,205,196,0.42)';
         c2.beginPath();
@@ -1196,9 +1198,9 @@ function renderCFTrends(){
           labels:{
             color:'#ffffff',padding:20,boxWidth:14,font:{size:12},
             generateLabels:chart=>[
-              {text:'Net Burn',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1},
-              {text:'Closing Balance',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(147,197,253,0.25)',strokeStyle:'#93c5fd',lineWidth:2},
-              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false},
+              {text:'Net Burn',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1,fontColor:'#ffffff'},
+              {text:'Closing Balance',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(147,197,253,0.35)',strokeStyle:'#93c5fd',lineWidth:2,fontColor:'#ffffff'},
+              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false,fontColor:'#94a3b8'},
             ]
           }
         },
