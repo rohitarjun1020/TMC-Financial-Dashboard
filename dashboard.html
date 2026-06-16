@@ -1042,6 +1042,19 @@ function renderCFTrends(){
   // Jun-2026 onwards = forecast
   const isFc=m=>{const [mn,yr]=m.split('-');const y=parseInt(yr);return y>2026||(y===2026&&['Jun','Jul','Aug','Sep','Oct','Nov','Dec'].includes(mn));};
 
+  // Always show in Lakhs (never Cr, never M)
+  const fmtL=v=>v===0?'0':Math.round(v/100000)+'L';
+
+  // Click-to-solo: clicking a legend item shows ONLY that dataset; click again to restore all
+  const soloClick=(e,item,legend)=>{
+    const idx=item.datasetIndex;
+    if(idx===undefined) return;
+    const chart=legend.chart;
+    const alreadySolo=chart.data.datasets.every((_,i)=>chart.getDatasetMeta(i).hidden===(i!==idx));
+    chart.data.datasets.forEach((_,i)=>{chart.getDatasetMeta(i).hidden=alreadySolo?false:i!==idx;});
+    chart.update();
+  };
+
   // Investment amounts from cfInflows (for receipts split)
   const investMap={};
   (TMC_DATA.cfInflows||[]).filter(r=>r.p==='Investment (initate Request)').forEach(r=>{investMap[r.m]=(investMap[r.m]||0)+r.a;});
@@ -1082,13 +1095,14 @@ function renderCFTrends(){
       plugins:{
         legend:{
           position:'top',
+          onClick:soloClick,
           labels:{
-            boxWidth:12,padding:18,color:'#94a3b8',
-            generateLabels:()=>[
-              {text:'Receipts — B2B / Ops',fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1,hidden:false},
-              {text:'Investment',fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1,hidden:false},
-              {text:'Outflows',fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,hidden:false},
-              {text:'░ = Forecast (Jun-26 onward)',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false},
+            boxWidth:12,padding:18,color:'#ffffff',
+            generateLabels:chart=>[
+              {text:'Receipts — B2B / Ops',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1},
+              {text:'Investment',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1},
+              {text:'Outflows',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1},
+              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false},
             ]
           }
         },
@@ -1099,7 +1113,7 @@ function renderCFTrends(){
         y:{
           stacked:true,
           grid:{color:sc=>sc.tick.value===0?'rgba(255,255,255,0.28)':'rgba(255,255,255,0.05)'},
-          ticks:{color:'#94a3b8',callback:v=>fmtShort(Math.abs(v))}
+          ticks:{color:'#94a3b8',callback:v=>v===0?'0':Math.round(Math.abs(v)/100000)+'L'}
         }
       }
     }
@@ -1123,14 +1137,14 @@ function renderCFTrends(){
         const bx=bar.x-pw/2;
         const by=d.nb<=0?bar.y-ph-4:bar.y+4;
         const isNeg=dispRwy<0;
-        c2.fillStyle=isNeg?'rgba(239,68,68,0.18)':'rgba(78,205,196,0.18)';
+        c2.fillStyle=isNeg?'rgba(239,68,68,0.42)':'rgba(78,205,196,0.42)';
         c2.beginPath();
         c2.roundRect(bx,by,pw,ph,4);
         c2.fill();
-        c2.strokeStyle=isNeg?'rgba(239,68,68,0.45)':'rgba(78,205,196,0.45)';
+        c2.strokeStyle=isNeg?'rgba(239,68,68,0.75)':'rgba(78,205,196,0.75)';
         c2.lineWidth=1;
         c2.stroke();
-        c2.fillStyle=isNeg?'#ef4444':'#4ecdc4';
+        c2.fillStyle='#ffffff';
         c2.textAlign='center';
         c2.textBaseline='middle';
         c2.fillText(text,bar.x,by+ph/2);
@@ -1178,13 +1192,13 @@ function renderCFTrends(){
       plugins:{
         legend:{
           position:'top',
+          onClick:soloClick,
           labels:{
-            color:'#cbd5e1',padding:20,boxWidth:14,font:{size:12},
-            generateLabels:()=>[
-              {text:'Burning Cash',fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1,hidden:false},
-              {text:'Net Positive',fillStyle:'rgba(42,157,143,0.7)',strokeStyle:C.midTeal,lineWidth:1,hidden:false},
-              {text:'Closing Balance',fillStyle:'transparent',strokeStyle:'#93c5fd',lineWidth:2,hidden:false},
-              {text:'░ = Forecast (Jun-26 onward)',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false},
+            color:'#ffffff',padding:20,boxWidth:14,font:{size:12},
+            generateLabels:chart=>[
+              {text:'Net Burn',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1},
+              {text:'Closing Balance',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(147,197,253,0.25)',strokeStyle:'#93c5fd',lineWidth:2},
+              {text:'░ Forecast = Jun-26+',fillStyle:'rgba(148,163,184,0.15)',strokeStyle:'#64748b',lineWidth:1,hidden:false},
             ]
           }
         },
@@ -1205,12 +1219,12 @@ function renderCFTrends(){
         yBurn:{
           position:'left',
           grid:{color:sc=>sc.tick&&sc.tick.value===0?'rgba(255,255,255,0.3)':'rgba(255,255,255,0.05)'},
-          ticks:{color:'#94a3b8',callback:v=>fmtShort(v)}
+          ticks:{color:'#94a3b8',callback:v=>fmtL(v)}
         },
         yCB:{
           position:'right',
           grid:{drawOnChartArea:false},
-          ticks:{color:'#93c5fd',callback:v=>fmtShort(v)}
+          ticks:{color:'#93c5fd',callback:v=>fmtL(v)}
         }
       }
     }
