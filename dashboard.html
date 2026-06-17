@@ -481,7 +481,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250616c"></script>
+<script src="dashboard-data.js?v=20250617a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1141,6 +1141,7 @@ function renderCFTrends(){
         const d=data[i];
         if(d.rwy===null||d.rwy===undefined||isNaN(d.rwy)) return;
         const dispRwy=-d.rwy;
+        if(dispRwy<1.0) return;
         const text=dispRwy.toFixed(1)+' mo';
         const tw=c2.measureText(text).width;
         const pw=tw+10,ph=16;
