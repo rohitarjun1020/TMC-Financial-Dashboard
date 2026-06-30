@@ -115,6 +115,15 @@ a{text-decoration:none;color:inherit}
 .reset-btn{background:transparent;border:1px solid var(--border);color:var(--text2);padding:7px 14px;border-radius:var(--radius-sm);font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:.3px;transition:border-color .2s,color .2s}
 .reset-btn:hover{border-color:var(--teal);color:var(--teal)}
 .filter-info{font-size:12px;color:var(--text3);margin-left:auto}
+.scen-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 20px;display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.scen-group{display:flex;align-items:center;gap:7px}
+.scen-type{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;min-width:28px}
+.scen-divider{width:1px;height:22px;background:var(--border);margin:0 4px}
+.scen-pill{background:transparent;border:1px solid var(--border);color:var(--text3);padding:5px 12px;border-radius:20px;font-size:11.5px;font-family:'Inter',sans-serif;cursor:pointer;transition:border-color .18s,color .18s,background .18s;letter-spacing:.2px;white-space:nowrap}
+.scen-pill:hover{border-color:var(--gold);color:var(--gold)}
+.scen-pill.active{background:rgba(212,168,67,0.14);border-color:var(--gold);color:var(--gold);font-weight:600}
+.scen-pill:disabled{opacity:0.35;cursor:default;pointer-events:none}
+.scen-badge{font-size:10px;background:rgba(212,168,67,0.18);color:var(--gold);border:1px solid rgba(212,168,67,0.4);padding:2px 7px;border-radius:10px;margin-left:6px}
 
 /* ── GRID LAYOUTS ── */
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px}
@@ -459,6 +468,24 @@ canvas{display:block;max-width:100%}
     <button class="reset-btn" onclick="resetTrendsFilter()">All Months</button>
   </div>
 
+  <!-- Pipeline Scenario Selector -->
+  <div class="scen-bar" id="scenario-bar">
+    <span class="filter-label">Pipeline Scenario</span>
+    <div class="scen-group">
+      <span class="scen-type">B2B</span>
+      <button class="scen-pill active" id="scen-b2b-none" onclick="changeScenario('b2b','none')">No Pipeline</button>
+      <button class="scen-pill" id="scen-b2b-high" onclick="changeScenario('b2b','high')">Highly Likely</button>
+      <button class="scen-pill" id="scen-b2b-med" onclick="changeScenario('b2b','med')">+ Medium</button>
+      <button class="scen-pill" id="scen-b2b-all" onclick="changeScenario('b2b','all')">All Likelihood</button>
+    </div>
+    <div class="scen-divider"></div>
+    <div class="scen-group">
+      <span class="scen-type">RTD</span>
+      <button class="scen-pill active" id="scen-rtd-none" onclick="changeScenario('rtd','none')">No Pipeline</button>
+      <button class="scen-pill" disabled title="No RTD pipeline data yet">No Data</button>
+    </div>
+  </div>
+
   <div class="grid-full card" style="margin-bottom:20px">
     <div class="section-header" style="display:flex;align-items:center;gap:10px">
       Receipts vs Outflows
@@ -481,7 +508,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250622a"></script>
+<script src="dashboard-data.js?v=20250622b"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -910,8 +937,20 @@ function renderCF(){
   document.getElementById('cf-filter-info').textContent=sel?'Showing: '+sel:'Select a month above';
   if(!sel) return;
 
-  // ── Summary CF ──
-  const sumRows=TMC_DATA.cfSummary.filter(r=>r.m===sel);
+  // ── Summary CF (with scenario adjustments if active) ──
+  let sumRows=TMC_DATA.cfSummary.filter(r=>r.m===sel).map(r=>({...r}));
+  if(scenarioState.b2b!=='none'||scenarioState.rtd!=='none'){
+    const scenData=buildScenarioCFData();
+    const sm=scenData.find(d=>d.m===sel);
+    if(sm) sumRows=sumRows.map(r=>{
+      if(r.p==='Opening balance') return {...r,a:sm.ob};
+      if(r.p==='Receipts') return {...r,a:sm.rcpt};
+      if(r.p==='Closing Balance') return {...r,a:sm.cb};
+      if(r.p==='Net Burn') return {...r,a:sm.nb};
+      if(r.p==='Runway') return {...r,a:sm.rwy};
+      return r;
+    });
+  }
   const orderMap={'Opening balance':1,'Receipts':2,'Outflows':3,'Adjustments':4,'Closing Balance':5,'Gross Burn':6,'Net Burn':7,'Runway':8};
   sumRows.sort((a,b)=>(orderMap[a.p]||99)-(orderMap[b.p]||99));
   document.getElementById('cf-summary-body').innerHTML=sumRows.map((r,i)=>{
@@ -925,7 +964,8 @@ function renderCF(){
 
   // ── Inflows ──
   const inflowRows=TMC_DATA.cfInflows.filter(r=>r.m===sel&&r.a>0);
-  const inflowTotal=inflowRows.reduce((s,r)=>s+r.a,0);
+  const pipelineAddonCF=getPipelineAddon(sel);
+  const inflowTotal=inflowRows.reduce((s,r)=>s+r.a,0)+(pipelineAddonCF||0);
   const inflowDetail=TMC_DATA.cfInflowsDetail||[];
   const inflowBodyHtml=inflowRows.map((r,i)=>{
     const details=inflowDetail.filter(d=>d.c===r.c&&d.m===r.m&&r.p==='Collections from B2B Invoices');
@@ -934,7 +974,7 @@ function renderCF(){
     const drillBtn=hasDrill?`<span class="drill-btn" onclick="toggleInflowDrilldown('${rowId}',this)" style="cursor:pointer;color:var(--gold);font-size:0.73em;margin-left:6px;user-select:none">▶ batches</span>`:'';
     const drillRows=hasDrill?`<tr id="${rowId}" style="display:none;background:rgba(212,168,67,0.04)"><td colspan="4" style="padding:0 0 4px 28px"><table style="width:100%;font-size:0.82em">${details.map(d=>`<tr><td style="padding:3px 6px;color:#94a3b8">${d.batch}</td><td></td><td class="num-cell ${d.a<0?'neg':'pos'}" style="padding:3px 10px">${fmt(d.a)}</td></tr>`).join('')}</table></td></tr>`:'';
     return `<tr><td>${i+1}.</td><td>${r.p}${drillBtn}</td><td style="color:${r.c?'#d4a843':'#64748b'};font-size:0.85em">${r.c||'—'}</td><td class="num-cell pos">${fmt(r.a)}</td></tr>${drillRows}`;
-  }).join('')+`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;
+  }).join('')+(pipelineAddonCF>0?`<tr style="background:rgba(139,92,246,0.06)"><td>+</td><td>B2B Pipeline Revenue <span style="font-size:0.75em;color:#8b5cf6;margin-left:6px">${scenarioState.b2b==='high'?'Highly Likely':scenarioState.b2b==='med'?'High+Medium':'All Likelihood'}</span></td><td style="color:#8b5cf6;font-size:0.85em">Scenario</td><td class="num-cell" style="color:#8b5cf6">${fmt(pipelineAddonCF)}</td></tr>`:'')+`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;
   document.getElementById('cf-inflows-body').innerHTML=inflowBodyHtml;
 
   // ── Outflows ──
@@ -1033,9 +1073,54 @@ function resetTrendsFilter(){
 }
 
 const trendsState={forecastOnly:false};
+const scenarioState={b2b:'none',rtd:'none'};
+
+function getPipelineAddon(m){
+  const P=TMC_DATA.cfPipeline||{};
+  let a=0;
+  const b=scenarioState.b2b;
+  if(b==='high') a+=(P.b2bHighlyLikely||{})[m]||0;
+  else if(b==='med') a+=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0);
+  else if(b==='all') a+=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0)+((P.b2bLowLikely||{})[m]||0);
+  a+=((P.rtd||{})[m]||0);
+  return a;
+}
+
+function buildScenarioCFData(){
+  const base=buildFullCFData();
+  const noScen=scenarioState.b2b==='none'&&scenarioState.rtd==='none';
+  if(noScen) return base.map(d=>({...d,pipelineAddon:0}));
+  let cum=0;
+  return base.map(d=>{
+    const addon=getPipelineAddon(d.m);
+    const nd={...d,pipelineAddon:addon};
+    if(addon!==0||cum!==0){
+      nd.ob=d.ob+cum;
+      nd.rcpt=d.rcpt+addon;
+      nd.cb=d.cb+addon+cum;
+      nd.nb=d.nb-addon;
+      const exNB=-nd.nb;
+      nd.rwy=(exNB!==0)?nd.cb/exNB:null;
+      cum+=addon;
+    }
+    return nd;
+  });
+}
+
+function changeScenario(type,val){
+  scenarioState[type]=val;
+  ['none','high','med','all'].forEach(v=>{
+    const el=document.getElementById('scen-b2b-'+v);
+    if(el) el.classList.toggle('active',scenarioState.b2b===v);
+  });
+  const rn=document.getElementById('scen-rtd-none');
+  if(rn) rn.classList.toggle('active',scenarioState.rtd==='none');
+  renderCFTrends();
+  renderCF();
+}
 
 function renderCFTrends(){
-  const all=buildFullCFData();
+  const all=buildScenarioCFData();
   const fi=parseInt(document.getElementById('ct-from')?.value??0);
   const ti=parseInt(document.getElementById('ct-to')?.value??(all.length-1));
 
@@ -1078,7 +1163,7 @@ function renderCFTrends(){
       datasets:[
         {
           label:'Receipts (B2B / Ops)',
-          data:data.map(r=>Math.max(0,r.rcpt-(investMap[r.m]||0))),
+          data:data.map(r=>Math.max(0,(r.rcpt-(r.pipelineAddon||0))-(investMap[r.m]||0))),
           backgroundColor:data.map(r=>isFc(r.m)?'rgba(42,157,143,0.28)':'rgba(42,157,143,0.65)'),
           borderColor:data.map(r=>isFc(r.m)?'rgba(42,157,143,0.45)':'#2a9d8f'),
           borderWidth:1,borderRadius:4,stack:'combined',
@@ -1088,6 +1173,13 @@ function renderCFTrends(){
           data:data.map(r=>investMap[r.m]||0),
           backgroundColor:data.map(r=>isFc(r.m)?'rgba(212,168,67,0.28)':'rgba(212,168,67,0.72)'),
           borderColor:data.map(r=>isFc(r.m)?'rgba(212,168,67,0.45)':'#d4a843'),
+          borderWidth:1,borderRadius:4,stack:'combined',
+        },
+        {
+          label:'Pipeline Revenue',
+          data:data.map(r=>r.pipelineAddon||0),
+          backgroundColor:data.map(r=>isFc(r.m)?'rgba(139,92,246,0.35)':'rgba(139,92,246,0.65)'),
+          borderColor:data.map(r=>isFc(r.m)?'rgba(139,92,246,0.5)':'#8b5cf6'),
           borderWidth:1,borderRadius:4,stack:'combined',
         },
         {
@@ -1107,12 +1199,17 @@ function renderCFTrends(){
           onClick:soloClick,
           labels:{
             boxWidth:12,padding:18,color:'#ffffff',
-            generateLabels:chart=>[
-              {text:'Receipts — B2B / Ops',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1,fontColor:'#ffffff'},
-              {text:'Investment',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1,fontColor:'#ffffff'},
-              {text:'Outflows',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'},
-              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jun-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
-            ]
+            generateLabels:chart=>{
+              const hasPL=data.some(r=>(r.pipelineAddon||0)>0);
+              const items=[
+                {text:'Receipts — B2B / Ops',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1,fontColor:'#ffffff'},
+                {text:'Investment',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1,fontColor:'#ffffff'},
+              ];
+              if(hasPL) items.push({text:'Pipeline Revenue',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(139,92,246,0.65)',strokeStyle:'#8b5cf6',lineWidth:1,fontColor:'#ffffff'});
+              items.push({text:'Outflows',datasetIndex:3,hidden:!!chart.getDatasetMeta(3).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'});
+              items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jun-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
+              return items;
+            }
           }
         },
         tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(Math.abs(c.raw))}}
