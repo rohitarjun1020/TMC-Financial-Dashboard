@@ -482,7 +482,7 @@ canvas{display:block;max-width:100%}
     <div class="scen-group">
       <span class="scen-type">RTD</span>
       <button class="scen-pill active" id="scen-rtd-none" onclick="changeScenario('rtd','none')">No Pipeline</button>
-      <button class="scen-pill" disabled title="No RTD pipeline data yet">No Data</button>
+      <button class="scen-pill" id="scen-rtd-all" onclick="changeScenario('rtd','all')">With Pipeline</button>
     </div>
   </div>
 
@@ -508,7 +508,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250622b"></script>
+<script src="dashboard-data.js?v=20250630a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1082,7 +1082,7 @@ function getPipelineAddon(m){
   if(b==='high') a+=(P.b2bHighlyLikely||{})[m]||0;
   else if(b==='med') a+=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0);
   else if(b==='all') a+=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0)+((P.b2bLowLikely||{})[m]||0);
-  a+=((P.rtd||{})[m]||0);
+  if(scenarioState.rtd==='all') a+=((P.rtd||{})[m]||0);
   return a;
 }
 
@@ -1113,8 +1113,10 @@ function changeScenario(type,val){
     const el=document.getElementById('scen-b2b-'+v);
     if(el) el.classList.toggle('active',scenarioState.b2b===v);
   });
-  const rn=document.getElementById('scen-rtd-none');
-  if(rn) rn.classList.toggle('active',scenarioState.rtd==='none');
+  ['none','all'].forEach(v=>{
+    const el=document.getElementById('scen-rtd-'+v);
+    if(el) el.classList.toggle('active',scenarioState.rtd===v);
+  });
   renderCFTrends();
   renderCF();
 }
