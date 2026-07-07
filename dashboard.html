@@ -510,7 +510,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250707a"></script>
+<script src="dashboard-data.js?v=20250707b"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -957,12 +957,19 @@ function renderCF(){
   }
   const orderMap={'Opening balance':1,'Receipts':2,'Outflows':3,'Adjustments':4,'Closing Balance':5,'Gross Burn':6,'Net Burn':7,'Runway':8};
   sumRows.sort((a,b)=>(orderMap[a.p]||99)-(orderMap[b.p]||99));
+  const rwyInfo=runwayInfo({cb:(sumRows.find(r=>r.p==='Closing Balance')||{}).a,nb:(sumRows.find(r=>r.p==='Net Burn')||{}).a});
+  const rwyDanger=rwyInfo.kind==='empty'||(rwyInfo.kind==='months'&&rwyInfo.months<3);
   document.getElementById('cf-summary-body').innerHTML=sumRows.map((r,i)=>{
+    if(r.p==='Runway') return `<tr>
+    <td>${i+1}.</td>
+    <td>${r.p}</td>
+    <td class="num-cell ${rwyDanger?'neg':'pos'}">${rwyInfo.text||'—'}</td>
+  </tr>`;
     const disp=(r.p==='Net Burn')?-r.a:r.a;
     return `<tr>
     <td>${i+1}.</td>
     <td>${r.p}</td>
-    <td class="num-cell ${colorNum(disp)}">${r.p==='Runway'?disp.toFixed(1)+' mo':fmt(disp)}</td>
+    <td class="num-cell ${colorNum(disp)}">${fmt(disp)}</td>
   </tr>`;
   }).join('');
 
@@ -1138,6 +1145,17 @@ function buildScenarioCFData(){
   });
 }
 
+// Runway shown as positive "months of cash left" while burning; special states otherwise.
+// cb = closing balance, nb = net burn stored as (outflow - receipts): positive = burning.
+function runwayInfo(d){
+  const cb=d?d.cb:null, nb=d?d.nb:null;
+  if(cb==null||nb==null||isNaN(cb)||isNaN(nb)) return {kind:'none',text:'',short:''};
+  if(cb<=0) return {kind:'empty',text:'Out of cash',short:'No cash'};
+  if(nb<=0) return {kind:'positive',text:'Cash-positive',short:'Cash+'};
+  const months=cb/nb;
+  return {kind:'months',months,text:months.toFixed(1)+' mo',short:months.toFixed(1)+' mo'};
+}
+
 function changeScenario(type,val){
   scenarioState[type]=val;
   ['none','high','med','all'].forEach(v=>{
@@ -1269,10 +1287,10 @@ function renderCFTrends(){
       c2.font='600 10px Inter,sans-serif';
       meta.data.forEach((bar,i)=>{
         const d=data[i];
-        if(d.rwy===null||d.rwy===undefined||isNaN(d.rwy)) return;
-        const dispRwy=d.rwy;
-        if(Math.abs(dispRwy)<0.05) return;
-        const text=dispRwy.toFixed(1)+' mo';
+        const info=runwayInfo(d);
+        if(info.kind==='none') return;
+        const text=info.short;
+        const danger=info.kind==='empty'||(info.kind==='months'&&info.months<3);
         const tw=c2.measureText(text).width;
         const pw=tw+10,ph=16;
         const bx=bar.x-pw/2;
@@ -1280,12 +1298,11 @@ function renderCFTrends(){
         const barTop=Math.min(bar.y,zeroY);
         const minY=chart.chartArea.top+2;
         const by=Math.max(barTop-ph-8,minY);
-        const isNeg=dispRwy<0;
-        c2.fillStyle=isNeg?'rgba(239,68,68,0.42)':'rgba(78,205,196,0.42)';
+        c2.fillStyle=danger?'rgba(239,68,68,0.42)':'rgba(78,205,196,0.42)';
         c2.beginPath();
         c2.roundRect(bx,by,pw,ph,4);
         c2.fill();
-        c2.strokeStyle=isNeg?'rgba(239,68,68,0.75)':'rgba(78,205,196,0.75)';
+        c2.strokeStyle=danger?'rgba(239,68,68,0.75)':'rgba(78,205,196,0.75)';
         c2.lineWidth=1;
         c2.stroke();
         c2.fillStyle='#ffffff';
@@ -1353,8 +1370,8 @@ function renderCFTrends(){
           },
           afterLabel:c=>{
             if(c.dataset.label==='Closing Balance') return '';
-            const rwy=data[c.dataIndex]?.rwy;
-            return rwy!=null?' Runway: '+rwy.toFixed(1)+' mo':'';
+            const info=runwayInfo(data[c.dataIndex]);
+            return info.text?' Runway: '+info.text:'';
           }
         }}
       },
