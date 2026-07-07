@@ -473,16 +473,16 @@ canvas{display:block;max-width:100%}
     <span class="filter-label">Pipeline Scenario</span>
     <div class="scen-group">
       <span class="scen-type">B2B</span>
-      <button class="scen-pill active" id="scen-b2b-none" onclick="changeScenario('b2b','none')">No Pipeline</button>
-      <button class="scen-pill" id="scen-b2b-high" onclick="changeScenario('b2b','high')">Highly Likely</button>
+      <button class="scen-pill" id="scen-b2b-none" onclick="changeScenario('b2b','none')">No Pipeline</button>
+      <button class="scen-pill active" id="scen-b2b-high" onclick="changeScenario('b2b','high')">Highly Likely</button>
       <button class="scen-pill" id="scen-b2b-med" onclick="changeScenario('b2b','med')">+ Medium</button>
       <button class="scen-pill" id="scen-b2b-all" onclick="changeScenario('b2b','all')">All Likelihood</button>
     </div>
     <div class="scen-divider"></div>
     <div class="scen-group">
       <span class="scen-type">RTD</span>
-      <button class="scen-pill active" id="scen-rtd-none" onclick="changeScenario('rtd','none')">No Pipeline</button>
-      <button class="scen-pill" id="scen-rtd-high" onclick="changeScenario('rtd','high')">Highly Likely</button>
+      <button class="scen-pill" id="scen-rtd-none" onclick="changeScenario('rtd','none')">No Pipeline</button>
+      <button class="scen-pill active" id="scen-rtd-high" onclick="changeScenario('rtd','high')">Highly Likely</button>
       <button class="scen-pill" id="scen-rtd-med" onclick="changeScenario('rtd','med')">+ Medium</button>
       <button class="scen-pill" id="scen-rtd-all" onclick="changeScenario('rtd','all')">All Likelihood</button>
     </div>
@@ -510,7 +510,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250706a"></script>
+<script src="dashboard-data.js?v=20250707a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -947,7 +947,9 @@ function renderCF(){
     if(sm) sumRows=sumRows.map(r=>{
       if(r.p==='Opening balance') return {...r,a:sm.ob};
       if(r.p==='Receipts') return {...r,a:sm.rcpt};
+      if(r.p==='Outflows') return {...r,a:sm.out};
       if(r.p==='Closing Balance') return {...r,a:sm.cb};
+      if(r.p==='Gross Burn') return {...r,a:sm.gb};
       if(r.p==='Net Burn') return {...r,a:sm.nb};
       if(r.p==='Runway') return {...r,a:sm.rwy};
       return r;
@@ -956,7 +958,7 @@ function renderCF(){
   const orderMap={'Opening balance':1,'Receipts':2,'Outflows':3,'Adjustments':4,'Closing Balance':5,'Gross Burn':6,'Net Burn':7,'Runway':8};
   sumRows.sort((a,b)=>(orderMap[a.p]||99)-(orderMap[b.p]||99));
   document.getElementById('cf-summary-body').innerHTML=sumRows.map((r,i)=>{
-    const disp=(r.p==='Net Burn'||r.p==='Runway')?-r.a:r.a;
+    const disp=(r.p==='Net Burn')?-r.a:r.a;
     return `<tr>
     <td>${i+1}.</td>
     <td>${r.p}</td>
@@ -981,7 +983,8 @@ function renderCF(){
 
   // ── Outflows ──
   const outRows=TMC_DATA.cfExpenses.filter(r=>r.m===sel&&r.a>0);
-  const outTotal=outRows.reduce((s,r)=>s+r.a,0);
+  const pipelineCostCF=getPipelineCostAddon(sel);
+  const outTotal=outRows.reduce((s,r)=>s+r.a,0)+(pipelineCostCF||0);
   pageState['cf-outflows-body']={page:0};
   renderPaged('cf-outflows-body','cf-outflows-page',outRows,(r,i)=>`<tr>
     <td>${i+1}.</td>
@@ -989,7 +992,11 @@ function renderCF(){
     <td>${r.p}</td>
     <td class="num-cell neg">${fmt(r.a)}</td>
   </tr>`,10);
-  setTimeout(()=>{const tb=document.getElementById('cf-outflows-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(outTotal)}</td></tr>`;},0);
+  setTimeout(()=>{const tb=document.getElementById('cf-outflows-body');if(tb){
+    if(pipelineCostCF>0){const lbl=scenarioState.b2b!=='none'?(scenarioState.b2b==='high'?'Highly Likely':scenarioState.b2b==='med'?'High+Medium':'All Likelihood'):(scenarioState.rtd==='high'?'Highly Likely':scenarioState.rtd==='med'?'High+Medium':'All Likelihood');
+      tb.innerHTML+=`<tr style="background:rgba(139,92,246,0.06)"><td>+</td><td colspan="2">Pipeline Delivery Cost <span style="font-size:0.75em;color:#8b5cf6;margin-left:6px">${lbl}</span></td><td class="num-cell" style="color:#8b5cf6">${fmt(pipelineCostCF)}</td></tr>`;}
+    tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(outTotal)}</td></tr>`;
+  }},0);
 
   // ── Expense breakup table (same data as outflows, by particulars) ──
   const expMap={};
@@ -1075,7 +1082,7 @@ function resetTrendsFilter(){
 }
 
 const trendsState={forecastOnly:false};
-const scenarioState={b2b:'none',rtd:'none'};
+const scenarioState={b2b:'high',rtd:'high'};
 
 function getPipelineAddon(m){
   const P=TMC_DATA.cfPipeline||{};
@@ -1091,22 +1098,41 @@ function getPipelineAddon(m){
   return a;
 }
 
+// Pipeline COST addon (added to outflows) — mirrors the Excel "With Pipeline" cost rows
+function getPipelineCostAddon(m){
+  const P=TMC_DATA.cfPipeline||{};
+  let a=0;
+  const b=scenarioState.b2b;
+  if(b==='high') a+=(P.b2bHighlyLikelyCost||{})[m]||0;
+  else if(b==='med') a+=((P.b2bHighlyLikelyCost||{})[m]||0)+((P.b2bMediumLikelyCost||{})[m]||0);
+  else if(b==='all') a+=((P.b2bHighlyLikelyCost||{})[m]||0)+((P.b2bMediumLikelyCost||{})[m]||0)+((P.b2bLowLikelyCost||{})[m]||0);
+  const r=scenarioState.rtd;
+  if(r==='high') a+=(P.rtdHighlyLikelyCost||{})[m]||0;
+  else if(r==='med') a+=((P.rtdHighlyLikelyCost||{})[m]||0)+((P.rtdMediumLikelyCost||{})[m]||0);
+  else if(r==='all') a+=((P.rtdHighlyLikelyCost||{})[m]||0)+((P.rtdMediumLikelyCost||{})[m]||0)+((P.rtdLowLikelyCost||{})[m]||0);
+  return a;
+}
+
 function buildScenarioCFData(){
   const base=buildFullCFData();
   const noScen=scenarioState.b2b==='none'&&scenarioState.rtd==='none';
-  if(noScen) return base.map(d=>({...d,pipelineAddon:0}));
+  if(noScen) return base.map(d=>({...d,pipelineAddon:0,pipelineCost:0}));
   let cum=0;
   return base.map(d=>{
-    const addon=getPipelineAddon(d.m);
-    const nd={...d,pipelineAddon:addon};
-    if(addon!==0||cum!==0){
+    const rev=getPipelineAddon(d.m);
+    const cost=getPipelineCostAddon(d.m);
+    const net=rev-cost;
+    const nd={...d,pipelineAddon:rev,pipelineCost:cost};
+    if(rev!==0||cost!==0||cum!==0){
       nd.ob=d.ob+cum;
-      nd.rcpt=d.rcpt+addon;
-      nd.cb=d.cb+addon+cum;
-      nd.nb=d.nb-addon;
-      const exNB=-nd.nb;
+      nd.rcpt=d.rcpt+rev;
+      nd.out=d.out+cost;
+      nd.gb=nd.out;              // gross burn stored as positive (=outflow), matching base convention
+      nd.cb=d.cb+net+cum;
+      nd.nb=d.nb-net;           // net burn = outflow - receipts; Δ = cost - rev = -net
+      const exNB=-nd.nb;        // Excel net burn = receipts - outflow
       nd.rwy=(exNB!==0)?nd.cb/exNB:null;
-      cum+=addon;
+      cum+=net;
     }
     return nd;
   });
@@ -1244,8 +1270,8 @@ function renderCFTrends(){
       meta.data.forEach((bar,i)=>{
         const d=data[i];
         if(d.rwy===null||d.rwy===undefined||isNaN(d.rwy)) return;
-        const dispRwy=-d.rwy;
-        if(dispRwy<1.0) return;
+        const dispRwy=d.rwy;
+        if(Math.abs(dispRwy)<0.05) return;
         const text=dispRwy.toFixed(1)+' mo';
         const tw=c2.measureText(text).width;
         const pw=tw+10,ph=16;
@@ -1328,7 +1354,7 @@ function renderCFTrends(){
           afterLabel:c=>{
             if(c.dataset.label==='Closing Balance') return '';
             const rwy=data[c.dataIndex]?.rwy;
-            return rwy!=null?' Runway: '+(-rwy).toFixed(1)+' mo':'';
+            return rwy!=null?' Runway: '+rwy.toFixed(1)+' mo':'';
           }
         }}
       },
