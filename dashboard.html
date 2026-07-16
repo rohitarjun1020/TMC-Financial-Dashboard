@@ -474,17 +474,17 @@ canvas{display:block;max-width:100%}
     <div class="scen-group">
       <span class="scen-type">B2B</span>
       <button class="scen-pill" id="scen-b2b-none" onclick="changeScenario('b2b','none')">No Pipeline</button>
-      <button class="scen-pill" id="scen-b2b-high" onclick="changeScenario('b2b','high')">Highly Likely</button>
+      <button class="scen-pill active" id="scen-b2b-high" onclick="changeScenario('b2b','high')">Highly Likely</button>
       <button class="scen-pill" id="scen-b2b-med" onclick="changeScenario('b2b','med')">+ Medium</button>
-      <button class="scen-pill active" id="scen-b2b-all" onclick="changeScenario('b2b','all')">All Likelihood</button>
+      <button class="scen-pill" id="scen-b2b-all" onclick="changeScenario('b2b','all')">All Likelihood</button>
     </div>
     <div class="scen-divider"></div>
     <div class="scen-group">
       <span class="scen-type">RTD</span>
       <button class="scen-pill" id="scen-rtd-none" onclick="changeScenario('rtd','none')">No Pipeline</button>
-      <button class="scen-pill" id="scen-rtd-high" onclick="changeScenario('rtd','high')">Highly Likely</button>
+      <button class="scen-pill active" id="scen-rtd-high" onclick="changeScenario('rtd','high')">Highly Likely</button>
       <button class="scen-pill" id="scen-rtd-med" onclick="changeScenario('rtd','med')">+ Medium</button>
-      <button class="scen-pill active" id="scen-rtd-all" onclick="changeScenario('rtd','all')">All Likelihood</button>
+      <button class="scen-pill" id="scen-rtd-all" onclick="changeScenario('rtd','all')">All Likelihood</button>
     </div>
   </div>
 
@@ -510,7 +510,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250714a"></script>
+<script src="dashboard-data.js?v=20250715a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -975,7 +975,8 @@ function renderCF(){
 
   // ── Inflows ──
   const inflowRows=TMC_DATA.cfInflows.filter(r=>r.m===sel&&r.a>0);
-  const pipelineAddonCF=getPipelineAddon(sel);
+  const pipelineSplitCF=getPipelineAddonSplit(sel);
+  const pipelineAddonCF=(scenarioState.b2b==='none'?0:pipelineSplitCF.b2b)+(scenarioState.rtd==='none'?0:pipelineSplitCF.rtd);
   const inflowTotal=inflowRows.reduce((s,r)=>s+r.a,0)+(pipelineAddonCF||0);
   const inflowDetail=TMC_DATA.cfInflowsDetail||[];
   const inflowBodyHtml=inflowRows.map((r,i)=>{
@@ -985,7 +986,10 @@ function renderCF(){
     const drillBtn=hasDrill?`<span class="drill-btn" onclick="toggleInflowDrilldown('${rowId}',this)" style="cursor:pointer;color:var(--gold);font-size:0.73em;margin-left:6px;user-select:none">▶ batches</span>`:'';
     const drillRows=hasDrill?`<tr id="${rowId}" style="display:none;background:rgba(212,168,67,0.04)"><td colspan="4" style="padding:0 0 4px 28px"><table style="width:100%;font-size:0.82em">${details.map(d=>`<tr><td style="padding:3px 6px;color:#94a3b8">${d.batch}</td><td></td><td class="num-cell ${d.a<0?'neg':'pos'}" style="padding:3px 10px">${fmt(d.a)}</td></tr>`).join('')}</table></td></tr>`:'';
     return `<tr><td>${i+1}.</td><td>${r.p}${drillBtn}</td><td style="color:${r.c?'#d4a843':'#64748b'};font-size:0.85em">${r.c||'—'}</td><td class="num-cell pos">${fmt(r.a)}</td></tr>${drillRows}`;
-  }).join('')+(pipelineAddonCF>0?`<tr style="background:rgba(139,92,246,0.06)"><td>+</td><td>B2B Pipeline Revenue <span style="font-size:0.75em;color:#8b5cf6;margin-left:6px">${scenarioState.b2b==='high'?'Highly Likely':scenarioState.b2b==='med'?'High+Medium':'All Likelihood'}</span></td><td style="color:#8b5cf6;font-size:0.85em">Scenario</td><td class="num-cell" style="color:#8b5cf6">${fmt(pipelineAddonCF)}</td></tr>`:'')+`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;
+  }).join('')
+  +(scenarioState.b2b!=='none'&&pipelineSplitCF.b2b>0?`<tr style="background:rgba(139,92,246,0.06)"><td>+</td><td>B2B Pipeline Revenue <span style="font-size:0.75em;color:#8b5cf6;margin-left:6px">${scenarioState.b2b==='high'?'Highly Likely':scenarioState.b2b==='med'?'High+Medium':'All Likelihood'}</span></td><td style="color:#8b5cf6;font-size:0.85em">Scenario</td><td class="num-cell" style="color:#8b5cf6">${fmt(pipelineSplitCF.b2b)}</td></tr>`:'')
+  +(scenarioState.rtd!=='none'&&pipelineSplitCF.rtd>0?`<tr style="background:rgba(236,72,153,0.06)"><td>+</td><td>RTD Pipeline Revenue <span style="font-size:0.75em;color:#ec4899;margin-left:6px">${scenarioState.rtd==='high'?'Highly Likely':scenarioState.rtd==='med'?'High+Medium':'All Likelihood'}</span></td><td style="color:#ec4899;font-size:0.85em">Scenario</td><td class="num-cell" style="color:#ec4899">${fmt(pipelineSplitCF.rtd)}</td></tr>`:'')
+  +`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(inflowTotal)}</td></tr>`;
   document.getElementById('cf-inflows-body').innerHTML=inflowBodyHtml;
 
   // ── Outflows ──
@@ -1089,20 +1093,27 @@ function resetTrendsFilter(){
 }
 
 const trendsState={forecastOnly:false};
-const scenarioState={b2b:'all',rtd:'all'};
+const scenarioState={b2b:'high',rtd:'high'};
+
+// Pipeline revenue addon split by source (B2B vs RTD) for the selected scenario tiers
+function getPipelineAddonSplit(m){
+  const P=TMC_DATA.cfPipeline||{};
+  let b2b=0;
+  const b=scenarioState.b2b;
+  if(b==='high') b2b=(P.b2bHighlyLikely||{})[m]||0;
+  else if(b==='med') b2b=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0);
+  else if(b==='all') b2b=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0)+((P.b2bLowLikely||{})[m]||0);
+  let rtd=0;
+  const r=scenarioState.rtd;
+  if(r==='high') rtd=(P.rtdHighlyLikely||{})[m]||0;
+  else if(r==='med') rtd=((P.rtdHighlyLikely||{})[m]||0)+((P.rtdMediumLikely||{})[m]||0);
+  else if(r==='all') rtd=((P.rtdHighlyLikely||{})[m]||0)+((P.rtdMediumLikely||{})[m]||0)+((P.rtdLowLikely||{})[m]||0);
+  return {b2b,rtd};
+}
 
 function getPipelineAddon(m){
-  const P=TMC_DATA.cfPipeline||{};
-  let a=0;
-  const b=scenarioState.b2b;
-  if(b==='high') a+=(P.b2bHighlyLikely||{})[m]||0;
-  else if(b==='med') a+=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0);
-  else if(b==='all') a+=((P.b2bHighlyLikely||{})[m]||0)+((P.b2bMediumLikely||{})[m]||0)+((P.b2bLowLikely||{})[m]||0);
-  const r=scenarioState.rtd;
-  if(r==='high') a+=((P.rtdHighlyLikely||{})[m]||0);
-  else if(r==='med') a+=((P.rtdHighlyLikely||{})[m]||0)+((P.rtdMediumLikely||{})[m]||0);
-  else if(r==='all') a+=((P.rtdHighlyLikely||{})[m]||0)+((P.rtdMediumLikely||{})[m]||0)+((P.rtdLowLikely||{})[m]||0);
-  return a;
+  const s=getPipelineAddonSplit(m);
+  return s.b2b+s.rtd;
 }
 
 // Pipeline COST addon (added to outflows) — mirrors the Excel "With Pipeline" cost rows
@@ -1123,13 +1134,14 @@ function getPipelineCostAddon(m){
 function buildScenarioCFData(){
   const base=buildFullCFData();
   const noScen=scenarioState.b2b==='none'&&scenarioState.rtd==='none';
-  if(noScen) return base.map(d=>({...d,pipelineAddon:0,pipelineCost:0}));
+  if(noScen) return base.map(d=>({...d,pipelineAddon:0,pipelineCost:0,pipelineB2B:0,pipelineRTD:0}));
   let cum=0;
   return base.map(d=>{
-    const rev=getPipelineAddon(d.m);
+    const split=getPipelineAddonSplit(d.m);
+    const rev=split.b2b+split.rtd;
     const cost=getPipelineCostAddon(d.m);
     const net=rev-cost;
-    const nd={...d,pipelineAddon:rev,pipelineCost:cost};
+    const nd={...d,pipelineAddon:rev,pipelineCost:cost,pipelineB2B:split.b2b,pipelineRTD:split.rtd};
     if(rev!==0||cost!==0||cum!==0){
       nd.ob=d.ob+cum;
       nd.rcpt=d.rcpt+rev;
@@ -1227,10 +1239,17 @@ function renderCFTrends(){
           borderWidth:1,borderRadius:4,stack:'combined',
         },
         {
-          label:'Pipeline Revenue',
-          data:data.map(r=>r.pipelineAddon||0),
+          label:'B2B Pipeline',
+          data:data.map(r=>r.pipelineB2B||0),
           backgroundColor:data.map(r=>isFc(r.m)?'rgba(139,92,246,0.35)':'rgba(139,92,246,0.65)'),
           borderColor:data.map(r=>isFc(r.m)?'rgba(139,92,246,0.5)':'#8b5cf6'),
+          borderWidth:1,borderRadius:4,stack:'combined',
+        },
+        {
+          label:'RTD Pipeline',
+          data:data.map(r=>r.pipelineRTD||0),
+          backgroundColor:data.map(r=>isFc(r.m)?'rgba(236,72,153,0.35)':'rgba(236,72,153,0.65)'),
+          borderColor:data.map(r=>isFc(r.m)?'rgba(236,72,153,0.5)':'#ec4899'),
           borderWidth:1,borderRadius:4,stack:'combined',
         },
         {
@@ -1251,13 +1270,15 @@ function renderCFTrends(){
           labels:{
             boxWidth:12,padding:18,color:'#ffffff',
             generateLabels:chart=>{
-              const hasPL=data.some(r=>(r.pipelineAddon||0)>0);
+              const hasB2B=data.some(r=>(r.pipelineB2B||0)>0);
+              const hasRTD=data.some(r=>(r.pipelineRTD||0)>0);
               const items=[
                 {text:'Receipts — B2B / Ops',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(42,157,143,0.65)',strokeStyle:'#2a9d8f',lineWidth:1,fontColor:'#ffffff'},
                 {text:'Investment',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(212,168,67,0.72)',strokeStyle:'#d4a843',lineWidth:1,fontColor:'#ffffff'},
               ];
-              if(hasPL) items.push({text:'Pipeline Revenue',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(139,92,246,0.65)',strokeStyle:'#8b5cf6',lineWidth:1,fontColor:'#ffffff'});
-              items.push({text:'Outflows',datasetIndex:3,hidden:!!chart.getDatasetMeta(3).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'});
+              if(hasB2B) items.push({text:'B2B Pipeline',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(139,92,246,0.65)',strokeStyle:'#8b5cf6',lineWidth:1,fontColor:'#ffffff'});
+              if(hasRTD) items.push({text:'RTD Pipeline',datasetIndex:3,hidden:!!chart.getDatasetMeta(3).hidden,fillStyle:'rgba(236,72,153,0.65)',strokeStyle:'#ec4899',lineWidth:1,fontColor:'#ffffff'});
+              items.push({text:'Outflows',datasetIndex:4,hidden:!!chart.getDatasetMeta(4).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'});
               items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jun-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
               return items;
             }
