@@ -473,16 +473,16 @@ canvas{display:block;max-width:100%}
     <span class="filter-label">Pipeline Scenario</span>
     <div class="scen-group">
       <span class="scen-type">B2B</span>
-      <button class="scen-pill" id="scen-b2b-none" onclick="changeScenario('b2b','none')">No Pipeline</button>
-      <button class="scen-pill active" id="scen-b2b-high" onclick="changeScenario('b2b','high')">Highly Likely</button>
+      <button class="scen-pill active" id="scen-b2b-none" onclick="changeScenario('b2b','none')">No Pipeline</button>
+      <button class="scen-pill" id="scen-b2b-high" onclick="changeScenario('b2b','high')">Highly Likely</button>
       <button class="scen-pill" id="scen-b2b-med" onclick="changeScenario('b2b','med')">+ Medium</button>
       <button class="scen-pill" id="scen-b2b-all" onclick="changeScenario('b2b','all')">All Likelihood</button>
     </div>
     <div class="scen-divider"></div>
     <div class="scen-group">
       <span class="scen-type">RTD</span>
-      <button class="scen-pill" id="scen-rtd-none" onclick="changeScenario('rtd','none')">No Pipeline</button>
-      <button class="scen-pill active" id="scen-rtd-high" onclick="changeScenario('rtd','high')">Highly Likely</button>
+      <button class="scen-pill active" id="scen-rtd-none" onclick="changeScenario('rtd','none')">No Pipeline</button>
+      <button class="scen-pill" id="scen-rtd-high" onclick="changeScenario('rtd','high')">Highly Likely</button>
       <button class="scen-pill" id="scen-rtd-med" onclick="changeScenario('rtd','med')">+ Medium</button>
       <button class="scen-pill" id="scen-rtd-all" onclick="changeScenario('rtd','all')">All Likelihood</button>
     </div>
@@ -510,7 +510,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250715a"></script>
+<script src="dashboard-data.js?v=20250728a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1093,7 +1093,7 @@ function resetTrendsFilter(){
 }
 
 const trendsState={forecastOnly:false};
-const scenarioState={b2b:'high',rtd:'high'};
+const scenarioState={b2b:'none',rtd:'none'};
 
 // Pipeline revenue addon split by source (B2B vs RTD) for the selected scenario tiers
 function getPipelineAddonSplit(m){
