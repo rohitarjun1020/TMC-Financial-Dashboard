@@ -111,6 +111,63 @@ D.pipe = {
 };
 D.tierProb = {high:0.9, med:0.6, low:0.3};
 
+/* ─────────────  PIPELINE — DEAL REGISTER FOR ACCRUAL RECOGNITION  ───────────
+   The arrays above carry the CASH timing of each pipeline deal (milestone
+   payments), which is what the cashflow model needs. For the P&L the same
+   deals must be recognised on an ACCRUAL basis — straight-line over the
+   delivery window rather than in payment lumps.
+
+   Each entry is [tier, firstMonth, lastMonth, totalValue] where firstMonth /
+   lastMonth are indexes into D.months and totalValue is the deal's
+   probability-weighted value inside the Apr-25 → Mar-27 window. Revenue is
+   recognised evenly across every month from firstMonth to lastMonth
+   inclusive. Deal totals — and therefore tier and FY totals — are identical
+   to the cash arrays above; only the monthly phasing differs.
+
+   Reconciliation (Jul-26 → Mar-27, probability-weighted):
+     B2B revenue  high 3,877,755 · med 3,627,540 · low   375,200
+     B2B cost     high 1,699,886 · med 1,088,262 · low    77,580
+     RTD revenue  high   810,000 · med 1,294,920 · low 1,915,500
+     RTD cost     high   252,000 · med   817,500 · low   126,000
+   ------------------------------------------------------------------------- */
+D.pipeDeals = {
+  b2b: [
+    ['high',17,22, 656100, 'A1 French Projection — Somika'],
+    ['high',17,21, 109350, 'A2 Projection — Somika'],
+    ['high',17,20, 652050, 'B1 Projection — Somika'],
+    ['high',18,23, 929475, 'A1 Projection (120 learners) — Somika'],
+    ['high',19,23, 164025, 'A2 Projection — Somika'],
+    ['high',20,22, 637875, 'B1 Projection — Somika'],
+    ['high',17,18, 273600, 'Sales Training Programme (Online) — Jambo'],
+    ['high',17,20, 270000, 'Arabic A1.3 — Mahindra'],
+    ['high',17,20,  72000, 'French 1:1 — MN Square'],
+    ['high',17,23, 113280, 'German — Nitin (B2C)'],
+    ['med', 17,22,1188000, 'First Payment (180 learners) — Tata'],
+    ['med', 19,23, 990000, 'Final Payment — Tata'],
+    ['med', 17,23,1213056, 'Individual hour based, Assessments — Employed World'],
+    ['med', 17,22,  69984, 'Evaluation / Webinar sessions — Employed World'],
+    ['med', 17,20, 166500, 'Language programme — Sudarshan Chemicals'],
+    ['low', 16,19, 284000, 'German 1:1 Executive — Vinay Padroo (Radico Khaitan)'],
+    ['low', 17,20,  91200, 'Insurance (Online) — Mayfair']
+  ],
+  rtd: [
+    ['high',17,20, 135000, 'Leo & Saggitarus — Euros, Austria'],
+    ['high',17,20, 405000, 'Leo & Saggitarus — Euros, Germany'],
+    ['high',17,19, 135000, '2 Comms — Physiotherapist'],
+    ['high',17,19, 135000, '2 Comms — Dentist'],
+    ['med', 17,19,1294920, 'Invita'],
+    ['low', 17,20,  45000, '2 Comms (B1 nurses) — Recruitment'],
+    ['low', 18,23,1620000, 'Faro — Physiotherapist'],
+    ['low', 18,20, 160500, 'Velocity'],
+    ['low', 17,20,  90000, 'Ampersand']
+  ],
+  /* Pipeline delivery cost, per tier, as modelled in the workbook. In the P&L
+     this is matched to revenue — spread across the months in proportion to
+     that tier's accrual revenue — rather than sitting in its payment month. */
+  b2bCostTotal: {high:1699886.25, med:1088262, low:77580},
+  rtdCostTotal: {high:252000,     med:817500,  low:126000}
+};
+
 /* B2B sales funnel — [CF] 'B2B Summary' r1-r7 (live snapshot: Oct-25 wave) */
 D.funnel = [
   {stage:'Qualification',          prob:0.00, cycle:4, count:25},

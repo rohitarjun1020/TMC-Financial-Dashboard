@@ -28,7 +28,6 @@ a{text-decoration:none;color:inherit}
 ::-webkit-scrollbar-thumb{background:#25344a;border-radius:5px}
 ::-webkit-scrollbar-thumb:hover{background:var(--dark-teal)}
 
-/* ── HEADER ── */
 .header{background:linear-gradient(135deg,#050c18 0%,#0a1628 50%,#071220 100%);
   border-bottom:1px solid var(--border);padding:0 28px;height:70px;
   display:flex;align-items:center;justify-content:space-between;
@@ -41,10 +40,9 @@ a{text-decoration:none;color:inherit}
 .tmc-logo-wrap img{height:34px;object-fit:contain;max-width:120px;filter:brightness(1.12)}
 .tmc-name{font-size:11.5px;font-weight:600;color:var(--cyan);white-space:nowrap}
 
-/* ── TABS ── */
 .tab-bar{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;
   align-items:center;gap:2px;padding:0 28px;position:sticky;top:70px;z-index:190;overflow-x:auto}
-.tab-btn{padding:13px 20px;font-size:12.5px;font-weight:500;color:var(--text2);
+.tab-btn{padding:13px 22px;font-size:12.5px;font-weight:500;color:var(--text2);
   border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;
   transition:.2s;white-space:nowrap;font-family:inherit;display:flex;align-items:center;gap:8px}
 .tab-btn:hover{color:var(--text)}
@@ -53,7 +51,6 @@ a{text-decoration:none;color:inherit}
   border-radius:5px;background:rgba(255,255,255,.07);font-size:10px;font-weight:700}
 .tab-btn.active .tab-num{background:var(--teal);color:#fff}
 
-/* ── SCENARIO BAR ── */
 .scen-wrap{position:sticky;top:114px;z-index:180;background:linear-gradient(180deg,#0b1322,#0a111e);
   border-bottom:1px solid var(--border);padding:11px 28px;box-shadow:0 4px 16px rgba(0,0,0,.35)}
 .scen-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
@@ -75,13 +72,15 @@ a{text-decoration:none;color:inherit}
 .scen-sep{width:1px;height:26px;background:var(--border)}
 .scen-live{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text3)}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--teal3);box-shadow:0 0 8px var(--teal3)}
+.basis{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:12px;
+  background:rgba(139,92,246,.14);color:#c4b5fd;font-size:9.5px;font-weight:700;letter-spacing:.7px;
+  text-transform:uppercase}
 
-/* ── LAYOUT ── */
 .page{display:none;padding:22px 28px 60px}
 .page.active{display:block}
 .page-head{margin-bottom:18px}
 .page-head h2{font-size:20px;font-weight:700;letter-spacing:.2px}
-.page-head p{font-size:12.5px;color:var(--text2);margin-top:3px;max-width:900px}
+.page-head p{font-size:12.5px;color:var(--text2);margin-top:3px;max-width:980px}
 
 .grid{display:grid;gap:14px}
 .g2{grid-template-columns:repeat(2,1fr)}
@@ -95,7 +94,6 @@ a{text-decoration:none;color:inherit}
 @media(max-width:1250px){.g5,.g6{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.g2,.g3,.g23,.g32,.g4,.g5,.g6{grid-template-columns:1fr}}
 
-/* ── KPI ── */
 .kpi{background:linear-gradient(160deg,var(--card),var(--card3));border:1px solid var(--border);
   border-radius:var(--radius);padding:15px 16px;position:relative;overflow:hidden}
 .kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--teal)}
@@ -107,7 +105,6 @@ a{text-decoration:none;color:inherit}
 .kpi-s{font-size:11px;color:var(--text2);margin-top:3px}
 .pos{color:var(--teal3)}.neg{color:var(--red)}.warn{color:var(--orange)}.gld{color:var(--gold2)}
 
-/* ── CARD ── */
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
 .card-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap}
 .card-t{font-size:13.5px;font-weight:700;letter-spacing:.2px}
@@ -115,16 +112,13 @@ a{text-decoration:none;color:inherit}
 .chart-box{position:relative;height:290px}
 .chart-box.sm{height:230px}
 .chart-box.lg{height:360px}
-.chart-box.xl{height:420px}
 
-/* ── SECTION BANNER ── */
 .banner{background:linear-gradient(90deg,var(--dark-teal),var(--mid-teal));color:#fff;
   padding:9px 18px;border-radius:var(--radius);font-size:12.5px;font-weight:700;
   letter-spacing:.6px;margin:22px 0 14px;display:flex;align-items:center;gap:10px}
 .banner.gold{background:linear-gradient(90deg,#8a6d1f,var(--gold))}
 .banner.red{background:linear-gradient(90deg,#7f1d1d,#dc2626)}
 
-/* ── TABLE ── */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--card)}
 table{width:100%;border-collapse:collapse;font-size:11.5px;white-space:nowrap}
 thead th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:right;
@@ -137,25 +131,22 @@ tbody tr:hover{background:rgba(42,157,143,.07)}
 tr.hd td{background:rgba(255,255,255,.03);font-weight:700;color:var(--cyan);text-transform:uppercase;font-size:10px;letter-spacing:.6px}
 tr.tot td{font-weight:700;border-top:1px solid var(--border2);background:rgba(10,147,150,.08)}
 tr.tot td:first-child{color:var(--text)}
-tr.sub td:first-child{padding-left:24px;color:var(--text3)}
 .fc{color:var(--gold2)}
 .dim{color:var(--text3)}
 
-/* ── MISC ── */
 .note{background:rgba(212,168,67,.07);border:1px solid rgba(212,168,67,.25);border-left:3px solid var(--gold);
   border-radius:var(--radius-sm);padding:12px 15px;font-size:12px;color:var(--text2);line-height:1.65}
 .note b{color:var(--gold2)}
 .note.teal{background:rgba(10,147,150,.07);border-color:rgba(10,147,150,.28);border-left-color:var(--teal3)}
 .note.teal b{color:var(--teal3)}
-.note.red{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.25);border-left-color:var(--red)}
-.note.red b{color:#fca5a5}
+.note.purple{background:rgba(139,92,246,.07);border-color:rgba(139,92,246,.28);border-left-color:var(--purple)}
+.note.purple b{color:#c4b5fd}
 .pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9.5px;font-weight:700;
   letter-spacing:.5px;text-transform:uppercase}
 .pill.h{background:rgba(16,185,129,.16);color:var(--teal3)}
 .pill.m{background:rgba(212,168,67,.16);color:var(--gold2)}
 .pill.l{background:rgba(239,68,68,.16);color:#fca5a5}
 .pill.a{background:rgba(148,163,184,.14);color:var(--text2)}
-.pill.f{background:rgba(139,92,246,.16);color:#c4b5fd}
 
 .act-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 @media(max-width:900px){.act-grid{grid-template-columns:1fr}}
@@ -180,10 +171,9 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
 .narr p b{color:var(--text);font-weight:600}
 .narr .big{color:var(--teal3);font-weight:700}
 .narr .bad{color:#fca5a5;font-weight:700}
-
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:10.5px;color:var(--text3);margin-top:9px}
-.legend span{display:flex;align-items:center;gap:5px}
-.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.narr.sm{padding:14px 18px}
+.narr.sm h4{color:var(--cyan)}
+.narr.sm p{font-size:12.3px}
 
 .heat td{text-align:center;font-weight:600}
 .heat td:first-child{text-align:left;font-weight:500}
@@ -197,7 +187,7 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
   <div class="header-logo"><img src="srf-logo.webp" alt="SRF Capital Studio"/></div>
   <div class="header-title">
     <h1>CFO Dashboard — FY 2026-27</h1>
-    <p id="asOf">Cashflow · MIS · Budget · Forecast · Commentary</p>
+    <p id="asOf">Commentary · Budget · Forecast</p>
   </div>
   <div class="tmc-logo-wrap">
     <img src="tmc-logo.png" alt="The Migration Company"/>
@@ -206,11 +196,9 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
 </div>
 
 <div class="tab-bar" id="tabBar">
-  <button class="tab-btn active" data-p="p1"><span class="tab-num">1</span>Cashflow</button>
-  <button class="tab-btn" data-p="p2"><span class="tab-num">2</span>MIS — Detailed</button>
-  <button class="tab-btn" data-p="p3"><span class="tab-num">3</span>Budget FY27</button>
-  <button class="tab-btn" data-p="p4"><span class="tab-num">4</span>Forecast vs Budget</button>
-  <button class="tab-btn" data-p="p5"><span class="tab-num">5</span>CFO Commentary</button>
+  <button class="tab-btn active" data-p="p1"><span class="tab-num">1</span>CFO Commentary</button>
+  <button class="tab-btn" data-p="p2"><span class="tab-num">2</span>Budget FY 26-27</button>
+  <button class="tab-btn" data-p="p3"><span class="tab-num">3</span>Forecast P&amp;L vs Budget</button>
 </div>
 
 <!-- ══════════ GLOBAL SCENARIO CONTROLS ══════════ -->
@@ -252,127 +240,72 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
         <button class="chip" data-c="model">As modelled</button>
       </div>
     </div>
-    <div class="scen-live"><span class="live-dot"></span><span id="scenLabel">Committed revenue only</span></div>
+    <div class="scen-live">
+      <span class="basis">P&amp;L on accrual basis</span>
+      <span class="live-dot"></span><span id="scenLabel">Committed revenue only</span>
+    </div>
   </div>
 </div>
 
-<!-- ══════════════════ PAGE 1 — CASHFLOW ══════════════════ -->
+<!-- ══════════════════ PAGE 1 — CFO COMMENTARY ══════════════════ -->
 <div class="page active" id="p1">
   <div class="page-head">
-    <h2>Cashflow — Apr 2025 to Mar 2027</h2>
-    <p>Actuals to Jun-26, forecast Jul-26 to Mar-27. Every figure below responds to the scenario selector above — pipeline revenue is probability-weighted at deal level (Highly 0.9 · Medium 0.6 · Low 0.3).</p>
+    <h2>CFO Commentary — the next six months</h2>
+    <p id="p1sub"></p>
   </div>
 
   <div class="grid g6 mb" id="p1kpi"></div>
 
   <div class="grid g32 mb">
     <div class="card">
-      <div class="card-h"><span class="card-t">Cash balance — actual vs forecast</span>
-        <span class="card-sub">closing bank balance, ₹</span></div>
-      <div class="chart-box lg"><canvas id="c_cash"></canvas></div>
+      <div class="card-h"><span class="card-t">The next six months — revenue, EBITDA and cash</span>
+        <span class="card-sub">Aug-26 → Jan-27 · P&amp;L accrual, cash on payment timing</span></div>
+      <div class="chart-box lg"><canvas id="c_six"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-h"><span class="card-t">Runway from today</span><span class="card-sub">months of cash</span></div>
-      <div class="chart-box lg"><canvas id="c_runway"></canvas></div>
+      <div class="card-h"><span class="card-t">Scenario spread — cash at Mar-27</span><span class="card-sub">₹</span></div>
+      <div class="chart-box lg"><canvas id="c_scenSpread"></canvas></div>
     </div>
   </div>
+
+  <div id="narrative"></div>
 
   <div class="card mb">
     <div class="card-h"><span class="card-t">Cash bridge — where the ₹58.4L at 30-Jun-26 goes by Mar-27</span>
-      <span class="card-sub">waterfall of the 9-month forecast, ₹</span></div>
+      <span class="card-sub">cash movement on payment timing, ₹</span></div>
     <div class="chart-box lg"><canvas id="c_bridge"></canvas></div>
   </div>
 
+  <div class="banner">What to do · what to avoid</div>
+  <div class="act-grid mb" id="actions"></div>
+
+  <div class="banner red">Risk register</div>
+  <div class="act-grid mb" id="risks"></div>
+
+  <div class="banner gold">Break-even &amp; funding maths</div>
   <div class="grid g2 mb">
     <div class="card">
-      <div class="card-h"><span class="card-t">Receipts vs payments</span><span class="card-sub">monthly, ₹</span></div>
-      <div class="chart-box"><canvas id="c_rp"></canvas></div>
+      <div class="card-h"><span class="card-t">What it takes to break even</span>
+        <span class="card-sub">monthly revenue needed at current cost base</span></div>
+      <div class="chart-box"><canvas id="c_be"></canvas></div>
     </div>
-    <div class="card">
-      <div class="card-h"><span class="card-t">Receipts composition</span><span class="card-sub">stacked, ₹</span></div>
-      <div class="chart-box"><canvas id="c_rcomp"></canvas></div>
-    </div>
+    <div class="tbl-wrap"><table id="t_funding"></table></div>
   </div>
 
-  <div class="card mb">
-    <div class="card-h"><span class="card-t">Payments composition</span><span class="card-sub">stacked by category, ₹</span></div>
-    <div class="chart-box lg"><canvas id="c_pcomp"></canvas></div>
-  </div>
+  <div class="banner">Commentary as filed with the June 2026 MIS</div>
+  <div id="juneComm" class="mb"></div>
 
-  <div class="banner">Monthly cashflow statement</div>
-  <div class="tbl-wrap mb"><table id="t_cf"></table></div>
-
-  <div class="note teal" id="p1note"></div>
+  <div class="note purple" id="p1note"></div>
 </div>
 
-<!-- ══════════════════ PAGE 2 — MIS ══════════════════ -->
+<!-- ══════════════════ PAGE 2 — BUDGET ══════════════════ -->
 <div class="page" id="p2">
   <div class="page-head">
-    <h2>Management Information System — detailed</h2>
-    <p>Accrual P&amp;L from the June 2026 MIS pack: 15 months of actuals (Apr-25 → Jun-26), Q1 FY26-27 against budget, cost structure, manpower and balance sheet. This page is <b>actuals only</b> — it does not move with the scenario selector.</p>
+    <h2>Budget FY 2026-27</h2>
+    <p>The approved plan for Apr-26 → Mar-27, rebuilt line-by-line from the RTD, pipeline and cost buildups. It reconciles exactly to the budget column in the MIS. The plan rests on an aggressive RTD placement ramp — that single assumption drives almost the entire year.</p>
   </div>
 
   <div class="grid g6 mb" id="p2kpi"></div>
-
-  <div class="grid g32 mb">
-    <div class="card">
-      <div class="card-h"><span class="card-t">Revenue &amp; EBITDA — 15-month trend</span><span class="card-sub">₹ per month</span></div>
-      <div class="chart-box lg"><canvas id="c_misTrend"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-h"><span class="card-t">Q1 FY27 — revenue to EBITDA bridge</span><span class="card-sub">Apr–Jun 26, ₹</span></div>
-      <div class="chart-box lg"><canvas id="c_misBridge"></canvas></div>
-    </div>
-  </div>
-
-  <div class="grid g2 mb">
-    <div class="card">
-      <div class="card-h"><span class="card-t">Margin profile</span><span class="card-sub">gross margin vs EBITDA margin, %</span></div>
-      <div class="chart-box"><canvas id="c_margin"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-h"><span class="card-t">Cost structure</span><span class="card-sub">share of total cost, %</span></div>
-      <div class="chart-box"><canvas id="c_coststack"></canvas></div>
-    </div>
-  </div>
-
-  <div class="banner">Q1 FY 26-27 — actual vs budget</div>
-  <div class="grid g2 mb">
-    <div class="card">
-      <div class="card-h"><span class="card-t">Actual vs budget — Q1 FY27</span><span class="card-sub">₹, Apr–Jun 2026</span></div>
-      <div class="chart-box"><canvas id="c_q1vb"></canvas></div>
-    </div>
-    <div class="tbl-wrap"><table id="t_q1vb"></table></div>
-  </div>
-
-  <div class="banner">Monthly P&amp;L — Apr 2025 to Jun 2026</div>
-  <div class="tbl-wrap mb"><table id="t_mis"></table></div>
-
-  <div class="banner">Manpower &amp; balance sheet</div>
-  <div class="grid g2 mb">
-    <div class="card">
-      <div class="card-h"><span class="card-t">Salary cost by department &amp; headcount</span><span class="card-sub">₹ / persons</span></div>
-      <div class="chart-box"><canvas id="c_mp"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-h"><span class="card-t">Working capital</span><span class="card-sub">as on 30 Jun 2026, ₹</span></div>
-      <div class="chart-box"><canvas id="c_wc"></canvas></div>
-    </div>
-  </div>
-  <div class="tbl-wrap mb"><table id="t_bs"></table></div>
-
-  <div class="banner gold">CFO commentary as filed with the June 2026 MIS</div>
-  <div id="juneComm"></div>
-</div>
-
-<!-- ══════════════════ PAGE 3 — BUDGET ══════════════════ -->
-<div class="page" id="p3">
-  <div class="page-head">
-    <h2>Budget FY 2026-27</h2>
-    <p>The approved plan for Apr-26 → Mar-27, rebuilt line-by-line from the RTD, pipeline and cost buildups. It reconciles exactly to the budget column in the MIS. The plan is built on an aggressive RTD placement ramp — that single assumption drives almost the entire year.</p>
-  </div>
-
-  <div class="grid g6 mb" id="p3kpi"></div>
 
   <div class="card mb">
     <div class="card-h"><span class="card-t">Budget revenue ramp &amp; EBITDA path</span>
@@ -413,17 +346,19 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
   <div class="banner">Budget P&amp;L — monthly, FY 26-27</div>
   <div class="tbl-wrap mb"><table id="t_bud"></table></div>
 
-  <div class="note" id="p3note"></div>
+  <div class="note" id="p2note"></div>
 </div>
 
-<!-- ══════════════════ PAGE 4 — FORECAST vs BUDGET ══════════════════ -->
-<div class="page" id="p4">
+<!-- ══════════════════ PAGE 3 — FORECAST vs BUDGET ══════════════════ -->
+<div class="page" id="p3">
   <div class="page-head">
-    <h2>Forecast MIS vs Budget — FY 2026-27</h2>
-    <p>A full-year P&amp;L built from <b>Q1 actuals + a 9-month forecast driven by the cashflow pipeline</b>, set against the approved budget. Move the scenario selector at the top to see the plan flex.</p>
+    <h2>Forecast P&amp;L vs Budget — FY 2026-27</h2>
+    <p>A full-year P&amp;L on a consistent <b>accrual basis</b>: Q1 actuals from the MIS, plus a nine-month forecast in which every revenue and cost stream is recognised evenly across the months it is earned or incurred — not when the cash moves. Move the scenario selector above to flex the plan.</p>
   </div>
 
-  <div class="grid g6 mb" id="p4kpi"></div>
+  <div class="grid g6 mb" id="p3kpi"></div>
+
+  <div class="note purple mb" id="basisNote"></div>
 
   <div class="card mb">
     <div class="card-h"><span class="card-t">EBITDA bridge — budget to forecast, FY27</span>
@@ -433,18 +368,33 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
 
   <div class="grid g2 mb">
     <div class="card">
-      <div class="card-h"><span class="card-t">Revenue — budget vs forecast</span><span class="card-sub">₹ per month</span></div>
+      <div class="card-h"><span class="card-t">Revenue — budget vs forecast</span><span class="card-sub">accrual, ₹ per month</span></div>
       <div class="chart-box"><canvas id="c_revBvF"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-h"><span class="card-t">EBITDA — budget vs forecast</span><span class="card-sub">₹ per month</span></div>
+      <div class="card-h"><span class="card-t">EBITDA — budget vs forecast</span><span class="card-sub">accrual, ₹ per month</span></div>
       <div class="chart-box"><canvas id="c_ebBvF"></canvas></div>
+    </div>
+  </div>
+
+  <div class="banner gold">Why the accrual basis matters</div>
+  <div class="grid g2 mb">
+    <div class="card">
+      <div class="card-h"><span class="card-t">Revenue recognition — accrual vs cash timing</span>
+        <span class="card-sub">same total, different months, ₹</span></div>
+      <div class="chart-box"><canvas id="c_accVsCash"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><span class="card-t">Monthly EBITDA — accrual vs cash timing</span>
+        <span class="card-sub">the cash view invents losses and profits that are not real, ₹</span></div>
+      <div class="chart-box"><canvas id="c_ebAccVsCash"></canvas></div>
     </div>
   </div>
 
   <div class="grid g23 mb">
     <div class="card">
-      <div class="card-h"><span class="card-t">Where forecast revenue comes from</span><span class="card-sub">Jul-26 → Mar-27, ₹</span></div>
+      <div class="card-h"><span class="card-t">Where forecast revenue comes from</span>
+        <span class="card-sub">Jul-26 → Mar-27, accrual, ₹</span></div>
       <div class="chart-box"><canvas id="c_revSrc"></canvas></div>
     </div>
     <div class="card">
@@ -453,66 +403,26 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
     </div>
   </div>
 
-  <div class="banner">FY 26-27 P&amp;L — actual Q1 + forecast Q2-Q4 vs budget</div>
+  <div class="banner">FY 26-27 P&amp;L — actual Q1 + forecast Q2-Q4 vs budget (accrual)</div>
   <div class="tbl-wrap mb"><table id="t_fvb"></table></div>
 
   <div class="banner gold">Sensitivity — every scenario, side by side</div>
   <div class="grid g2 mb">
     <div class="tbl-wrap"><table id="t_sens" class="heat"></table></div>
     <div class="card">
-      <div class="card-h"><span class="card-t">Cost-of-revenue sensitivity</span><span class="card-sub">FY27 EBITDA at 40 / 50 / 60% B2B pipeline cost, ₹</span></div>
+      <div class="card-h"><span class="card-t">Cost-of-revenue sensitivity</span>
+        <span class="card-sub">FY27 EBITDA at 40 / 50 / 60% B2B pipeline cost, ₹</span></div>
       <div class="chart-box"><canvas id="c_costSens"></canvas></div>
     </div>
   </div>
 
-  <div class="banner">Live pipeline register</div>
+  <div class="banner">Pipeline register — recognition windows</div>
   <div class="grid g2 mb">
     <div class="tbl-wrap"><table id="t_dealsB"></table></div>
     <div class="tbl-wrap"><table id="t_dealsR"></table></div>
   </div>
 
-  <div class="note" id="p4note"></div>
-</div>
-
-<!-- ══════════════════ PAGE 5 — COMMENTARY ══════════════════ -->
-<div class="page" id="p5">
-  <div class="page-head">
-    <h2>CFO Commentary — the next six months</h2>
-    <p id="p5sub"></p>
-  </div>
-
-  <div class="grid g4 mb" id="p5kpi"></div>
-
-  <div class="grid g32 mb">
-    <div class="card">
-      <div class="card-h"><span class="card-t">The next six months — cash, revenue and burn</span>
-        <span class="card-sub">Aug-26 → Jan-27</span></div>
-      <div class="chart-box lg"><canvas id="c_six"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-h"><span class="card-t">Scenario spread — closing cash at Mar-27</span><span class="card-sub">₹</span></div>
-      <div class="chart-box lg"><canvas id="c_scenSpread"></canvas></div>
-    </div>
-  </div>
-
-  <div id="narrative"></div>
-
-  <div class="banner">What to do · what to avoid</div>
-  <div class="act-grid mb" id="actions"></div>
-
-  <div class="banner red">Risk register</div>
-  <div class="act-grid mb" id="risks"></div>
-
-  <div class="banner gold">Break-even &amp; funding maths</div>
-  <div class="grid g2 mb">
-    <div class="card">
-      <div class="card-h"><span class="card-t">What it takes to break even</span><span class="card-sub">monthly revenue needed at current cost base</span></div>
-      <div class="chart-box"><canvas id="c_be"></canvas></div>
-    </div>
-    <div class="tbl-wrap"><table id="t_funding"></table></div>
-  </div>
-
-  <div class="note" id="p5note"></div>
+  <div class="note" id="p3note"></div>
 </div>
 
 <div class="footer">
@@ -520,7 +430,7 @@ tr.sub td:first-child{padding-left:24px;color:var(--text3)}
   <span id="footSrc"></span>
 </div>
 
-<script src="cfo-data.js?v=1"></script>
+<script src="cfo-data.js?v=2"></script>
 <script>
 /* ═════════════════════════ FORMATTERS ═════════════════════════ */
 const N = v => (v==null||isNaN(v))?0:v;
@@ -531,7 +441,7 @@ function inr(v){
   if(rest) rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
   return (v<0?'-':'') + '₹' + (rest? rest+','+last3 : last3);
 }
-function L(v, dp){                    // lakh / crore short form
+function L(v, dp){
   v = N(v); const a = Math.abs(v); const d = dp==null?1:dp;
   if(a>=1e7) return (v<0?'-':'')+'₹'+(a/1e7).toFixed(2)+'Cr';
   if(a>=1e5) return (v<0?'-':'')+'₹'+(a/1e5).toFixed(d)+'L';
@@ -541,13 +451,12 @@ function L(v, dp){                    // lakh / crore short form
 const pct = (v,d)=> (N(v)*100).toFixed(d==null?1:d)+'%';
 const sum = a => a.reduce((s,x)=>s+N(x),0);
 const sl  = (a,i,j) => a.slice(i,j).map(N);
-const add = (...as) => as[0].map((_,i)=>as.reduce((s,a)=>s+N(a[i]),0));
 
 /* ═════════════════════════ STATE ═════════════════════════ */
 const S = {
   b2b:{high:false,med:false,low:false},
   rtd:{high:false,med:false,low:false},
-  cost:0.50            // 0.40 | 0.50 | 0.60 | 'model'
+  cost:0.50                       // 0.40 | 0.50 | 0.60 | 'model'
 };
 const PRESETS = {
   base:{b2b:[0,0,0], rtd:[0,0,0], label:'Committed revenue only'},
@@ -555,27 +464,37 @@ const PRESETS = {
   bal: {b2b:[1,1,0], rtd:[1,1,0], label:'Balanced — highly + medium likely'},
   agg: {b2b:[1,1,1], rtd:[1,1,1], label:'Full pipeline — all likelihoods'}
 };
+const FC0 = 15, FCN = 9;          // forecast window: Jul-26 (idx 15) → Mar-27, 9 months
 
-/* ═════════════════════ Q4 LEVELLING (P&L only) ═════════════════════ */
-/* The cashflow model books no payroll/opex in Jan-27 and a double charge in
-   Mar-27. For P&L purposes Q4 lines are levelled to the quarter average —
-   quarter and full-year totals are unchanged.                              */
-function level(arr){
+/* ═══════════════ ACCRUAL CONVERSION OF THE COST BASE ═══════════════
+   Payroll comes from the employee-level payroll schedule and is already an
+   accrual figure — it keeps its genuine July hiring ramp. It only needs the
+   Jan-27 nil / Mar-27 double payment artefact levelled out of Q4.
+   Every other operating line in the cashflow is a payment, so for the P&L it
+   is recognised evenly across the nine forecast months.                     */
+function levelQ4(arr){
   const a = arr.slice();
   const t = (N(a[21])+N(a[22])+N(a[23]))/3;
   a[21]=t; a[22]=t; a[23]=t;
   return a;
 }
-const PL = {
-  ops:level(D.payrollDept.ops), ga:level(D.payrollDept.ga), sm:level(D.payrollDept.sm),
-  travel:level(D.cf.travel), software:level(D.cf.software), marketing:level(D.cf.marketing),
-  otherGA:level(D.cf.otherGA), professional:level(D.cf.professional),
-  telephone:level(D.cf.telephone), courier:level(D.cf.courier), print:level(D.cf.print),
-  otherConsult:level(D.cf.otherConsult), otherExp:level(D.cf.otherExp)
+const PAY = {ops:levelQ4(D.payrollDept.ops), ga:levelQ4(D.payrollDept.ga), sm:levelQ4(D.payrollDept.sm)};
+/* even monthly charge across the forecast window */
+const ev = arr => sum(sl(arr,FC0,FC0+FCN))/FCN;
+const ACC = {
+  b2bRevComm : ev(D.cf.b2bColl),
+  rtdRevComm : ev(D.cf.rtdColl),
+  otherInc   : ev(D.cf.otherInc),
+  b2bCostComm: ev(D.cf.b2bCost),
+  rtdCostComm: ev(D.cf.rtdCost),
+  smOther    : ev(D.cf.travel)+ev(D.cf.software)+ev(D.cf.marketing),
+  gaOther    : ev(D.cf.otherGA)+ev(D.cf.professional)+ev(D.cf.telephone)
+             + ev(D.cf.courier)+ev(D.cf.print)+ev(D.cf.otherConsult)+ev(D.cf.otherExp)
 };
 
-/* ═════════════════════════ MODEL ═════════════════════════ */
-function pipeAgg(side, sel){
+/* ═════════════════════════ PIPELINE ═════════════════════════ */
+/* cash timing — straight from the workbook's milestone months */
+function pipeCash(side, sel){
   const rev = [], cost = [];
   for(let i=0;i<24;i++){
     let r=0,c=0;
@@ -588,50 +507,87 @@ function pipeAgg(side, sel){
   }
   return {rev, cost};
 }
+/* accrual timing — each deal straight-lined across its delivery window, and
+   delivery cost matched to the revenue it supports                          */
+function pipeAccrual(side, sel, costMode){
+  const rev = new Array(24).fill(0);
+  const byTier = {high:new Array(24).fill(0), med:new Array(24).fill(0), low:new Array(24).fill(0)};
+  D.pipeDeals[side].forEach(d=>{
+    const tier=d[0], f=d[1], l=d[2], tot=d[3];
+    if(!sel[tier]) return;
+    const per = tot/(l-f+1);
+    for(let i=f;i<=l;i++){ byTier[tier][i]+=per; rev[i]+=per; }
+  });
+  const cost = new Array(24).fill(0);
+  const totals = side==='b2b' ? D.pipeDeals.b2bCostTotal : D.pipeDeals.rtdCostTotal;
+  ['high','med','low'].forEach(k=>{
+    if(!sel[k]) return;
+    if(side==='b2b' && costMode!=='model'){
+      for(let i=0;i<24;i++) cost[i] += byTier[k][i]*costMode;   // flat % of revenue
+    }else{
+      const t = sum(byTier[k]);
+      if(t<=0) return;
+      for(let i=0;i<24;i++) cost[i] += totals[k]*(byTier[k][i]/t);  // matched to revenue
+    }
+  });
+  return {rev, cost, byTier};
+}
 
+/* ═════════════════════════ MODEL ═════════════════════════ */
 function build(state){
   state = state || S;
-  const pB = pipeAgg('b2b', state.b2b);
-  const pR = pipeAgg('rtd', state.rtd);
-  /* B2B pipeline cost: either the workbook's modelled figure or a flat % of
-     probability-weighted pipeline revenue.                                  */
-  const b2bPipeCost = (state.cost==='model') ? pB.cost : pB.rev.map(r=>r*state.cost);
-  const rtdPipeCost = pR.cost;
 
+  /* ── CASH: drives cash balance, runway and funding ── */
+  const cB = pipeCash('b2b', state.b2b), cR = pipeCash('rtd', state.rtd);
+  const cBcost = (state.cost==='model') ? cB.cost : cB.rev.map(r=>r*state.cost);
+  const cRcost = cR.cost;
   const cf = D.cf;
-  const receipts = [], outflow = [], opening = [], closing = [], net = [];
+  const receipts=[], outflow=[], opening=[], closing=[], net=[];
   let open = cf.opening[0];
   for(let i=0;i<24;i++){
-    const rec = N(cf.receipts[i]) + pB.rev[i] + pR.rev[i];
-    const out = N(cf.outflow[i]) + b2bPipeCost[i] + rtdPipeCost[i];
+    const rec = N(cf.receipts[i]) + cB.rev[i] + cR.rev[i];
+    const out = N(cf.outflow[i]) + cBcost[i] + cRcost[i];
     const cl  = open + rec - out + N(cf.adjust[i]);
     opening.push(open); receipts.push(rec); outflow.push(out);
-    closing.push(cl);  net.push(rec-out);
+    closing.push(cl); net.push(rec-out);
     open = cl;
   }
 
-  /* ── forecast P&L, Jul-26 → Mar-27 (indices 15-23) ── */
-  const F = {i0:15,i1:23,months:D.months.slice(15),
-    b2bRev:[],rtdRev:[],otherInc:[],revenue:[],b2bCogs:[],rtdCogs:[],opsSal:[],
-    cogs:[],gp:[],sm:[],ga:[],ebitda:[],pipeB2b:[],pipeRtd:[]};
-  for(let i=15;i<24;i++){
-    const b2bR = N(cf.b2bColl[i]) + pB.rev[i];
-    const rtdR = N(cf.rtdColl[i]) + pR.rev[i];
-    const oth  = N(cf.otherInc[i]);
-    const b2bC = N(cf.b2bCost[i]) + b2bPipeCost[i];
-    const rtdC = N(cf.rtdCost[i]) + rtdPipeCost[i];
-    const ops  = N(PL.ops[i]);
-    const smX  = N(PL.sm[i]) + N(PL.travel[i]) + N(PL.software[i]) + N(PL.marketing[i]);
-    const gaX  = N(PL.ga[i]) + N(PL.otherGA[i]) + N(PL.professional[i]) + N(PL.telephone[i])
-               + N(PL.courier[i]) + N(PL.print[i]) + N(PL.otherConsult[i]) + N(PL.otherExp[i]);
-    const rev  = b2bR + rtdR + oth, cogs = b2bC + rtdC + ops, gp = rev - cogs;
-    F.b2bRev.push(b2bR); F.rtdRev.push(rtdR); F.otherInc.push(oth); F.revenue.push(rev);
-    F.b2bCogs.push(b2bC); F.rtdCogs.push(rtdC); F.opsSal.push(ops); F.cogs.push(cogs);
-    F.gp.push(gp); F.sm.push(smX); F.ga.push(gaX); F.ebitda.push(gp - smX - gaX);
-    F.pipeB2b.push(pB.rev[i]); F.pipeRtd.push(pR.rev[i]);
+  /* ── ACCRUAL P&L: Jul-26 → Mar-27 ── */
+  const aB = pipeAccrual('b2b', state.b2b, state.cost);
+  const aR = pipeAccrual('rtd', state.rtd, state.cost);
+  const F = {months:D.months.slice(FC0), b2bRev:[],rtdRev:[],otherInc:[],revenue:[],
+             b2bCogs:[],rtdCogs:[],opsSal:[],cogs:[],gp:[],sm:[],ga:[],ebitda:[],
+             pipeB2b:[],pipeRtd:[],cashRevenue:[],cashEbitda:[]};
+  for(let j=0;j<FCN;j++){
+    const i = FC0+j;
+    const b2bR = ACC.b2bRevComm + aB.rev[i];
+    const rtdR = ACC.rtdRevComm + aR.rev[i];
+    const rev  = b2bR + rtdR + ACC.otherInc;
+    const b2bC = ACC.b2bCostComm + aB.cost[i];
+    const rtdC = ACC.rtdCostComm + aR.cost[i];
+    const ops  = N(PAY.ops[i]);
+    const smX  = N(PAY.sm[i]) + ACC.smOther;
+    const gaX  = N(PAY.ga[i]) + ACC.gaOther;
+    const cogs = b2bC + rtdC + ops, gp = rev - cogs;
+    F.b2bRev.push(b2bR); F.rtdRev.push(rtdR); F.otherInc.push(ACC.otherInc);
+    F.revenue.push(rev); F.b2bCogs.push(b2bC); F.rtdCogs.push(rtdC); F.opsSal.push(ops);
+    F.cogs.push(cogs); F.gp.push(gp); F.sm.push(smX); F.ga.push(gaX);
+    F.ebitda.push(gp - smX - gaX);
+    F.pipeB2b.push(aB.rev[i]); F.pipeRtd.push(aR.rev[i]);
+
+    /* the same months on the old cash basis, kept for the comparison charts */
+    const cRev = N(cf.b2bColl[i])+N(cf.rtdColl[i])+N(cf.otherInc[i])+cB.rev[i]+cR.rev[i];
+    const cCogs= N(cf.b2bCost[i])+N(cf.rtdCost[i])+cBcost[i]+cRcost[i]+ops;
+    const cSm  = N(PAY.sm[i])+N(levelQ4(cf.travel)[i])+N(levelQ4(cf.software)[i])+N(levelQ4(cf.marketing)[i]);
+    const cGa  = N(PAY.ga[i])+N(levelQ4(cf.otherGA)[i])+N(levelQ4(cf.professional)[i])
+               + N(levelQ4(cf.telephone)[i])+N(levelQ4(cf.courier)[i])+N(levelQ4(cf.print)[i])
+               + N(levelQ4(cf.otherConsult)[i])+N(levelQ4(cf.otherExp)[i]);
+    F.cashRevenue.push(cRev);
+    F.cashEbitda.push(cRev - cCogs - cSm - cGa);
   }
 
-  /* ── FY27 = Q1 actual (MIS) + Q2-Q4 forecast ── */
+  /* ── FY27 = Q1 actual (MIS, accrual) + Q2-Q4 forecast (accrual) ── */
   const m = D.mis, q1 = [12,13,14];
   const A = k => sum(q1.map(i=>N(m[k][i])));
   const fy = {
@@ -643,33 +599,32 @@ function build(state){
     sm     : A('sm') + sum(F.sm),
     ga     : A('ga') + sum(F.ga)
   };
-  fy.cogs = fy.cogsDirect + fy.opsSal;
-  fy.gp = fy.revenue - fy.cogs;
+  fy.cogs   = fy.cogsDirect + fy.opsSal;
+  fy.gp     = fy.revenue - fy.cogs;
   fy.ebitda = fy.gp - fy.sm - fy.ga;
 
-  /* ── runway & low point ── */
-  const fcClose = closing.slice(15);
-  let low = Infinity, lowM = '', firstNeg = -1;
-  fcClose.forEach((v,j)=>{ if(v<low){low=v; lowM=D.months[15+j];}
-                           if(v<0 && firstNeg<0) firstNeg = 15+j; });
-  const burn9 = -sum(net.slice(15));
-  const avgBurn = burn9/9;
+  /* ── runway & low point (cash) ── */
+  const fcClose = closing.slice(FC0);
+  let low = Infinity, lowM='', firstNeg=-1;
+  fcClose.forEach((v,j)=>{ if(v<low){low=v; lowM=D.months[FC0+j];}
+                           if(v<0 && firstNeg<0) firstNeg = FC0+j; });
+  const avgBurn = -sum(net.slice(FC0))/FCN;
   const cashJun = closing[14];
-  const runway = avgBurn>0 ? cashJun/avgBurn : Infinity;
+  const runway  = avgBurn>0 ? cashJun/avgBurn : Infinity;
 
-  return {pB,pR,b2bPipeCost,rtdPipeCost,receipts,outflow,opening,closing,net,F,fy,
+  return {cB,cR,cBcost,cRcost,receipts,outflow,opening,closing,net,F,fy,
           low,lowM,firstNeg,avgBurn,runway,cashJun};
 }
 
 /* ── budget model (static) ── */
 const B = (()=>{
   const b = D.budget;
-  const b2bRev = b.months.map((_,i)=> N(b.b2bGroup[i])+N(b.b2bExist[i])+N(b.b2bNew[i]));
+  const b2bRev  = b.months.map((_,i)=> N(b.b2bGroup[i])+N(b.b2bExist[i])+N(b.b2bNew[i]));
   const b2bCogs = b2bRev.map(v=>v*b.b2bCogsPct);
   const revenue = b.months.map((_,i)=> N(b.rtdRev[i]) + b2bRev[i]);
-  const cogs = b.months.map((_,i)=> N(b.rtdCogs[i]) + b2bCogs[i] + N(b.opsSalary[i]));
-  const gp = revenue.map((v,i)=> v - cogs[i]);
-  const ebitda = gp.map((v,i)=> v - N(b.sm[i]) - N(b.ga[i]));
+  const cogs    = b.months.map((_,i)=> N(b.rtdCogs[i]) + b2bCogs[i] + N(b.opsSalary[i]));
+  const gp      = revenue.map((v,i)=> v - cogs[i]);
+  const ebitda  = gp.map((v,i)=> v - N(b.sm[i]) - N(b.ga[i]));
   return {months:b.months, rtdRev:b.rtdRev.map(N), b2bRev, b2bCogs,
           rtdCogs:b.rtdCogs.map(N), opsSal:b.opsSalary.map(N),
           revenue, cogs, gp, sm:b.sm.map(N), ga:b.ga.map(N), ebitda,
@@ -678,7 +633,7 @@ const B = (()=>{
              cogs:sum(cogs), gp:sum(gp), sm:sum(b.sm), ga:sum(b.ga), ebitda:sum(ebitda)}};
 })();
 
-/* ═════════════════════════ CHART DEFAULTS ═════════════════════════ */
+/* ═════════════════════════ CHART SETUP ═════════════════════════ */
 Chart.defaults.color='#94a3b8';
 Chart.defaults.font.family="'Inter',sans-serif";
 Chart.defaults.font.size=11;
@@ -691,15 +646,15 @@ const GRID={color:'rgba(255,255,255,0.05)'}, TICK={color:'#64748b',font:{size:10
 const TT={backgroundColor:'#0a1220',borderColor:'rgba(255,255,255,.14)',borderWidth:1,
   titleColor:'#e2e8f0',bodyColor:'#cbd5e1',padding:11,cornerRadius:7,displayColors:true,
   callbacks:{label:c=>` ${c.dataset.label||''}: ${inr(c.parsed.y!=null?c.parsed.y:c.parsed)}`}};
-const axY = (extra) => Object.assign({grid:GRID,ticks:Object.assign({},TICK,{callback:v=>L(v,0)})}, extra||{});
+const axY = extra => Object.assign({grid:GRID,ticks:Object.assign({},TICK,{callback:v=>L(v,0)})}, extra||{});
 const axX = () => ({grid:{display:false},ticks:TICK});
+const ZERO = {grid:{color:c=>c.tick.value===0?'rgba(255,255,255,.25)':'rgba(255,255,255,0.05)'}};
 
 const CH = {};
 function chart(id, cfg){ if(CH[id]) CH[id].destroy(); const el=document.getElementById(id);
   if(!el) return; CH[id]=new Chart(el.getContext('2d'), cfg); }
 
-/* waterfall helper: items = [{label, value, type}] type: 'start'|'end'|'flow'|'sub' */
-function waterfall(id, items, title){
+function waterfall(id, items){
   let run = 0; const bars=[], colors=[], labels=[];
   items.forEach(it=>{
     labels.push(it.label);
@@ -711,15 +666,15 @@ function waterfall(id, items, title){
       colors.push(it.value>=0?'#57cc99':'#ef4444');
     }
   });
-  chart(id,{type:'bar',data:{labels,datasets:[{label:title||'',data:bars,backgroundColor:colors,
+  chart(id,{type:'bar',data:{labels,datasets:[{data:bars,backgroundColor:colors,
       borderRadius:3,borderSkipped:false}]},
     options:{plugins:{legend:{display:false},tooltip:Object.assign({},TT,{callbacks:{
         label:c=>{const v=c.raw; return ' '+inr(v[1]-v[0])+'   →  '+inr(v[1]);}}})},
-      scales:{x:{grid:{display:false},ticks:Object.assign({},TICK,{maxRotation:52,minRotation:0,autoSkip:false,font:{size:9.5}})},
+      scales:{x:{grid:{display:false},ticks:Object.assign({},TICK,{maxRotation:52,autoSkip:false,font:{size:9.5}})},
               y:axY()}}});
 }
 
-/* ═════════════════════════ RENDER ═════════════════════════ */
+/* ═════════════════════════ RENDER HELPERS ═════════════════════════ */
 function kpi(el, cards){
   document.getElementById(el).innerHTML = cards.map(c=>
     `<div class="kpi ${c.cls||''}"><div class="kpi-l">${c.l}</div>
@@ -730,285 +685,264 @@ function table(id, head, rows){
   t.innerHTML = '<thead><tr>'+head.map(h=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>'+
     rows.map(r=>{
       if(r.hd) return `<tr class="hd"><td colspan="${head.length}">${r.hd}</td></tr>`;
-      const cls = r.cls?` class="${r.cls}"`:'';
-      return `<tr${cls}>`+r.c.map((c,i)=>`<td${i===0?'':''}>${c}</td>`).join('')+'</tr>';
+      return `<tr${r.cls?` class="${r.cls}"`:''}>`+r.c.map(c=>`<td>${c}</td>`).join('')+'</tr>';
     }).join('')+'</tbody>';
 }
-
-/* ────────────────────────── PAGE 1 ────────────────────────── */
-/* runway display — capped, because a near-zero burn produces a meaningless
-   headline number rather than a useful one                                  */
 function rwTxt(M){
   if(M.avgBurn<=0) return 'cash positive';
   if(M.runway>24)  return '24+ mo';
   return M.runway.toFixed(1)+' mo';
 }
+function currentPreset(){
+  for(const k in PRESETS){
+    const p=PRESETS[k], t=['high','med','low'];
+    if(t.every((x,i)=> S.b2b[x]===!!p.b2b[i] && S.rtd[x]===!!p.rtd[i])) return k;
+  }
+  return null;
+}
+function scenLabel(){
+  const p=currentPreset();
+  if(p) return PRESETS[p].label;
+  const on = o => ['high','med','low'].filter(k=>o[k]).map(k=>({high:'High',med:'Med',low:'Low'}[k])).join('+')||'none';
+  return `Custom — B2B ${on(S.b2b)} · RTD ${on(S.rtd)}`;
+}
+function scenBuild(key, cost){
+  const st={b2b:{},rtd:{},cost:cost===undefined?S.cost:cost};
+  ['high','med','low'].forEach((t,i)=>{st.b2b[t]=!!PRESETS[key].b2b[i]; st.rtd[t]=!!PRESETS[key].rtd[i];});
+  return build(st);
+}
+
+/* ══════════════════ PAGE 1 — CFO COMMENTARY ══════════════════ */
 function renderP1(M){
-  const cf=D.cf, mo=D.months;
-  const fy27r = sum(M.receipts.slice(12)), fy27p = sum(M.outflow.slice(12));
-  const close = M.closing[23];
+  const F=M.F, fy=M.fy, T=B.T, m=D.mis, q1=[12,13,14];
+  const Q1 = k => sum(q1.map(i=>N(m[k][i])));
+  const s0=16, s1=22;                                   // Aug-26 → Jan-27
+  const sixRev = sum(F.revenue.slice(s0-FC0, s1-FC0));
+  const sixEb  = sum(F.ebitda.slice(s0-FC0, s1-FC0));
+  const cashJan = M.closing[21];
+  const monthlyFixed = (sum(F.opsSal)+sum(F.sm)+sum(F.ga))/FCN;
+  const cogsPct = fy.revenue ? fy.cogsDirect/fy.revenue : 0.45;
+  const beRev = monthlyFixed/(1-cogsPct);
+  const q1Rev = Q1('revenue'), q1Avg = q1Rev/3;
+  const mult = beRev/q1Avg;
+
+  document.getElementById('p1sub').innerHTML =
+   `Scenario in force: <b style="color:var(--gold2)">${scenLabel()}</b>. The P&amp;L is on an accrual basis; `+
+   `cash figures follow payment timing. Every number, chart and sentence on this page is computed live from that selection.`;
+
   kpi('p1kpi',[
-    {l:'Cash at 30-Jun-26',v:L(M.cashJun),s:'last audited actual',cls:'gn',vc:'pos'},
-    {l:'Forecast cash Mar-27',v:L(close),s:close<0?'funding gap':'closing balance',
-      cls:close<0?'rd':'gn',vc:close<0?'neg':'pos'},
-    {l:'Lowest point',v:L(M.low),s:M.lowM+(M.low<0?' · goes negative':''),
-      cls:M.low<0?'rd':'or',vc:M.low<0?'neg':'warn'},
-    {l:'Runway from Jul-26',v:rwTxt(M),
-      s:M.avgBurn>0?('avg burn '+L(M.avgBurn)+'/mo'):'net cash generative',
+    {l:'Cash at 31-Jan-27',v:L(cashJan),s:'six months from today',
+      cls:cashJan<0?'rd':cashJan<1500000?'or':'gn',vc:cashJan<0?'neg':cashJan<1500000?'warn':'pos'},
+    {l:'Cash at 31-Mar-27',v:L(M.closing[23]),s:M.closing[23]<0?'funding gap':'closing balance',
+      cls:M.closing[23]<0?'rd':'gn',vc:M.closing[23]<0?'neg':'pos'},
+    {l:'Runway from Jul-26',v:rwTxt(M),s:M.avgBurn>0?('avg burn '+L(M.avgBurn)+'/mo'):'net cash generative',
       cls:M.runway<6?'rd':'gd',vc:M.runway<6?'neg':'gld'},
-    {l:'FY27 receipts',v:L(fy27r),s:'Apr-26 → Mar-27',cls:'pu'},
-    {l:'FY27 payments',v:L(fy27p),s:'net '+L(fy27r-fy27p),cls:'or',vc:fy27r-fy27p<0?'neg':'pos'}
+    {l:'Revenue next 6 months',v:L(sixRev),s:'Aug-26 → Jan-27, accrual',cls:'pu'},
+    {l:'EBITDA next 6 months',v:L(sixEb),s:sixEb<0?'cumulative loss':'cumulative profit',
+      cls:sixEb<0?'rd':'gn',vc:sixEb<0?'neg':'pos'},
+    {l:'Break-even revenue',v:L(beRev)+'/mo',s:'at '+pct(cogsPct,0)+' cost of revenue',cls:'gd',vc:'gld'}
   ]);
 
-  /* cash line */
-  const actual = M.closing.map((v,i)=> i<15?v:null);
-  const fc     = M.closing.map((v,i)=> i>=14?v:null);
-  chart('c_cash',{type:'line',data:{labels:mo,datasets:[
-      {label:'Actual',data:actual,borderColor:'#0a9396',backgroundColor:'rgba(10,147,150,.16)',
-       fill:true,tension:.32,pointRadius:2.5,borderWidth:2.4},
-      {label:'Forecast',data:fc,borderColor:'#d4a843',backgroundColor:'rgba(212,168,67,.12)',
-       fill:true,tension:.32,pointRadius:2.5,borderWidth:2.4,borderDash:[6,4]}]},
+  chart('c_six',{type:'bar',data:{labels:D.months.slice(s0,s1),datasets:[
+      {label:'Revenue (accrual)',data:F.revenue.slice(s0-FC0,s1-FC0),backgroundColor:'#0a9396',borderRadius:3,order:3},
+      {label:'EBITDA (accrual)',data:F.ebitda.slice(s0-FC0,s1-FC0),backgroundColor:'rgba(239,68,68,.75)',borderRadius:3,order:3},
+      {label:'Closing cash',type:'line',data:M.closing.slice(s0,s1),borderColor:'#d4a843',
+       borderWidth:2.6,pointRadius:3.4,tension:.28,order:1,fill:false}]},
     options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
-      scales:{x:axX(),y:axY({grid:{color:c=>c.tick.value===0?'rgba(239,68,68,.45)':'rgba(255,255,255,0.05)'}})}}});
+      scales:{x:axX(),y:axY(ZERO)}}});
 
-  /* runway gauge */
-  const rw = Math.max(0, Math.min(12, M.avgBurn>0?M.runway:12));
-  chart('c_runway',{type:'doughnut',data:{labels:['Months of cash','Beyond 12 mo'],
-      datasets:[{data:[rw,12-rw],backgroundColor:[rw<4?'#ef4444':rw<7?'#f59e0b':'#0a9396','rgba(255,255,255,.05)'],
-        borderWidth:0,circumference:270,rotation:225,cutout:'72%'}]},
-    options:{plugins:{legend:{display:false},tooltip:{enabled:false}},
-      layout:{padding:6}},
-    plugins:[{id:'ctr',afterDraw(ch){const{ctx,chartArea}=ch;
-      const x=(chartArea.left+chartArea.right)/2, y=(chartArea.top+chartArea.bottom)/2+6;
-      ctx.save();ctx.textAlign='center';
-      ctx.fillStyle=rw<4?'#ef4444':rw<7?'#f59e0b':'#57cc99';
-      ctx.font='700 34px Inter';ctx.fillText(M.avgBurn>0?M.runway.toFixed(1):'∞',x,y);
-      ctx.fillStyle='#64748b';ctx.font='600 11px Inter';
-      ctx.fillText('MONTHS OF RUNWAY',x,y+22);
-      ctx.fillStyle='#94a3b8';ctx.font='400 10px Inter';
-      ctx.fillText('at '+L(M.avgBurn)+'/mo burn',x,y+38);ctx.restore();}}]});
+  const combos=[['base','Committed only'],['cons','Conservative'],['bal','Balanced'],['agg','Full pipeline']];
+  const spread = combos.map(c=>scenBuild(c[0]));
+  chart('c_scenSpread',{type:'bar',indexAxis:'y',data:{labels:combos.map(c=>c[1]),
+      datasets:[{label:'Cash at Mar-27',data:spread.map(s=>s.closing[23]),
+        backgroundColor:spread.map(s=>s.closing[23]<0?'#ef4444':'#0a9396'),borderRadius:4},
+        {label:'Lowest cash in forecast',data:spread.map(s=>s.low),
+        backgroundColor:spread.map(s=>s.low<0?'rgba(239,68,68,.45)':'rgba(10,147,150,.45)'),borderRadius:4}]},
+    options:{plugins:{tooltip:Object.assign({},TT,{callbacks:{label:c=>` ${c.dataset.label}: ${inr(c.parsed.x)}`}})},
+      scales:{x:{grid:GRID,ticks:Object.assign({},TICK,{callback:v=>L(v,0)})},y:{grid:{display:false},ticks:TICK}}}});
 
-  /* cash bridge Jun-26 → Mar-27 */
-  const F=[15,23];
-  const g = k => sum(sl(cf[k],15,24));
-  const items=[
+  /* cash bridge */
+  const g = k => sum(sl(D.cf[k],FC0,24));
+  waterfall('c_bridge',[
     {label:'Cash 30-Jun-26',value:M.cashJun,type:'start'},
     {label:'B2B collections (committed)',value:g('b2bColl')},
-    {label:'B2B pipeline',value:sum(M.pB.rev.slice(15))},
+    {label:'B2B pipeline',value:sum(M.cB.rev.slice(FC0))},
     {label:'RTD collections (committed)',value:g('rtdColl')},
-    {label:'RTD pipeline',value:sum(M.pR.rev.slice(15))},
+    {label:'RTD pipeline',value:sum(M.cR.rev.slice(FC0))},
     {label:'Other income',value:g('otherInc')},
     {label:'Payroll',value:-g('payroll')},
     {label:'B2B / RTD delivery',value:-(g('b2bCost')+g('rtdCost'))},
-    {label:'Pipeline delivery cost',value:-(sum(M.b2bPipeCost.slice(15))+sum(M.rtdPipeCost.slice(15)))},
+    {label:'Pipeline delivery cost',value:-(sum(M.cBcost.slice(FC0))+sum(M.cRcost.slice(FC0)))},
     {label:'Professional fees',value:-g('professional')},
     {label:'Travel & software',value:-(g('travel')+g('software'))},
     {label:'Other opex',value:-(g('otherGA')+g('marketing')+g('telephone')+g('courier')
                                 +g('print')+g('otherConsult')+g('otherExp')+g('assets'))},
     {label:'Cash 31-Mar-27',value:M.closing[23],type:'end'}
-  ];
-  waterfall('c_bridge',items);
+  ]);
 
-  /* receipts vs payments */
-  chart('c_rp',{type:'bar',data:{labels:mo,datasets:[
-      {label:'Receipts',data:M.receipts,backgroundColor:'#0a9396',borderRadius:3},
-      {label:'Payments',data:M.outflow.map(v=>-v),backgroundColor:'#ef4444',borderRadius:3},
-      {label:'Net',type:'line',data:M.net,borderColor:'#d4a843',borderWidth:2.2,
-       pointRadius:2,tension:.3,fill:false}]},
-    options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
-      scales:{x:axX(),y:axY()}}});
+  /* ── narrative ── */
+  const gap = fy.ebitda - T.ebitda;
+  const rtdGap = fy.rtdRev - T.rtdRev;
+  const pipeShare = fy.revenue ? (sum(F.pipeB2b)+sum(F.pipeRtd))/fy.revenue : 0;
+  const negMonth = M.firstNeg<0?null:D.months[M.firstNeg];
+  const fundNeed = M.low<0 ? Math.ceil((-M.low + 2*Math.abs(M.avgBurn))/500000)*500000 : 0;
+  const q1Gm = Q1('gp')/q1Rev;
 
-  /* receipts composition */
-  const rc=[
-    ['Billed collections',cf.billed,'#4ecdc4'],
-    ['B2B collections',cf.b2bColl,'#0a9396'],
-    ['RTD collections',cf.rtdColl,'#57cc99'],
-    ['B2B pipeline',M.pB.rev,'#d4a843'],
-    ['RTD pipeline',M.pR.rev,'#f0c96a'],
-    ['Investment',cf.investment,'#8b5cf6'],
-    ['Other income',cf.otherInc,'#94d2bd']];
-  chart('c_rcomp',{type:'bar',data:{labels:mo,datasets:rc.map(([l,d,c])=>
-      ({label:l,data:d.map(N),backgroundColor:c,borderRadius:2}))},
-    options:{plugins:{tooltip:TT},scales:{x:Object.assign(axX(),{stacked:true}),
-      y:Object.assign(axY(),{stacked:true})}}});
+  document.getElementById('narrative').innerHTML = `
+   <div class="narr"><h4>Where we are</h4>
+     <p>TMC closed June 2026 with <b class="big">${L(M.cashJun)}</b> in the bank — but <b>${L(15000000)}</b> of that
+     has come from the investor, not from trading. Q1 FY26-27 delivered revenue of <b>${L(q1Rev)}</b>
+     against a budget of <b>₹67.85L</b>, a shortfall of <b class="bad">${L(q1Rev-6785075)} (${pct((q1Rev-6785075)/6785075,0)})</b>.
+     The entire gap is RTD: the placement business has billed <b class="bad">nothing</b> in fifteen months, while the
+     FY27 budget puts <b>${L(T.rtdRev)}</b> — ${pct(T.rtdRev/T.revenue,0)} of planned revenue — through that single line.</p>
+     <p>The B2B training business is real and paying. It has produced <b>${L(sum(sl(m.b2bRev,0,15)))}</b> of revenue
+     across fifteen months, and Q1 FY27 gross margin of <b class="big">${pct(q1Gm,0)}</b> was actually
+     <b>ahead</b> of the budgeted ${pct(1296531/6785075,0)}. The problem is not unit economics. It is scale, and it is
+     fixed cost.</p></div>
 
-  /* payments composition */
-  const pc = D.paymentLines.map(p=>({label:p.label,data:cf[p.k].map(N),backgroundColor:p.c,borderRadius:2}));
-  pc.push({label:'B2B pipeline cost',data:M.b2bPipeCost,backgroundColor:'#f0c96a',borderRadius:2});
-  pc.push({label:'RTD pipeline cost',data:M.rtdPipeCost,backgroundColor:'#fb923c',borderRadius:2});
-  chart('c_pcomp',{type:'bar',data:{labels:mo,datasets:pc},
-    options:{plugins:{tooltip:TT,legend:{labels:{boxWidth:9,padding:9,font:{size:10}}}},
-      scales:{x:Object.assign(axX(),{stacked:true}),y:Object.assign(axY(),{stacked:true})}}});
+   <div class="narr"><h4>Where we land in six months — ${scenLabel()}</h4>
+     <p>On the scenario currently selected, accrued revenue over Aug-26 → Jan-27 totals <b class="big">${L(sixRev)}</b>,
+     of which <b>${pct(pipeShare,0)}</b> of the full-year forecast comes from unconverted pipeline rather than
+     signed business. Cumulative EBITDA over those six months is <b class="${sixEb<0?'bad':'big'}">${L(sixEb)}</b>,
+     and cash lands at <b class="${cashJan<0?'bad':'big'}">${L(cashJan)}</b> on 31 January 2027.</p>
+     <p>${negMonth
+        ? `Cash turns <b class="bad">negative in ${negMonth}</b> and reaches a low of <b class="bad">${L(M.low)}</b>.
+           On the forecast burn of <b>${L(M.avgBurn)} per month</b>, runway from July 2026 is
+           <b class="bad">${rwTxt(M)}</b>. A raise of roughly <b class="bad">${L(fundNeed)}</b> is required, and it
+           needs to be committed no later than <b>${D.months[Math.max(0,M.firstNeg-3)]}</b> to avoid a payroll event.`
+        : `Cash stays positive throughout, with a low of <b class="big">${L(M.low)}</b> in ${M.lowM}.
+           That is the good news. The bad news is that it depends on <b>${pct(pipeShare,0)}</b> of forecast
+           revenue converting from pipeline, and the balance is investor money, not trading surplus.`}</p>
+     <p>Against the approved plan, FY27 EBITDA comes in at <b class="${fy.ebitda<0?'bad':'big'}">${L(fy.ebitda)}</b>
+     versus a budgeted <b>${L(T.ebitda)}</b> — a gap of <b class="bad">${L(gap)}</b>. Revenue lands
+     <b class="bad">${L(fy.revenue-T.revenue)}</b> below plan, and <b>${pct(Math.abs(rtdGap)/Math.abs(fy.revenue-T.revenue),0)}</b>
+     of that shortfall is RTD placement revenue that will not appear this year. Cost discipline is <b>not</b> the
+     issue: the forecast spends <b class="big">${L(T.sm+T.ga+T.opsSal-fy.sm-fy.ga-fy.opsSal)}</b> less than budget
+     on salaries, S&amp;M and G&amp;A combined.</p></div>
 
-  /* cashflow table */
-  const head=['₹'].concat(mo.map((m,i)=> i<15?m:m+' F'));
-  const row=(l,arr,cls)=>({cls,c:[l].concat(arr.map((v,i)=>
-    `<span class="${i>=15?'fc':''}">${v?inr(v):'–'}</span>`))});
-  const rows=[
-    row('Opening balance',M.opening,'tot'),
-    {hd:'Receipts'},
-    row('Billed collections',cf.billed.map(N)),
-    row('B2B collections',cf.b2bColl.map(N)),
-    row('RTD collections',cf.rtdColl.map(N)),
-    row('B2B pipeline',M.pB.rev),
-    row('RTD pipeline',M.pR.rev),
-    row('Investment received',cf.investment.map(N)),
-    row('Other income',cf.otherInc.map(N)),
-    row('Total receipts',M.receipts,'tot'),
-    {hd:'Payments'}
-  ];
-  D.paymentLines.forEach(p=> rows.push(row(p.label, cf[p.k].map(N))));
-  rows.push(row('B2B pipeline cost',M.b2bPipeCost));
-  rows.push(row('RTD pipeline cost',M.rtdPipeCost));
-  rows.push(row('Total payments',M.outflow,'tot'));
-  rows.push(row('Net cashflow',M.net,'tot'));
-  rows.push(row('Closing balance',M.closing,'tot'));
-  table('t_cf',head,rows);
+   <div class="narr"><h4>The one number that matters</h4>
+     <p>At the forecast fixed cost base of <b>${L(monthlyFixed)} per month</b> (operations salaries + S&amp;M + G&amp;A)
+     and a cost of revenue of <b>${pct(cogsPct,0)}</b>, TMC breaks even at
+     <b class="big">${L(beRev)} of accrued revenue per month</b>. The best month in the last fifteen was
+     <b>${L(Math.max(...sl(m.revenue,0,15)))}</b>; the Q1 FY27 average was <b>${L(q1Avg)}</b>. Break-even is
+     <b class="bad">${mult.toFixed(1)}×</b> the current run rate. Either revenue rises
+     <b>${mult.toFixed(1)}×</b>, or the fixed base comes down by <b>${L(monthlyFixed - q1Avg*(1-cogsPct))}</b>
+     a month — <b>${pct((monthlyFixed - q1Avg*(1-cogsPct))/monthlyFixed,0)}</b> of the current base.
+     Realistically it has to be both.</p></div>`;
 
-  const costLbl = S.cost==='model'?'as modelled in the workbook':pct(S.cost,0)+' of pipeline revenue';
+  /* ── actions ── */
+  const fixed6 = monthlyFixed;
+  document.getElementById('actions').innerHTML = `
+   <div class="act do"><h4 style="color:var(--teal3)">▲ Do this — next 90 days</h4><ul>
+     <li><b>Convert one RTD deal to cash, not to pipeline.</b>
+         ${L(sum(D.pipe.rtd.rev.high.slice(FC0))+sum(D.pipe.rtd.rev.med.slice(FC0)))} of highly- and
+         medium-likely RTD revenue sits in the model. A single signed placement with a collected advance
+         changes the funding conversation entirely.</li>
+     <li><b>Bill and collect faster on B2B.</b> Receivables stood at ${L(928333)} at 30-Jun-26 and collections
+         ran below billed revenue through Q1. Pulling DSO in by 20 days releases roughly ${L(928333*0.3)}
+         of cash at no cost.</li>
+     <li><b>Lock the highly-likely B2B book.</b> ${L(sum(D.pipe.b2b.rev.high.slice(FC0)))} of probability-weighted
+         B2B revenue — dominated by the Somika A1/A2/B1 programmes — starts landing from Sep-26. Get delivery
+         schedules and advances signed before the Q3 cash trough, not after it.</li>
+     <li><b>Re-forecast the budget formally.</b> The approved FY27 plan is
+         ${pct((T.revenue-fy.revenue)/T.revenue,0)} above where the business will land. Reporting against an
+         unachievable plan destroys credibility with the investor at exactly the moment you need more money.</li>
+     <li><b>Keep the books on accrual, not cash.</b> The cashflow model recognises nothing in Feb-27 and Mar-27
+         for B2B because invoices have not been raised yet. On a proper accrual view those months carry
+         ${L(ACC.b2bRevComm)} of committed revenue each. Managing off the cash view understates the back half
+         of the year.</li>
+   </ul></div>
+
+   <div class="act dont"><h4 style="color:#fca5a5">▼ Avoid this</h4><ul>
+     <li><b>Do not add headcount against RTD revenue that has not been signed.</b> Budget carries
+         ${inr(1131000)}/month of salary at steady state against ${L(q1Avg)} of monthly revenue. Every hire
+         ahead of a contract shortens runway by real weeks.</li>
+     <li><b>Do not treat investor drawdowns as revenue performance.</b> ${L(15000000)} of the ${L(M.cashJun)}
+         on the balance sheet at Jun-26 is borrowed. Trading cashflow over the last twelve months was
+         <b>${L(sum(M.net.slice(3,15))-sum(sl(D.cf.investment,3,15)))}</b>.</li>
+     <li><b>Do not run the full-pipeline scenario as the plan.</b> Low-likelihood deals carry a 30% probability
+         for a reason — several are already flagged "removed from pipeline" in the source register.</li>
+     <li><b>Do not let G&amp;A drift.</b> G&amp;A ran ${L(Q1('ga'))} in Q1 FY27 against gross profit of
+         ${L(Q1('gp'))} — that is ${(Q1('ga')/Q1('gp')).toFixed(1)}× the gross profit the business generates.</li>
+     <li><b>Do not defer the funding conversation to the trough.</b> Money raised at ${L(M.low)} of cash is
+         raised on someone else's terms.</li>
+   </ul></div>`;
+
+  document.getElementById('risks').innerHTML = `
+   <div class="act watch"><h4 style="color:var(--orange)">⚑ Watch closely</h4><ul>
+     <li><b>RTD concentration.</b> ${pct(T.rtdRev/T.revenue,0)} of the budget and
+         ${L(sum(D.pipe.rtd.rev.high.slice(FC0))+sum(D.pipe.rtd.rev.med.slice(FC0))+sum(D.pipe.rtd.rev.low.slice(FC0)))}
+         of pipeline sit in a business line with zero billing history.</li>
+     <li><b>Customer concentration in B2B.</b> Somika accounts for the majority of highly-likely B2B pipeline.
+         One client decision moves the whole forecast.</li>
+     <li><b>Revenue recognition discipline.</b> Several pipeline deals are billed in two lumps months apart.
+         Recognised on delivery they smooth out — but only if delivery schedules are actually documented.
+         Without them the audit position on cut-off is weak.</li>
+     <li><b>Interest cost.</b> ${inr(325226)} of interest is already payable on the convertible note, plus
+         ${inr(36136)} of TDS. This sits below EBITDA and is in none of the figures above.</li>
+   </ul></div>
+
+   <div class="act win"><h4 style="color:var(--gold2)">◆ What would change the picture</h4><ul>
+     <li><b>Two RTD placements a month at budgeted economics</b> (${inr(275000)} revenue, ${inr(132800)} cost)
+         adds about ${inr(284400)} of gross profit per month — roughly
+         ${(284400/fixed6*100).toFixed(0)}% of the fixed base.</li>
+     <li><b>A 10% cut in the fixed cost base</b> saves ${L(fixed6*0.1*FCN)} across the remaining nine months
+         of FY27 — more than the entire S&amp;M underspend to date.</li>
+     <li><b>Moving B2B pipeline cost from 60% to 40%</b> lifts FY27 EBITDA by
+         ${L(build({b2b:S.b2b,rtd:S.rtd,cost:0.40}).fy.ebitda - build({b2b:S.b2b,rtd:S.rtd,cost:0.60}).fy.ebitda)}.
+         Teacher utilisation is the highest-leverage operational lever in the business.</li>
+     <li><b>Converting the medium-likely B2B book</b> (${L(sum(D.pipe.b2b.rev.med.slice(FC0)))} weighted) takes
+         the business materially closer to break-even without a single new hire.</li>
+   </ul></div>`;
+
+  chart('c_be',{type:'bar',data:{labels:['-20% fixed cost','-10%','Current base','+10%'],
+      datasets:[{label:'Break-even revenue / month',
+        data:[0.8,0.9,1.0,1.1].map(f=>monthlyFixed*f/(1-cogsPct)),
+        backgroundColor:['#57cc99','#94d2bd','#d4a843','#ef4444'],borderRadius:4},
+        {label:'Q1 FY27 actual run rate',type:'line',data:[0,1,2,3].map(()=>q1Avg),
+         borderColor:'#8b5cf6',borderWidth:2.2,pointRadius:0,borderDash:[6,4],fill:false}]},
+    options:{plugins:{tooltip:TT},scales:{x:axX(),y:axY()}}});
+
+  const need = Math.max(0,-M.low);
+  table('t_funding',['Funding maths','Amount'],[
+    {c:['Cash at 30-Jun-26',inr(M.cashJun)]},
+    {c:['Investor funding drawn to date',inr(15000000)]},
+    {c:['Forecast net cash movement Jul-26 → Mar-27',
+        `<span class="${sum(M.net.slice(FC0))<0?'neg':'pos'}">${inr(sum(M.net.slice(FC0)))}</span>`]},
+    {c:['Forecast cash at 31-Mar-27',
+        `<span class="${M.closing[23]<0?'neg':'pos'}">${inr(M.closing[23])}</span>`]},
+    {c:['Lowest cash point in forecast',
+        `<span class="${M.low<0?'neg':'pos'}">${inr(M.low)} (${M.lowM})</span>`]},
+    {cls:'tot',c:['Minimum funding required',need>0?inr(need):'Nil on this scenario']},
+    {cls:'tot',c:['Recommended raise (low point + 2 months buffer)',
+      need>0?inr(Math.ceil((need+2*Math.abs(M.avgBurn))/500000)*500000)
+            :inr(Math.ceil(3*Math.abs(M.avgBurn)/500000)*500000)]},
+    {c:['Average monthly burn (forecast)',inr(M.avgBurn)]},
+    {c:['Months of runway from Jul-26',rwTxt(M)]}
+  ]);
+
+  if(!document.getElementById('juneComm').innerHTML){
+    document.getElementById('juneComm').innerHTML = D.juneCommentary.map(([h,p])=>
+      `<div class="narr sm"><h4>${h}</h4><p>${p}</p></div>`).join('');
+  }
+
   document.getElementById('p1note').innerHTML =
-   `<b>How to read this.</b> Months to Jun-26 are actuals; Jul-26 onward are forecast (shown in gold). `+
-   `Pipeline revenue is already probability-weighted at deal level in the source model — selecting a `+
-   `likelihood tier switches that weighted stream on, it does not apply a second haircut. `+
-   `B2B pipeline delivery cost is currently set to <b>${costLbl}</b>; RTD pipeline cost uses the `+
-   `explicit deal-level costs from the model. Investment inflows of ₹1.50Cr to date are shown as `+
-   `receipts — the ₹50L drawn in Jun-26 is the only reason cash rose to ₹58.4L.`;
+   `<b>Basis of preparation.</b> Actuals to 30 June 2026 are from the TMC MIS pack (accrual). The nine-month `+
+   `forecast is an <b>accrual P&amp;L</b>: committed revenue and cost, and every operating expense, are `+
+   `recognised evenly across the months they relate to, and each pipeline deal is straight-lined across its `+
+   `delivery window rather than booked in its payment month. Payroll comes from the employee-level schedule `+
+   `and is already accrual. Cash balances, burn and runway on this page follow <b>payment timing</b> from the `+
+   `28 July 2026 cashflow model — that is the correct basis for a liquidity question. Figures exclude interest, `+
+   `depreciation and tax. This commentary is generated from the scenario selected above.`;
 }
 
-/* ────────────────────────── PAGE 2 ────────────────────────── */
+/* ══════════════════ PAGE 2 — BUDGET ══════════════════ */
 let p2done=false;
 function renderP2(){
   if(p2done) return; p2done=true;
-  const m=D.mis, mo=m.months, q1=[12,13,14];
-  const A=k=>sum(q1.map(i=>N(m[k][i])));
-  const q1rev=A('revenue'), q1eb=A('ebitda'), q1gp=A('gp');
-  const bQ1 = {revenue:6785075, cogs:4645544, opsSal:843000, gp:1296531, sm:2544000, ga:2155000, ebitda:-3402469};
-
-  kpi('p2kpi',[
-    {l:'Q1 FY27 revenue',v:L(q1rev),s:'vs budget '+L(bQ1.revenue),cls:'rd',vc:'neg'},
-    {l:'Revenue variance',v:pct((q1rev-bQ1.revenue)/bQ1.revenue,0),s:L(q1rev-bQ1.revenue)+' below plan',cls:'rd',vc:'neg'},
-    {l:'Q1 gross margin',v:pct(q1gp/q1rev,1),s:'budget '+pct(bQ1.gp/bQ1.revenue,1),cls:'gn',vc:'pos'},
-    {l:'Q1 EBITDA',v:L(q1eb),s:'vs budget '+L(bQ1.ebitda),cls:'or',vc:'neg'},
-    {l:'Jun-26 revenue',v:L(m.revenue[14]),s:'-22.2% MoM from '+L(m.revenue[13]),cls:'rd',vc:'neg'},
-    {l:'RTD revenue booked',v:'₹0',s:'12 months — stream not started',cls:'rd',vc:'neg'}
-  ]);
-
-  chart('c_misTrend',{type:'bar',data:{labels:mo,datasets:[
-      {label:'Revenue',data:m.revenue,backgroundColor:'#0a9396',borderRadius:3,order:2},
-      {label:'Total cost',data:m.revenue.map((v,i)=>-(N(m.cogs[i])+N(m.sm[i])+N(m.ga[i]))),
-       backgroundColor:'rgba(239,68,68,.72)',borderRadius:3,order:2},
-      {label:'EBITDA',type:'line',data:m.ebitda,borderColor:'#d4a843',borderWidth:2.4,
-       pointRadius:2.6,tension:.3,order:1}]},
-    options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
-      scales:{x:axX(),y:axY()}}});
-
-  waterfall('c_misBridge',[
-    {label:'Revenue',value:q1rev,type:'start'},
-    {label:'Teacher cost',value:-A('teacherCost')},
-    {label:'RTD cost',value:-A('rtdCogs')},
-    {label:'Ops salaries',value:-A('opsSalary')},
-    {label:'Gross profit',value:q1gp,type:'sub'},
-    {label:'S&M',value:-A('sm')},
-    {label:'G&A',value:-A('ga')},
-    {label:'EBITDA',value:q1eb,type:'end'}
-  ]);
-
-  chart('c_margin',{type:'line',data:{labels:mo,datasets:[
-      {label:'Gross margin %',data:m.gp.map((v,i)=>N(m.revenue[i])?v/m.revenue[i]*100:null),
-       borderColor:'#57cc99',borderWidth:2.3,tension:.3,pointRadius:2.4,fill:false},
-      {label:'EBITDA margin %',data:m.ebitda.map((v,i)=>N(m.revenue[i])?v/m.revenue[i]*100:null),
-       borderColor:'#ef4444',borderWidth:2.3,tension:.3,pointRadius:2.4,fill:false}]},
-    options:{plugins:{tooltip:Object.assign({},TT,{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toFixed(1)}%`}})},
-      interaction:{mode:'index',intersect:false},
-      scales:{x:axX(),y:{grid:GRID,ticks:Object.assign({},TICK,{callback:v=>v+'%'})}}}});
-
-  const cs=[['Teacher / RTD cost',m.revenue.map((_,i)=>N(m.teacherCost[i])+N(m.rtdCogs[i])),'#0a9396'],
-            ['Ops salaries',m.opsSalary.map(N),'#4ecdc4'],
-            ['S&M',m.sm.map(N),'#d4a843'],
-            ['G&A',m.ga.map(N),'#ef4444']];
-  const tot = mo.map((_,i)=> cs.reduce((s,c)=>s+N(c[1][i]),0));
-  chart('c_coststack',{type:'bar',data:{labels:mo,datasets:cs.map(([l,d,c])=>
-      ({label:l,data:d.map((v,i)=> tot[i]? v/tot[i]*100 : 0),backgroundColor:c,borderRadius:2}))},
-    options:{plugins:{tooltip:Object.assign({},TT,{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toFixed(1)}%`}})},
-      scales:{x:Object.assign(axX(),{stacked:true}),
-              y:{stacked:true,max:100,grid:GRID,ticks:Object.assign({},TICK,{callback:v=>v+'%'})}}}});
-
-  const lbl=['Revenue','COGS + ops salary','Gross profit','S&M','G&A','EBITDA'];
-  const act=[q1rev,A('cogs'),q1gp,A('sm'),A('ga'),q1eb];
-  const bud=[bQ1.revenue,bQ1.cogs+bQ1.opsSal,bQ1.gp,bQ1.sm,bQ1.ga,bQ1.ebitda];
-  chart('c_q1vb',{type:'bar',data:{labels:lbl,datasets:[
-      {label:'Actual',data:act,backgroundColor:'#0a9396',borderRadius:3},
-      {label:'Budget',data:bud,backgroundColor:'rgba(212,168,67,.85)',borderRadius:3}]},
-    options:{plugins:{tooltip:TT},scales:{x:axX(),y:axY()}}});
-  table('t_q1vb',['Q1 FY 26-27','Actual','Budget','Variance','Var %'],
-    lbl.map((l,i)=>({cls:i===5?'tot':'',c:[l,inr(act[i]),inr(bud[i]),
-      `<span class="${(act[i]-bud[i])>=0?'pos':'neg'}">${inr(act[i]-bud[i])}</span>`,
-      bud[i]?pct((act[i]-bud[i])/Math.abs(bud[i]),0):'–']})));
-
-  /* monthly P&L table */
-  const H=['₹'].concat(mo,['FY26 total','Q1 FY27']);
-  const fy26=k=>sum(sl(m[k],0,12)), fq1=k=>A(k);
-  const R=(l,k,cls,neg)=>({cls,c:[l].concat(m[k].map(v=>inr(neg?-v:v)),
-    [inr(neg?-fy26(k):fy26(k)),inr(neg?-fq1(k):fq1(k))])});
-  table('t_mis',H,[
-    R('B2B training revenue','b2bRev'),
-    R('RTD revenue','rtdRev'),
-    R('Other income','otherInc'),
-    R('Total revenue','revenue','tot'),
-    {hd:'Cost of sale'},
-    R('Teacher / consultant cost','teacherCost'),
-    R('RTD delivery cost','rtdCogs'),
-    R('Operations salaries','opsSalary'),
-    R('Total cost of sale','cogs','tot'),
-    R('Gross profit','gp','tot'),
-    {hd:'Sales & marketing'},
-    R('Marketing','smMarketing'),R('Website & software','smSoftware'),
-    R('S&M manpower','smSalary'),R('Travel','smTravel'),R('S&M consultants','smConsult'),
-    R('Total S&M','sm','tot'),
-    {hd:'General & administrative'},
-    R('Office rent','gaRent'),R('Office maintenance','gaMaint'),R('G&A manpower','gaSalary'),
-    R('Professional fees','gaProf'),R('Other G&A','gaMisc'),
-    R('Total G&A','ga','tot'),
-    R('EBITDA','ebitda','tot')
-  ]);
-
-  /* manpower */
-  chart('c_mp',{type:'bar',data:{labels:mo,datasets:[
-      {label:'Operations',data:sl(D.payrollDept.ops,0,15),backgroundColor:'#0a9396',borderRadius:2,yAxisID:'y'},
-      {label:'G&A',data:sl(D.payrollDept.ga,0,15),backgroundColor:'#d4a843',borderRadius:2,yAxisID:'y'},
-      {label:'S&M',data:sl(D.payrollDept.sm,0,15),backgroundColor:'#8b5cf6',borderRadius:2,yAxisID:'y'},
-      {label:'Headcount',type:'line',data:D.headcount,borderColor:'#57cc99',borderWidth:2.3,
-       pointRadius:2.6,tension:.3,yAxisID:'y1'}]},
-    options:{plugins:{tooltip:TT},scales:{x:Object.assign(axX(),{stacked:true}),
-      y:Object.assign(axY(),{stacked:true}),
-      y1:{position:'right',grid:{display:false},ticks:Object.assign({},TICK,{callback:v=>v}),
-          min:0,max:20,title:{display:true,text:'headcount',color:'#64748b',font:{size:10}}}}}});
-
-  const bs=D.bs, j=2;
-  chart('c_wc',{type:'bar',data:{labels:['Receivables','Other current assets','Cash','Payables','Other liabilities','Duties & taxes'],
-      datasets:[{label:'₹',data:[bs.asset[1][1][j],bs.asset[2][1][j],bs.asset[3][1][j],
-        -bs.liab[5][1][j],-bs.liab[6][1][j],-bs.liab[4][1][j]],
-        backgroundColor:['#0a9396','#4ecdc4','#57cc99','#ef4444','#f59e0b','#8b5cf6'],borderRadius:3}]},
-    options:{plugins:{legend:{display:false},tooltip:TT},scales:{x:axX(),y:axY()}}});
-
-  const bsRows=[{hd:'Sources of funds'}]
-    .concat(bs.liab.map(([l,v])=>({c:[l].concat(v.map(inr))})))
-    .concat([{cls:'tot',c:['Total'].concat(bs.liabTotal.map(inr))},{hd:'Application of funds'}])
-    .concat(bs.asset.map(([l,v])=>({c:[l].concat(v.map(inr))})))
-    .concat([{cls:'tot',c:['Total'].concat(bs.assetTotal.map(inr))}]);
-  table('t_bs',['Balance sheet'].concat(bs.months),bsRows);
-
-  document.getElementById('juneComm').innerHTML = D.juneCommentary.map(([h,p])=>
-    `<div class="narr"><h4>${h}</h4><p>${p}</p></div>`).join('');
-}
-
-/* ────────────────────────── PAGE 3 ────────────────────────── */
-let p3done=false;
-function renderP3(){
-  if(p3done) return; p3done=true;
   const b=D.budget, T=B.T, mo=B.months;
   let beIdx=-1; B.ebitda.forEach((v,i)=>{ if(v>=0 && beIdx<0) beIdx=i; });
-  kpi('p3kpi',[
+  kpi('p2kpi',[
     {l:'FY27 budget revenue',v:L(T.revenue),s:'RTD '+pct(T.rtdRev/T.revenue,0)+' · B2B '+pct(T.b2bRev/T.revenue,0),cls:'gn',vc:'pos'},
     {l:'RTD placement revenue',v:L(T.rtdRev),s:'from ₹0 booked in 15 months',cls:'or',vc:'warn'},
     {l:'B2B training revenue',v:L(T.b2bRev),s:'2.3× the FY26 actual run rate',cls:'pu'},
@@ -1033,7 +967,7 @@ function renderP3(){
       {label:'SG&A',data:[0,1,2,3].map(q=>-(qs(B.sm,q)+qs(B.ga,q))),backgroundColor:'#f59e0b',borderRadius:3},
       {label:'EBITDA',type:'line',data:[0,1,2,3].map(q=>qs(B.ebitda,q)),borderColor:'#d4a843',
        borderWidth:2.6,pointRadius:4,tension:.25}]},
-    options:{plugins:{tooltip:TT},scales:{x:axX(),y:axY()}}});
+    options:{plugins:{tooltip:TT},scales:{x:axX(),y:axY(ZERO)}}});
 
   waterfall('c_budBridge',[
     {label:'RTD revenue',value:T.rtdRev,type:'start'},
@@ -1109,23 +1043,23 @@ function renderP3(){
     R('EBITDA',B.ebitda,'tot')
   ]);
 
-  document.getElementById('p3note').innerHTML =
-   `<b>Source note.</b> The 'Budget FY27' sheet in the client workbook evaluates to #NAME? because the `+
-   `installed Excel build does not support XLOOKUP. Every line above has been rebuilt from the underlying `+
-   `RTD Buildup, Pipeline Buildup FY27 and Cost Buildup FY27 sheets, and ties exactly to the budget column `+
-   `carried in the June MIS (Q1: revenue ₹67.85L · cost of sale ₹46.46L · ops salary ₹8.43L · S&amp;M ₹25.44L · `+
-   `G&amp;A ₹21.55L · EBITDA -₹34.02L). <b>${pct(T.rtdRev/T.revenue,0)} of budgeted revenue is RTD placement</b> — `+
-   `a stream that has billed nothing in the 15 months to Jun-26.`;
+  document.getElementById('p2note').innerHTML =
+   `<b>Source note.</b> The 'Budget FY27' sheet in the client workbook evaluates to #NAME? because the installed `+
+   `Excel build does not support XLOOKUP. Every line above is rebuilt from the underlying RTD Buildup, Pipeline `+
+   `Buildup FY27 and Cost Buildup FY27 sheets, and ties exactly to the budget column carried in the June MIS `+
+   `(Q1: revenue ₹67.85L · cost of sale ₹46.46L · ops salary ₹8.43L · S&amp;M ₹25.44L · G&amp;A ₹21.55L · `+
+   `EBITDA -₹34.02L). <b>${pct(T.rtdRev/T.revenue,0)} of budgeted revenue is RTD placement</b> — a stream that `+
+   `has billed nothing in the 15 months to Jun-26.`;
 }
 
-/* ────────────────────────── PAGE 4 ────────────────────────── */
-function renderP4(M){
+/* ══════════════════ PAGE 3 — FORECAST vs BUDGET ══════════════════ */
+function renderP3(M){
   const F=M.F, fy=M.fy, T=B.T, mo=B.months;
-  const q1=[12,13,14], m=D.mis, A=k=>sum(q1.map(i=>N(m[k][i])));
-  const fRev=q1.map(i=>N(m.revenue[i])).concat(F.revenue);
-  const fEb =q1.map(i=>N(m.ebitda[i])).concat(F.ebitda);
+  const m=D.mis, q1=[12,13,14], Q1=k=>sum(q1.map(i=>N(m[k][i])));
+  const fRev = q1.map(i=>N(m.revenue[i])).concat(F.revenue);
+  const fEb  = q1.map(i=>N(m.ebitda[i])).concat(F.ebitda);
 
-  kpi('p4kpi',[
+  kpi('p3kpi',[
     {l:'FY27 forecast revenue',v:L(fy.revenue),s:'budget '+L(T.revenue),cls:'rd',vc:'neg'},
     {l:'Revenue gap',v:pct((fy.revenue-T.revenue)/T.revenue,0),s:L(fy.revenue-T.revenue),cls:'rd',vc:'neg'},
     {l:'Forecast gross margin',v:pct(fy.gp/fy.revenue,1),s:'budget '+pct(T.gp/T.revenue,1),
@@ -1136,6 +1070,15 @@ function renderP4(M){
     {l:'Pipeline in forecast',v:L(sum(F.pipeB2b)+sum(F.pipeRtd)),
       s:pct((sum(F.pipeB2b)+sum(F.pipeRtd))/(fy.revenue||1),0)+' of FY27 revenue',cls:'pu'}
   ]);
+
+  document.getElementById('basisNote').innerHTML =
+   `<b>Accrual basis.</b> Committed B2B revenue is recognised at <b>${inr(ACC.b2bRevComm)} per month</b> across `+
+   `all nine forecast months, rather than following the collection profile in the cashflow (which runs from `+
+   `${inr(1164010.95)} in Aug-26 down to nil in Feb-27 and Mar-27, simply because those invoices have not been `+
+   `raised yet). Each pipeline deal is straight-lined across its delivery window — the Mahindra Arabic programme, `+
+   `for example, is billed in two lumps four months apart but earned evenly over those four months. Delivery cost `+
+   `is matched to the revenue it supports. Payroll keeps its genuine July hiring ramp because the payroll `+
+   `schedule is already an accrual record. <b>Totals are unchanged; only the phasing is corrected.</b>`;
 
   waterfall('c_gapBridge',[
     {label:'Budget EBITDA',value:T.ebitda,type:'start'},
@@ -1151,21 +1094,35 @@ function renderP4(M){
 
   chart('c_revBvF',{type:'bar',data:{labels:mo,datasets:[
       {label:'Budget',data:B.revenue,backgroundColor:'rgba(212,168,67,.8)',borderRadius:3},
-      {label:'Actual / forecast',data:fRev,backgroundColor:'#0a9396',borderRadius:3}]},
+      {label:'Actual / forecast (accrual)',data:fRev,backgroundColor:'#0a9396',borderRadius:3}]},
     options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
       scales:{x:axX(),y:axY()}}});
 
   chart('c_ebBvF',{type:'line',data:{labels:mo,datasets:[
       {label:'Budget EBITDA',data:B.ebitda,borderColor:'#d4a843',borderWidth:2.4,tension:.28,
        pointRadius:2.6,fill:false},
-      {label:'Forecast EBITDA',data:fEb,borderColor:'#ef4444',borderWidth:2.4,tension:.28,
+      {label:'Forecast EBITDA (accrual)',data:fEb,borderColor:'#ef4444',borderWidth:2.4,tension:.28,
        pointRadius:2.6,backgroundColor:'rgba(239,68,68,.1)',fill:true}]},
     options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
-      scales:{x:axX(),y:axY({grid:{color:c=>c.tick.value===0?'rgba(255,255,255,.25)':'rgba(255,255,255,0.05)'}})}}});
+      scales:{x:axX(),y:axY(ZERO)}}});
+
+  chart('c_accVsCash',{type:'bar',data:{labels:F.months,datasets:[
+      {label:'Cash timing (old basis)',data:F.cashRevenue,backgroundColor:'rgba(148,163,184,.45)',borderRadius:3},
+      {label:'Accrual — as earned',type:'line',data:F.revenue,borderColor:'#57cc99',borderWidth:2.8,
+       pointRadius:3.2,tension:.25,fill:false}]},
+    options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
+      scales:{x:axX(),y:axY()}}});
+
+  chart('c_ebAccVsCash',{type:'bar',data:{labels:F.months,datasets:[
+      {label:'Cash timing (old basis)',data:F.cashEbitda,backgroundColor:'rgba(148,163,184,.45)',borderRadius:3},
+      {label:'Accrual — as earned',type:'line',data:F.ebitda,borderColor:'#ef4444',borderWidth:2.8,
+       pointRadius:3.2,tension:.25,fill:false}]},
+    options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
+      scales:{x:axX(),y:axY(ZERO)}}});
 
   chart('c_revSrc',{type:'bar',data:{labels:F.months,datasets:[
-      {label:'B2B committed',data:sl(D.cf.b2bColl,15,24),backgroundColor:'#0a9396',borderRadius:2},
-      {label:'RTD committed',data:sl(D.cf.rtdColl,15,24),backgroundColor:'#4ecdc4',borderRadius:2},
+      {label:'B2B committed',data:F.months.map(()=>ACC.b2bRevComm),backgroundColor:'#0a9396',borderRadius:2},
+      {label:'RTD committed',data:F.months.map(()=>ACC.rtdRevComm),backgroundColor:'#4ecdc4',borderRadius:2},
       {label:'B2B pipeline',data:F.pipeB2b,backgroundColor:'#d4a843',borderRadius:2},
       {label:'RTD pipeline',data:F.pipeRtd,backgroundColor:'#8b5cf6',borderRadius:2}]},
     options:{plugins:{tooltip:TT},scales:{x:Object.assign(axX(),{stacked:true}),
@@ -1175,311 +1132,90 @@ function renderP4(M){
   const tn={high:'Highly likely (0.9)',med:'Medium likely (0.6)',low:'Low likely (0.3)'};
   chart('c_tier',{type:'bar',data:{labels:['B2B','RTD'],datasets:tiers.map((k,i)=>({
       label:tn[k],
-      data:[sum(D.pipe.b2b.rev[k].slice(15)),sum(D.pipe.rtd.rev[k].slice(15))],
+      data:[sum(D.pipe.b2b.rev[k].slice(FC0)),sum(D.pipe.rtd.rev[k].slice(FC0))],
       borderRadius:3,
-      /* tiers switched off in the current scenario are greyed out */
-      backgroundColor:[ S.b2b[k]?TC[i]:OFF, S.rtd[k]?TC[i]:OFF ]
-    }))},
+      backgroundColor:[ S.b2b[k]?TC[i]:OFF, S.rtd[k]?TC[i]:OFF ]}))},
     options:{plugins:{tooltip:TT},scales:{x:Object.assign(axX(),{stacked:true}),
       y:Object.assign(axY(),{stacked:true})}}});
 
   /* FY27 P&L table */
   const H=['₹'].concat(mo,['FY27 forecast','FY27 budget','Variance']);
-  function line(label,actKey,fcArr,budArr,cls){
-    const cells=[];
-    for(let i=0;i<3;i++) cells.push(`<span>${inr(N(m[actKey][12+i]))}</span>`);
-    fcArr.forEach(v=>cells.push(`<span class="fc">${inr(v)}</span>`));
-    const tot = sum([0,1,2].map(i=>N(m[actKey][12+i]))) + sum(fcArr);
-    const bt = sum(budArr);
+  function row(label, actArr, fcArr, budArr, cls){
+    const cells = actArr.map(inr).concat(fcArr.map(v=>`<span class="fc">${inr(v)}</span>`));
+    const tot = sum(actArr)+sum(fcArr), bt = sum(budArr);
     cells.push(inr(tot), inr(bt), `<span class="${tot-bt>=0?'pos':'neg'}">${inr(tot-bt)}</span>`);
     return {cls,c:[label].concat(cells)};
   }
-  const cogsDirectAct = [0,1,2].map(i=>N(m.teacherCost[12+i])+N(m.rtdCogs[12+i]));
-  function line2(label,actArr,fcArr,budArr,cls){
-    const cells=actArr.map(v=>inr(v)).concat(fcArr.map(v=>`<span class="fc">${inr(v)}</span>`));
-    const tot=sum(actArr)+sum(fcArr), bt=sum(budArr);
-    cells.push(inr(tot),inr(bt),`<span class="${tot-bt>=0?'pos':'neg'}">${inr(tot-bt)}</span>`);
-    return {cls,c:[label].concat(cells)};
-  }
+  const q1a = k => q1.map(i=>N(m[k][i]));
   table('t_fvb',H,[
-    line('B2B revenue','b2bRev',F.b2bRev,B.b2bRev),
-    line('RTD revenue','rtdRev',F.rtdRev,B.rtdRev),
-    line('Other income','otherInc',F.otherInc,mo.map(()=>0)),
-    line('Total revenue','revenue',F.revenue,B.revenue,'tot'),
+    row('B2B revenue',q1a('b2bRev'),F.b2bRev,B.b2bRev),
+    row('RTD revenue',q1a('rtdRev'),F.rtdRev,B.rtdRev),
+    row('Other income',q1a('otherInc'),F.otherInc,mo.map(()=>0)),
+    row('Total revenue',q1a('revenue'),F.revenue,B.revenue,'tot'),
     {hd:'Cost of sale'},
-    line2('Delivery cost (teacher / RTD)',cogsDirectAct,
-          F.b2bCogs.map((v,i)=>v+F.rtdCogs[i]),B.rtdCogs.map((v,i)=>v+B.b2bCogs[i])),
-    line('Operations salaries','opsSalary',F.opsSal,B.opsSal),
-    line2('Total cost of sale',[0,1,2].map(i=>N(m.cogs[12+i])),F.cogs,B.cogs,'tot'),
-    line('Gross profit','gp',F.gp,B.gp,'tot'),
-    line('Sales & marketing','sm',F.sm,B.sm),
-    line('General & administrative','ga',F.ga,B.ga),
-    line('EBITDA','ebitda',F.ebitda,B.ebitda,'tot')
+    row('Delivery cost (teacher / RTD)',
+        q1.map(i=>N(m.teacherCost[i])+N(m.rtdCogs[i])),
+        F.b2bCogs.map((v,i)=>v+F.rtdCogs[i]),
+        B.rtdCogs.map((v,i)=>v+B.b2bCogs[i])),
+    row('Operations salaries',q1a('opsSalary'),F.opsSal,B.opsSal),
+    row('Total cost of sale',q1a('cogs'),F.cogs,B.cogs,'tot'),
+    row('Gross profit',q1a('gp'),F.gp,B.gp,'tot'),
+    row('Sales & marketing',q1a('sm'),F.sm,B.sm),
+    row('General & administrative',q1a('ga'),F.ga,B.ga),
+    row('EBITDA',q1a('ebitda'),F.ebitda,B.ebitda,'tot')
   ]);
 
-  /* sensitivity grid */
+  /* sensitivity */
   const combos=[['base','Committed only'],['cons','Conservative'],['bal','Balanced'],['agg','Full pipeline']];
-  const sensRows = combos.map(([k,lab])=>{
-    const st={b2b:{},rtd:{},cost:S.cost};
-    ['high','med','low'].forEach((t,i)=>{st.b2b[t]=!!PRESETS[k].b2b[i]; st.rtd[t]=!!PRESETS[k].rtd[i];});
-    const mm=build(st);
-    const heat=v=>v<0?'style="color:#fca5a5"':'style="color:#57cc99"';
-    return {cls:(k===currentPreset()?'tot':''),c:[lab,
-      `<span ${heat(mm.fy.revenue)}>${L(mm.fy.revenue)}</span>`,
-      `<span ${heat(mm.fy.ebitda)}>${L(mm.fy.ebitda)}</span>`,
-      `<span ${heat(mm.closing[23])}>${L(mm.closing[23])}</span>`,
-      `<span ${heat(mm.low)}>${L(mm.low)}</span>`,
-      rwTxt(mm).replace(' mo',''),
-      mm.firstNeg<0?'<span style="color:#57cc99">never</span>':
-        `<span style="color:#fca5a5">${D.months[mm.firstNeg]}</span>`]};
+  const cur = currentPreset();
+  table('t_sens',['Scenario','FY27 revenue','FY27 EBITDA','Cash Mar-27','Lowest cash','Runway','Cash turns negative'],
+    combos.map(([k,lab])=>{
+      const mm = scenBuild(k);
+      const h = v => v<0?'style="color:#fca5a5"':'style="color:#57cc99"';
+      return {cls:(k===cur?'tot':''),c:[lab,
+        `<span ${h(mm.fy.revenue)}>${L(mm.fy.revenue)}</span>`,
+        `<span ${h(mm.fy.ebitda)}>${L(mm.fy.ebitda)}</span>`,
+        `<span ${h(mm.closing[23])}>${L(mm.closing[23])}</span>`,
+        `<span ${h(mm.low)}>${L(mm.low)}</span>`,
+        rwTxt(mm).replace(' mo',''),
+        mm.firstNeg<0?'<span style="color:#57cc99">never</span>'
+                     :`<span style="color:#fca5a5">${D.months[mm.firstNeg]}</span>`]};
+    }));
+
+  const opts=[0.40,0.50,0.60,'model'], oLab=['40% cost','50% cost','60% cost','As modelled'];
+  const runs = opts.map(p=>build({b2b:S.b2b,rtd:S.rtd,cost:p}));
+  chart('c_costSens',{type:'bar',data:{labels:oLab,datasets:[
+      {label:'FY27 EBITDA (accrual)',data:runs.map(r=>r.fy.ebitda),
+       backgroundColor:['#57cc99','#d4a843','#ef4444','#8b5cf6'],borderRadius:4},
+      {label:'Cash at Mar-27',data:runs.map(r=>r.closing[23]),
+       backgroundColor:['rgba(87,204,153,.4)','rgba(212,168,67,.4)','rgba(239,68,68,.4)','rgba(139,92,246,.4)'],borderRadius:4}]},
+    options:{plugins:{tooltip:TT},scales:{x:axX(),y:axY(ZERO)}}});
+
+  /* pipeline register with recognition windows */
+  const pillOf = t=>`<span class="pill ${t==='high'?'h':t==='med'?'m':'l'}">${t==='high'?'High':t==='med'?'Medium':'Low'}</span>`;
+  const regRows = (side)=> D.pipeDeals[side].map(d=>{
+    const tier=d[0], f=d[1], l=d[2], tot=d[3], name=d[4];
+    const n = l-f+1;
+    return {c:[name, pillOf(tier), `${D.months[f]} → ${D.months[l]}`, n+' mo',
+               inr(tot/n), S[side][tier]?'<span class="pill h">In</span>':'<span class="pill a">Out</span>']};
   });
-  table('t_sens',['Scenario','FY27 revenue','FY27 EBITDA','Cash Mar-27','Lowest cash','Runway (mo)','Cash turns negative'],sensRows);
+  table('t_dealsB',['B2B pipeline deal','Likelihood','Recognised over','Months','Per month','Scenario'],regRows('b2b'));
+  table('t_dealsR',['RTD pipeline deal','Likelihood','Recognised over','Months','Per month','Scenario'],regRows('rtd'));
 
-  /* cost % sensitivity */
-  const pcts=[0.40,0.50,0.60];
-  const curTiers = {b2b:Object.assign({},S.b2b), rtd:Object.assign({},S.rtd)};
-  chart('c_costSens',{type:'bar',data:{labels:['40% cost','50% cost','60% cost','As modelled'],
-      datasets:[{label:'FY27 EBITDA',
-        data:pcts.concat(['model']).map(p=>build({b2b:curTiers.b2b,rtd:curTiers.rtd,cost:p}).fy.ebitda),
-        backgroundColor:['#57cc99','#d4a843','#ef4444','#8b5cf6'],borderRadius:4},
-        {label:'Cash at Mar-27',
-        data:pcts.concat(['model']).map(p=>build({b2b:curTiers.b2b,rtd:curTiers.rtd,cost:p}).closing[23]),
-        backgroundColor:['rgba(87,204,153,.4)','rgba(212,168,67,.4)','rgba(239,68,68,.4)','rgba(139,92,246,.4)'],borderRadius:4}]},
-    options:{plugins:{tooltip:TT},scales:{x:axX(),y:axY()}}});
-
-  /* deal registers */
-  const tierPill={high:'<span class="pill h">High</span>',med:'<span class="pill m">Medium</span>',low:'<span class="pill l">Low</span>'};
-  const dealRows = (arr,side)=> arr.map(([n,c,t])=>({
-    cls: S[side][t]?'':'',
-    c:[n, c, tierPill[t], S[side][t]?'<span class="pill h">In</span>':'<span class="pill a">Out</span>']}));
-  table('t_dealsB',['B2B pipeline deal','Client','Likelihood','In scenario'],dealRows(D.deals.b2b,'b2b'));
-  table('t_dealsR',['RTD pipeline deal','Partner','Likelihood','In scenario'],dealRows(D.deals.rtd,'rtd'));
-
-  const cl = S.cost==='model'?'as modelled':pct(S.cost,0);
-  document.getElementById('p4note').innerHTML =
-   `<b>Methodology.</b> Q1 FY27 (Apr–Jun 26) is accrual actual from the MIS. Jul-26 → Mar-27 is built from `+
-   `the cashflow model: collections and payments are used as a proxy for accrued revenue and cost, and the `+
-   `selected pipeline tiers are added on top. Over Q1 FY27 collections ran about <b>22% below billed revenue</b> `+
-   `on receivable timing, so this forecast is conservative on the topline. Payroll and operating expenses for `+
-   `Jan–Mar 27 are levelled to the quarter average to remove a payment-timing artefact in the source cashflow `+
-   `(quarter totals unchanged). B2B pipeline delivery cost is set at <b>${cl}</b>; RTD pipeline cost uses `+
-   `deal-level amounts. Note the source workbook applies the stage probability to pipeline cost a second time, `+
-   `which understates B2B COGS — switching from "as modelled" to a flat percentage corrects that.`;
-}
-function currentPreset(){
-  for(const k in PRESETS){
-    const p=PRESETS[k], t=['high','med','low'];
-    if(t.every((x,i)=> S.b2b[x]===!!p.b2b[i] && S.rtd[x]===!!p.rtd[i])) return k;
-  }
-  return null;
-}
-
-/* ────────────────────────── PAGE 5 ────────────────────────── */
-function renderP5(M){
-  const F=M.F, fy=M.fy, T=B.T;
-  /* six months Aug-26 → Jan-27 = indices 16..21 */
-  const s0=16, s1=22;
-  const sixRev = sum(F.revenue.slice(s0-15, s1-15));
-  const sixEb  = sum(F.ebitda.slice(s0-15, s1-15));
-  const sixNet = sum(M.net.slice(s0,s1));
-  const cashAtJan = M.closing[21];
-  const monthlyFixed = (sum(F.opsSal.slice(1,7))+sum(F.sm.slice(1,7))+sum(F.ga.slice(1,7)))/6;
-  const gmPct = fy.revenue? fy.gp/fy.revenue : 0;
-  const cogsPct = fy.revenue? (fy.cogsDirect/fy.revenue) : 0.45;
-  const beRev = monthlyFixed/(1-cogsPct);
-
-  document.getElementById('p5sub').innerHTML =
-   `Scenario in force: <b style="color:var(--gold2)">${scenLabel()}</b>. Everything below is computed live from that selection — `+
-   `numbers, narrative and actions all move together.`;
-
-  kpi('p5kpi',[
-    {l:'Cash at 31-Jan-27',v:L(cashAtJan),s:'six months from today',
-      cls:cashAtJan<0?'rd':cashAtJan<1500000?'or':'gn',vc:cashAtJan<0?'neg':cashAtJan<1500000?'warn':'pos'},
-    {l:'Revenue next 6 months',v:L(sixRev),s:'Aug-26 → Jan-27',cls:'pu'},
-    {l:'EBITDA next 6 months',v:L(sixEb),s:sixEb<0?'cumulative loss':'cumulative profit',
-      cls:sixEb<0?'rd':'gn',vc:sixEb<0?'neg':'pos'},
-    {l:'Break-even revenue',v:L(beRev)+'/mo',s:'at '+pct(cogsPct,0)+' cost of revenue and current fixed base',cls:'gd',vc:'gld'}
-  ]);
-
-  const lbl=D.months.slice(s0,s1);
-  chart('c_six',{type:'bar',data:{labels:lbl,datasets:[
-      {label:'Revenue',data:F.revenue.slice(s0-15,s1-15),backgroundColor:'#0a9396',borderRadius:3,order:3},
-      {label:'EBITDA',data:F.ebitda.slice(s0-15,s1-15),backgroundColor:'rgba(239,68,68,.75)',borderRadius:3,order:3},
-      {label:'Closing cash',type:'line',data:M.closing.slice(s0,s1),borderColor:'#d4a843',
-       borderWidth:2.6,pointRadius:3.4,tension:.28,order:1,fill:false}]},
-    options:{plugins:{tooltip:TT},interaction:{mode:'index',intersect:false},
-      scales:{x:axX(),y:axY({grid:{color:c=>c.tick.value===0?'rgba(255,255,255,.25)':'rgba(255,255,255,0.05)'}})}}});
-
-  const combos=[['base','Committed only'],['cons','Conservative'],['bal','Balanced'],['agg','Full pipeline']];
-  const spread = combos.map(([k])=>{
-    const st={b2b:{},rtd:{},cost:S.cost};
-    ['high','med','low'].forEach((t,i)=>{st.b2b[t]=!!PRESETS[k].b2b[i]; st.rtd[t]=!!PRESETS[k].rtd[i];});
-    return build(st);
-  });
-  chart('c_scenSpread',{type:'bar',indexAxis:'y',data:{labels:combos.map(c=>c[1]),
-      datasets:[{label:'Cash at Mar-27',data:spread.map(s=>s.closing[23]),
-        backgroundColor:spread.map(s=>s.closing[23]<0?'#ef4444':'#0a9396'),borderRadius:4},
-        {label:'Lowest cash in forecast',data:spread.map(s=>s.low),
-        backgroundColor:spread.map(s=>s.low<0?'rgba(239,68,68,.45)':'rgba(10,147,150,.45)'),borderRadius:4}]},
-    options:{plugins:{tooltip:Object.assign({},TT,{callbacks:{label:c=>` ${c.dataset.label}: ${inr(c.parsed.x)}`}})},
-      scales:{x:{grid:GRID,ticks:Object.assign({},TICK,{callback:v=>L(v,0)})},y:{grid:{display:false},ticks:TICK}}}});
-
-  /* ── narrative ── */
-  const gap = fy.ebitda - T.ebitda;
-  const rtdGap = fy.rtdRev - T.rtdRev;
-  const pipeShare = fy.revenue? (sum(F.pipeB2b)+sum(F.pipeRtd))/fy.revenue : 0;
-  const negMonth = M.firstNeg<0?null:D.months[M.firstNeg];
-  const fundNeed = M.low<0 ? Math.ceil((-M.low + 2*Math.abs(M.avgBurn))/500000)*500000 : 0;
-
-  document.getElementById('narrative').innerHTML = `
-   <div class="narr"><h4>Where we are</h4>
-     <p>TMC closed June 2026 with <b class="big">${L(M.cashJun)}</b> in the bank — but ${L(15000000)} of that
-     has come from the investor, not from trading. Q1 FY26-27 delivered revenue of <b>${L(sum([12,13,14].map(i=>N(D.mis.revenue[i]))))}</b>
-     against a budget of <b>₹67.85L</b>, a shortfall of <b class="bad">₹39.78L (59%)</b>. The entire gap is RTD:
-     the placement business has billed <b class="bad">nothing</b> in fifteen months, while the budget for FY27 puts
-     <b>${L(T.rtdRev)}</b> — ${pct(T.rtdRev/T.revenue,0)} of planned revenue — through that single line.</p>
-     <p>The B2B training business is real and paying. It has produced <b>${L(sum(sl(D.mis.b2bRev,0,15)))}</b> of revenue
-     across fifteen months at a gross margin of <b>${pct(sum(sl(D.mis.gp,0,15))/sum(sl(D.mis.revenue,0,15)),0)}</b>,
-     and Q1 FY27 gross margin of <b class="big">${pct(sum([12,13,14].map(i=>N(D.mis.gp[i])))/sum([12,13,14].map(i=>N(D.mis.revenue[i]))),0)}</b>
-     was actually <b>ahead</b> of the budgeted ${pct(1296531/6785075,0)}. The problem is not unit economics. It is scale
-     and it is fixed cost.</p></div>
-
-   <div class="narr"><h4>Where we land in six months — ${scenLabel()}</h4>
-     <p>On the scenario currently selected, revenue over Aug-26 → Jan-27 totals <b class="big">${L(sixRev)}</b>,
-     of which <b>${pct(pipeShare,0)}</b> of the full-year forecast comes from unconverted pipeline rather than
-     signed business. Cumulative EBITDA over those six months is <b class="${sixEb<0?'bad':'big'}">${L(sixEb)}</b>,
-     and cash lands at <b class="${cashAtJan<0?'bad':'big'}">${L(cashAtJan)}</b> on 31 January 2027.</p>
-     <p>${negMonth
-        ? `Cash turns <b class="bad">negative in ${negMonth}</b> and reaches a low of <b class="bad">${L(M.low)}</b>.
-           On the current burn of <b>${L(M.avgBurn)} per month</b>, the runway from July 2026 is
-           <b class="bad">${M.runway.toFixed(1)} months</b>. A funding round of roughly
-           <b class="bad">${L(fundNeed)}</b> is required, and it needs to be committed no later than
-           <b>${D.months[Math.max(0,M.firstNeg-3)]}</b> to avoid a payroll event.`
-        : `Cash stays positive throughout, with a low of <b class="big">${L(M.low)}</b> in ${M.lowM}.
-           That is the good news. The bad news is that it depends on <b>${pct(pipeShare,0)}</b> of forecast
-           revenue converting from pipeline, and the model is carrying investor money, not trading surplus.`}</p>
-     <p>Against the approved plan, FY27 EBITDA comes in at <b class="${fy.ebitda<0?'bad':'big'}">${L(fy.ebitda)}</b>
-     versus a budgeted <b>${L(T.ebitda)}</b> — a gap of <b class="bad">${L(gap)}</b>.
-     Revenue lands <b class="bad">${L(fy.revenue-T.revenue)}</b> below plan, and
-     <b>${pct(Math.abs(rtdGap)/Math.abs(fy.revenue-T.revenue),0)}</b> of that shortfall is RTD placement revenue
-     that will not appear this year. Cost discipline is <b>not</b> the issue: the forecast spends
-     <b class="big">${L(T.sm+T.ga+T.opsSal-fy.sm-fy.ga-fy.opsSal)}</b> less than budget on salaries, S&amp;M and G&amp;A combined.</p></div>
-
-   <div class="narr"><h4>The one number that matters</h4>
-     <p>At the current fixed cost base of <b>${L(monthlyFixed)} per month</b> (operations salaries + S&amp;M + G&amp;A)
-     and a cost of revenue of <b>${pct(cogsPct,0)}</b>, TMC breaks even at
-     <b class="big">${L(beRev)} of revenue per month</b>. The best month in the last fifteen was
-     <b>${L(Math.max(...sl(D.mis.revenue,0,15)))}</b>; the Q1 FY27 average was
-     <b>${L(sum([12,13,14].map(i=>N(D.mis.revenue[i])))/3)}</b>. The gap to break-even is roughly
-     <b class="bad">${(beRev/(sum([12,13,14].map(i=>N(D.mis.revenue[i])))/3)).toFixed(1)}×</b> the current run rate.
-     Either revenue rises <b>${(beRev/(sum([12,13,14].map(i=>N(D.mis.revenue[i])))/3)).toFixed(1)}×</b>, or the fixed base comes down by
-     <b>${L(monthlyFixed - (sum([12,13,14].map(i=>N(D.mis.revenue[i])))/3)*(1-cogsPct))}</b> a month —
-     that is <b>${pct((monthlyFixed - (sum([12,13,14].map(i=>N(D.mis.revenue[i])))/3)*(1-cogsPct))/monthlyFixed,0)}</b> of the
-     current fixed cost base. Realistically it has to be both.</p></div>`;
-
-  /* ── actions ── */
-  document.getElementById('actions').innerHTML = `
-   <div class="act do"><h4 style="color:var(--teal3)">▲ Do this — next 90 days</h4><ul>
-     <li><b>Convert one RTD deal to cash, not to pipeline.</b> ${L(sum(D.pipe.rtd.rev.high.slice(15))+sum(D.pipe.rtd.rev.med.slice(15)))}
-         of highly- and medium-likely RTD revenue sits in the model. A single signed placement contract with a
-         collected advance changes the funding conversation entirely.</li>
-     <li><b>Bill and collect faster on B2B.</b> Collections ran ~22% below billed revenue in Q1 FY27 and receivables
-         stood at ${L(928333)} at 30-Jun-26. Pulling DSO in by 20 days releases roughly
-         ${L(928333*0.3)} of cash at no cost.</li>
-     <li><b>Lock the highly-likely B2B book.</b> ${L(sum(D.pipe.b2b.rev.high.slice(15)))} of probability-weighted
-         B2B revenue — dominated by the Somika A1/A2/B1 programmes — starts landing from Sep-26. Get the delivery
-         schedule and advances signed before the Q3 cash trough, not after it.</li>
-     <li><b>Re-forecast the budget formally.</b> The approved FY27 plan is ${pct((T.revenue-fy.revenue)/T.revenue,0)}
-         above where the business will land. Board reporting against an unachievable plan destroys credibility with
-         the investor at exactly the moment you need more money.</li>
-     <li><b>Fix the pipeline cost model.</b> The workbook multiplies pipeline cost by probability twice, understating
-         B2B COGS by roughly ${pct(1-0.43/0.5,0)}. Move to a clean percentage of weighted revenue.</li>
-   </ul></div>
-
-   <div class="act dont"><h4 style="color:#fca5a5">▼ Avoid this</h4><ul>
-     <li><b>Do not add headcount against RTD revenue that has not been signed.</b> Budget carries
-         ${inr(1131000)}/month of salary at steady state versus ${L((sum([12,13,14].map(i=>N(D.mis.revenue[i])))/3))} of
-         monthly revenue. Every hire ahead of a contract shortens runway by real weeks.</li>
-     <li><b>Do not treat investor drawdowns as revenue performance.</b> ${L(15000000)} of the ${L(M.cashJun)} on the
-         balance sheet at Jun-26 is borrowed. Trading cashflow over the last twelve months was
-         <b>${L(sum(M.net.slice(3,15))-sum(sl(D.cf.investment,3,15)))}</b>.</li>
-     <li><b>Do not run the full-pipeline scenario as the plan.</b> Low-likelihood deals carry a 30% probability
-         for a reason — several are already flagged "removed from pipeline" in the source register.</li>
-     <li><b>Do not let G&amp;A drift.</b> G&amp;A ran ${L(sum([12,13,14].map(i=>N(D.mis.ga[i]))))} in Q1 FY27
-         against gross profit of ${L(sum([12,13,14].map(i=>N(D.mis.gp[i]))))}. G&amp;A alone is
-         ${(sum([12,13,14].map(i=>N(D.mis.ga[i])))/sum([12,13,14].map(i=>N(D.mis.gp[i])))).toFixed(1)}× the gross profit
-         the business generates.</li>
-     <li><b>Do not defer the funding conversation to the trough.</b> Money raised at ${L(M.low)} of cash is
-         raised on someone else's terms.</li>
-   </ul></div>`;
-
-  document.getElementById('risks').innerHTML = `
-   <div class="act watch"><h4 style="color:var(--orange)">⚑ Watch closely</h4><ul>
-     <li><b>RTD concentration.</b> ${pct(T.rtdRev/T.revenue,0)} of the budget and
-         ${L(sum(D.pipe.rtd.rev.high.slice(15))+sum(D.pipe.rtd.rev.med.slice(15))+sum(D.pipe.rtd.rev.low.slice(15)))}
-         of pipeline sit in a business line with zero billing history.</li>
-     <li><b>Customer concentration in B2B.</b> Somika accounts for the majority of highly-likely B2B pipeline.
-         One client decision moves the whole forecast.</li>
-     <li><b>Payroll timing.</b> The cashflow shows nil payroll in May-26 and Jan-27 with double charges the
-         following month. That is a payment-timing artefact, but it masks the true monthly obligation of
-         about ${inr(842500)}.</li>
-     <li><b>Interest cost.</b> ${inr(325226)} of interest is already payable on the convertible note, with
-         ${inr(36136)} of TDS. This sits below EBITDA and is not in any of the figures above.</li>
-   </ul></div>
-
-   <div class="act win"><h4 style="color:var(--gold2)">◆ What would change the picture</h4><ul>
-     <li><b>Two RTD placements a month at budgeted economics</b> (${inr(275000)} revenue, ${inr(132800)} cost)
-         adds roughly ${inr(284400)} of gross profit per month — about
-         ${((284400)/((sum(F.opsSal.slice(1,7))+sum(F.sm.slice(1,7))+sum(F.ga.slice(1,7)))/6)*100).toFixed(0)}% of the fixed base.</li>
-     <li><b>A 10% reduction in the fixed cost base</b> saves
-         ${L(((sum(F.opsSal.slice(1,7))+sum(F.sm.slice(1,7))+sum(F.ga.slice(1,7)))/6)*0.1*9)} across the
-         remaining nine months of FY27 — more than the entire S&amp;M underspend to date.</li>
-     <li><b>Moving B2B pipeline cost from 60% to 40%</b> lifts FY27 EBITDA by
-         ${L(build({b2b:S.b2b,rtd:S.rtd,cost:0.40}).fy.ebitda - build({b2b:S.b2b,rtd:S.rtd,cost:0.60}).fy.ebitda)}.
-         Teacher utilisation is the single highest-leverage operational lever in the business.</li>
-     <li><b>Converting the medium-likely B2B book</b> (${L(sum(D.pipe.b2b.rev.med.slice(15)))} weighted)
-         would take the business materially closer to break-even without a single new hire.</li>
-   </ul></div>`;
-
-  /* break-even chart */
-  const fixed=[0.8,0.9,1.0,1.1].map(f=>monthlyFixed*f);
-  chart('c_be',{type:'bar',data:{labels:['-20% fixed cost','-10%','Current base','+10%'],
-      datasets:[{label:'Break-even revenue / month',data:fixed.map(f=>f/(1-cogsPct)),
-        backgroundColor:['#57cc99','#94d2bd','#d4a843','#ef4444'],borderRadius:4},
-        {label:'Q1 FY27 actual run rate',type:'line',
-         data:fixed.map(()=>sum([12,13,14].map(i=>N(D.mis.revenue[i])))/3),
-         borderColor:'#8b5cf6',borderWidth:2.2,pointRadius:0,borderDash:[6,4],fill:false}]},
-    options:{plugins:{tooltip:TT},scales:{x:axX(),y:axY()}}});
-
-  const need = Math.max(0,-M.low);
-  table('t_funding',['Funding maths','Amount'],[
-    {c:['Cash at 30-Jun-26',inr(M.cashJun)]},
-    {c:['Investor funding drawn to date',inr(15000000)]},
-    {c:['Forecast net cash movement Jul-26 → Mar-27',`<span class="${sum(M.net.slice(15))<0?'neg':'pos'}">${inr(sum(M.net.slice(15)))}</span>`]},
-    {c:['Forecast cash at 31-Mar-27',`<span class="${M.closing[23]<0?'neg':'pos'}">${inr(M.closing[23])}</span>`]},
-    {c:['Lowest cash point in forecast',`<span class="${M.low<0?'neg':'pos'}">${inr(M.low)} (${M.lowM})</span>`]},
-    {cls:'tot',c:['Minimum funding required',need>0?inr(need):'Nil on this scenario']},
-    {cls:'tot',c:['Recommended raise (low point + 2 months buffer)',
-      need>0?inr(Math.ceil((need+2*Math.abs(M.avgBurn))/500000)*500000):inr(Math.ceil(3*Math.abs(M.avgBurn)/500000)*500000)]},
-    {c:['Average monthly burn (forecast)',inr(M.avgBurn)]},
-    {c:['Months of runway from Jul-26',rwTxt(M)]}
-  ]);
-
-  document.getElementById('p5note').innerHTML =
-   `<b>Basis of preparation.</b> Actuals to 30 June 2026 are taken from the TMC MIS pack; the cashflow forecast is `+
-   `the 28 July 2026 model; the budget is rebuilt from the FY27 budget file and reconciles to the MIS budget column. `+
-   `Forecast P&amp;L is prepared on a cash-proxy basis and is therefore conservative on revenue. Figures exclude `+
-   `interest, depreciation and tax. This commentary is generated from the scenario selected above — change the `+
-   `selection and every number, chart and sentence updates.`;
+  const cl = S.cost==='model'?'as modelled in the workbook':pct(S.cost,0)+' of pipeline revenue';
+  document.getElementById('p3note').innerHTML =
+   `<b>Methodology.</b> Q1 FY27 (Apr–Jun 26) is accrual actual from the MIS. Jul-26 → Mar-27 is an accrual `+
+   `forecast built from the cashflow model's committed book plus the selected pipeline tiers, with revenue and `+
+   `cost recognised over the periods they relate to rather than when cash moves. Pipeline revenue is `+
+   `probability-weighted at deal level in the source model, so selecting a likelihood tier switches that `+
+   `weighted stream on — it does not apply a second haircut. B2B pipeline delivery cost is set at <b>${cl}</b>; `+
+   `RTD pipeline cost uses deal-level amounts matched to revenue. Note the source workbook applies the stage `+
+   `probability to pipeline cost a second time, which understates B2B COGS — switching from "as modelled" to a `+
+   `flat percentage corrects that. Cash, burn and runway remain on payment timing and are shown on the `+
+   `commentary page.`;
 }
 
 /* ═════════════════════════ WIRING ═════════════════════════ */
-function scenLabel(){
-  const p=currentPreset();
-  if(p) return PRESETS[p].label;
-  const on = o => ['high','med','low'].filter(k=>o[k]).map(k=>({high:'High',med:'Med',low:'Low'}[k])).join('+')||'none';
-  return `Custom — B2B ${on(S.b2b)} · RTD ${on(S.rtd)}`;
-}
 function syncChips(){
   document.querySelectorAll('.chip[data-t]').forEach(c=>{
     const on = S[c.dataset.t][c.dataset.k];
@@ -1498,8 +1234,7 @@ function refresh(){
   const M = build();
   syncChips();
   renderP1(M);
-  renderP4(M);
-  renderP5(M);
+  renderP3(M);
 }
 document.querySelectorAll('.chip[data-t]').forEach(c=> c.onclick=()=>{
   S[c.dataset.t][c.dataset.k] = !S[c.dataset.t][c.dataset.k]; refresh(); });
@@ -1515,7 +1250,6 @@ document.querySelectorAll('.tab-btn').forEach(b=> b.onclick=()=>{
   b.classList.add('active');
   document.getElementById(b.dataset.p).classList.add('active');
   if(b.dataset.p==='p2') renderP2();
-  if(b.dataset.p==='p3') renderP3();
   window.scrollTo({top:0,behavior:'smooth'});
   Object.values(CH).forEach(c=>{ try{c.resize();}catch(e){} });
 });
