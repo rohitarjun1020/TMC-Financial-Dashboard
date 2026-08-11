@@ -510,7 +510,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250728d"></script>
+<script src="dashboard-data.js?v=20250811a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1188,7 +1188,7 @@ function renderCFTrends(){
   const ti=parseInt(document.getElementById('ct-to')?.value??(all.length-1));
 
   // Jun-2026 onwards = forecast (defined early so data filter can use it)
-  const isFc=m=>{const [mn,yr]=m.split('-');const y=parseInt(yr);return y>2026||(y===2026&&['Jun','Jul','Aug','Sep','Oct','Nov','Dec'].includes(mn));};
+  const isFc=m=>{const [mn,yr]=m.split('-');const y=parseInt(yr);return y>2026||(y===2026&&['Jul','Aug','Sep','Oct','Nov','Dec'].includes(mn));};
 
   let data=all.slice(fi,ti+1);
   if(trendsState.forecastOnly) data=data.filter(r=>isFc(r.m));
@@ -1279,7 +1279,7 @@ function renderCFTrends(){
               if(hasB2B) items.push({text:'B2B Pipeline',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(139,92,246,0.65)',strokeStyle:'#8b5cf6',lineWidth:1,fontColor:'#ffffff'});
               if(hasRTD) items.push({text:'RTD Pipeline',datasetIndex:3,hidden:!!chart.getDatasetMeta(3).hidden,fillStyle:'rgba(236,72,153,0.65)',strokeStyle:'#ec4899',lineWidth:1,fontColor:'#ffffff'});
               items.push({text:'Outflows',datasetIndex:4,hidden:!!chart.getDatasetMeta(4).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'});
-              items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jun-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
+              items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jul-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
               return items;
             }
           }
@@ -1380,7 +1380,7 @@ function renderCFTrends(){
             generateLabels:chart=>[
               {text:'Net Burn',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1,fontColor:'#ffffff'},
               {text:'Closing Balance',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(147,197,253,0.35)',strokeStyle:'#93c5fd',lineWidth:2,fontColor:'#ffffff'},
-              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jun-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
+              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Jul-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
             ]
           }
         },
