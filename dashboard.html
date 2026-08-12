@@ -1037,6 +1037,32 @@ function renderCF(){
   </tr>`,12);
   setTimeout(()=>{const tb=document.getElementById('cf-sal-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(cfSalTotal)}</td></tr>`;},0);
 
+  // ── Shared pie-slice % label plugin ──
+  const pieLabelsPlugin={
+    id:'pieLabels',
+    afterDatasetsDraw(chart){
+      const {ctx}=chart;
+      const meta=chart.getDatasetMeta(0);
+      const vals=chart.data.datasets[0].data;
+      const total=vals.reduce((s,v)=>s+v,0);
+      if(!total) return;
+      ctx.save();
+      ctx.font='700 12px Inter,sans-serif';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      meta.data.forEach((arc,i)=>{
+        const pct=(vals[i]/total)*100;
+        if(pct<4) return; // skip slivers to avoid clutter
+        const pos=arc.tooltipPosition();
+        ctx.fillStyle='rgba(0,0,0,0.55)';
+        ctx.fillText(pct.toFixed(1)+'%',pos.x+0.6,pos.y+0.6);
+        ctx.fillStyle='#ffffff';
+        ctx.fillText(pct.toFixed(1)+'%',pos.x,pos.y);
+      });
+      ctx.restore();
+    }
+  };
+
   // ── Expense Pie ──
   const pieMap={};
   outRows.forEach(r=>{ pieMap[r.p]=(pieMap[r.p]||0)+r.a; });
@@ -1045,6 +1071,7 @@ function renderCF(){
   const ctxPie1=document.getElementById('cf-exp-pie').getContext('2d');
   charts['cf-exp-pie']=new Chart(ctxPie1,{
     type:'pie',
+    plugins:[pieLabelsPlugin],
     data:{
       labels:pieEntries.map(e=>e[0]),
       datasets:[{data:pieEntries.map(e=>e[1]),backgroundColor:C.pieColors,borderColor:'#0f1a2e',borderWidth:2}]
@@ -1066,6 +1093,7 @@ function renderCF(){
   const ctxPie2=document.getElementById('cf-dept-pie').getContext('2d');
   charts['cf-dept-pie']=new Chart(ctxPie2,{
     type:'pie',
+    plugins:[pieLabelsPlugin],
     data:{
       labels:deptEntries.map(e=>e[0]),
       datasets:[{data:deptEntries.map(e=>e[1]),backgroundColor:[C.darkTeal,C.midTeal,C.gold,C.blue,C.red],borderColor:'#0f1a2e',borderWidth:2}]
