@@ -510,7 +510,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20250811a"></script>
+<script src="dashboard-data.js?v=20260904a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1025,8 +1025,8 @@ function renderCF(){
     <td class="num-cell neg">${fmt(r.a)}</td>
   </tr>`,12);
 
-  // ── CF Salaries (from MIS salaries, filtered by month) ──
-  const cfSalRows=TMC_DATA.misSalaries.filter(r=>r.m===sel&&r.a>0).sort((a,b)=>b.a-a.a);
+  // ── CF Salaries (from cashflow Payroll sheet, filtered by month — kept separate from Page 1's misSalaries per the never-cross-populate rule) ──
+  const cfSalRows=(TMC_DATA.cfSalaries||[]).filter(r=>r.m===sel&&r.a>0).sort((a,b)=>b.a-a.a);
   const cfSalTotal=cfSalRows.reduce((s,r)=>s+r.a,0);
   pageState['cf-sal-body']={page:0};
   renderPaged('cf-sal-body','cf-sal-page',cfSalRows,(r,i)=>`<tr>
