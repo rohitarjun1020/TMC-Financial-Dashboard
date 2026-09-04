@@ -124,6 +124,9 @@ a{text-decoration:none;color:inherit}
 .scen-pill.active{background:rgba(212,168,67,0.14);border-color:var(--gold);color:var(--gold);font-weight:600}
 .scen-pill:disabled{opacity:0.35;cursor:default;pointer-events:none}
 .scen-badge{font-size:10px;background:rgba(212,168,67,0.18);color:var(--gold);border:1px solid rgba(212,168,67,0.4);padding:2px 7px;border-radius:10px;margin-left:6px}
+.budget-col{display:none}
+#concise-pl-table.budget-mode .budget-col{display:table-cell}
+.sc-budget{font-size:11px;color:var(--text3);margin-top:2px}
 
 /* ── GRID LAYOUTS ── */
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px}
@@ -274,6 +277,7 @@ canvas{display:block;max-width:100%}
     <select class="filter-select" id="mis-month" onchange="renderMIS()">
       <option value="ALL">All Months (Cumulative)</option>
     </select>
+    <button class="scen-pill" id="budget-toggle-btn" onclick="toggleBudgetCompare()" title="Compare MIS actuals against the FY27 budget">Compare with Budget</button>
     <span class="filter-info" id="mis-filter-info"></span>
   </div>
 
@@ -299,6 +303,8 @@ canvas{display:block;max-width:100%}
             <th onclick="sortTable('concise-pl-table',1)">Department</th>
             <th onclick="sortTable('concise-pl-table',2)">Amount</th>
             <th onclick="sortTable('concise-pl-table',3)">% of Rev</th>
+            <th class="budget-col">Budget</th>
+            <th class="budget-col">Variance</th>
           </tr></thead>
           <tbody id="concise-pl-body"></tbody>
         </table>
@@ -510,7 +516,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20260904a"></script>
+<script src="dashboard-data.js?v=20260904b"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -566,6 +572,36 @@ let _misSalData=[];
 let _misSalFilter=null;
 let _misProfFeesData=[];
 const SAL_DEPTS=['COGS-Manpowers Cost','G&A-Manpower Costs','S&M-Manpower Costs','G&A-Professional Fees'];
+
+// ── BUDGET COMPARISON (Page 1 only) ──────────────────────────
+let budgetCompareOn=false;
+function toggleBudgetCompare(){
+  budgetCompareOn=!budgetCompareOn;
+  const btn=document.getElementById('budget-toggle-btn');
+  if(btn) btn.classList.toggle('active',budgetCompareOn);
+  document.getElementById('concise-pl-table').classList.toggle('budget-mode',budgetCompareOn);
+  renderMIS();
+}
+// Returns {Revenue,COGS,'Gross Profit',S&M,G&A,EBITDA} budget totals for the months
+// that overlap the current MIS selection, or null if no budget exists for that selection.
+function getBudgetTotals(sel,isAll){
+  const budget=TMC_DATA.budgetSummary||[];
+  const budgetMonthSet=new Set(budget.map(r=>r.m));
+  let months;
+  if(isAll){
+    months=TMC_DATA.misMonths.filter(m=>budgetMonthSet.has(m));
+  }else{
+    months=budgetMonthSet.has(sel)?[sel]:[];
+  }
+  if(!months.length) return null;
+  const monthSet=new Set(months);
+  const totals={};
+  budget.forEach(r=>{
+    if(!monthSet.has(r.m)) return;
+    totals[r.d]=(totals[r.d]||0)+r.a;
+  });
+  return totals;
+}
 
 // ── TAB SWITCHING ────────────────────────────────────────────
 function switchTab(idx,btn){
@@ -774,11 +810,20 @@ function renderMIS(){
   const cogs=deptTotals['COGS']||0;
   const grossProfit=deptTotals['Gross Profit']||0;
   const ebitda=deptTotals['EBITDA']||0;
+  const budgetTotals=budgetCompareOn?getBudgetTotals(sel,isAll):null;
+  const budgetLine=(key,actual)=>{
+    if(!budgetCompareOn) return '';
+    if(!budgetTotals) return `<div class="sc-budget">No budget for this period</div>`;
+    const b=budgetTotals[key]||0;
+    const diff=actual-b;
+    const sign=diff>=0?'+':'';
+    return `<div class="sc-budget">Budget: ${fmt(b)} (${sign}${fmt(diff)})</div>`;
+  };
   sc.innerHTML=`
-    <div class="scorecard green"><div class="sc-label">Revenue</div><div class="sc-value">${fmt(revenue)}</div><div class="sc-sub">${isAll?'Cumulative':'Month'}</div></div>
-    <div class="scorecard"><div class="sc-label">COGS</div><div class="sc-value">${fmt(cogs)}</div><div class="sc-sub">${pctFmt(cogs,revenue)} of Rev</div></div>
-    <div class="scorecard gold"><div class="sc-label">Gross Profit</div><div class="sc-value ${colorNum(grossProfit)}">${fmt(grossProfit)}</div><div class="sc-sub">${pctFmt(grossProfit,revenue)} of Rev</div></div>
-    <div class="scorecard ${ebitda<0?'red':'green'}"><div class="sc-label">EBITDA</div><div class="sc-value ${colorNum(ebitda)}">${fmt(ebitda)}</div><div class="sc-sub">${pctFmt(ebitda,revenue)} of Rev</div></div>
+    <div class="scorecard green"><div class="sc-label">Revenue</div><div class="sc-value">${fmt(revenue)}</div><div class="sc-sub">${isAll?'Cumulative':'Month'}</div>${budgetLine('Revenue',revenue)}</div>
+    <div class="scorecard"><div class="sc-label">COGS</div><div class="sc-value">${fmt(cogs)}</div><div class="sc-sub">${pctFmt(cogs,revenue)} of Rev</div>${budgetLine('COGS',cogs)}</div>
+    <div class="scorecard gold"><div class="sc-label">Gross Profit</div><div class="sc-value ${colorNum(grossProfit)}">${fmt(grossProfit)}</div><div class="sc-sub">${pctFmt(grossProfit,revenue)} of Rev</div>${budgetLine('Gross Profit',grossProfit)}</div>
+    <div class="scorecard ${ebitda<0?'red':'green'}"><div class="sc-label">EBITDA</div><div class="sc-value ${colorNum(ebitda)}">${fmt(ebitda)}</div><div class="sc-sub">${pctFmt(ebitda,revenue)} of Rev</div>${budgetLine('EBITDA',ebitda)}</div>
   `;
 
   // ── REVENUE TREND CHART ──
@@ -827,14 +872,27 @@ function renderMIS(){
     {key:'G&A',label:'G&A'},
     {key:'EBITDA',label:'EBITDA'},
   ];
+  document.getElementById('concise-pl-table').classList.toggle('budget-mode',budgetCompareOn);
   document.getElementById('concise-pl-body').innerHTML=plDepts.map((d,i)=>{
     const amt=deptTotals[d.key]||0;
     const pct=pctFmt(amt,totalRev);
+    let budgetCells='';
+    if(budgetCompareOn){
+      if(budgetTotals){
+        const b=budgetTotals[d.key]||0;
+        const diff=amt-b;
+        const sign=diff>=0?'+':'';
+        budgetCells=`<td class="num-cell budget-col">${fmt(b)}</td><td class="num-cell budget-col ${colorNum(diff)}">${sign}${fmt(diff)}</td>`;
+      }else{
+        budgetCells=`<td class="num-cell budget-col">—</td><td class="num-cell budget-col">—</td>`;
+      }
+    }
     return `<tr class="pl-drill-row" data-dept="${d.key}" onclick="filterDetailByDept('${d.key}')" style="cursor:pointer" title="Click to drill down into ${d.label}">
       <td>${i+1}.</td>
       <td>${deptTag(d.label)}</td>
       <td class="num-cell ${colorNum(amt)}">${fmt(amt)}</td>
       <td class="num-cell ${colorNum(amt)}">${pct}</td>
+      ${budgetCells}
     </tr>`;
   }).join('');
 
