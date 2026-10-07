@@ -40,14 +40,6 @@ const TMC_DATA = {
       'Pipeline scenarios close March 2027 at ₹30.01L, ₹66.29L and ₹69.86L — each ₹2.07L higher than the previous update; all stay positive beyond March 2027.',
       'Projected travel, October 2026–March 2027: ₹17,04,320 (full year FY 2026-27: ₹24,12,401).'
     ],
-    marchDrivers:[
-      {l:'Travel forecast lower',d:'October allocation replaced by actuals, November trimmed, claims lower',v:213000},
-      {l:'Teacher costs lower',d:'November “MES” cost ₹1,88,325 removed; +₹7,200 French 1:1',v:181000},
-      {l:'Receipts higher',d:'New Somika A1.78 ₹1,00,440; September collections ₹19,484 lower',v:81000},
-      {l:'Other overheads lower, net',d:'',v:7000},
-      {l:'RTD remedial costs lower',d:'',v:5000},
-      {l:'Payroll lower',d:'September salaries revised',v:5000}
-    ],
     priorities:[
       {n:1,title:'Collect October receipts',hl:'₹11.54L due, none received yet.',d:'Somika ₹10.70L is the big one.',c:'gold'},
       {n:2,title:'Convert Scenario 1',hl:'₹51.89L net contribution',d:'is what keeps March positive.',c:'blue'},

@@ -136,15 +136,6 @@ a{text-decoration:none;color:inherit}
 .brief-keymsg{list-style:none;padding:16px 20px;display:grid;gap:10px}
 .brief-keymsg li{font-size:13px;color:var(--text2);padding-left:22px;position:relative;line-height:1.55}
 .brief-keymsg li::before{content:attr(data-n);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:rgba(10,147,150,.25);color:var(--cyan);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.brief-drivers{padding:16px 20px}
-.bd-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
-.bd-row .l{font-size:12.5px;color:var(--text)}
-.bd-row .l small{display:block;font-size:10.5px;color:var(--text3)}
-.bd-track{height:10px;background:rgba(255,255,255,.05);border-radius:5px;overflow:hidden}
-.bd-track span{display:block;height:100%;background:linear-gradient(90deg,#0a9396,#57cc99);border-radius:5px}
-.bd-row .v{font-size:12.5px;font-weight:700;color:#34d399;text-align:right}
-.bd-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:10px;font-size:13px;font-weight:700}
-.bd-foot{font-size:11px;color:var(--text3);margin-top:8px}
 @media(max-width:1100px){.brief-grid{grid-template-columns:1fr}.brief-panel{position:static}}
 @media(max-width:700px){.brief-chapters{grid-template-columns:repeat(2,minmax(0,1fr))}.tab-content{padding:16px}.brief-title{font-size:18px}.tab-bar{overflow-x:auto;padding:0 12px}
   .header{padding:0 12px}.header-title{padding:0 8px}.header-title p{display:none}.header-title h1{font-size:13px}.header-logo-text{font-size:11px;white-space:normal}.tmc-logo-wrap img{height:24px}}
@@ -371,15 +362,9 @@ canvas{display:block;max-width:100%}
     </div>
     <aside class="brief-panel" id="brief-panel" aria-live="polite"></aside>
   </div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="section-header">Key messages</div>
-      <ul class="brief-keymsg" id="brief-keymsg"></ul>
-    </div>
-    <div class="card">
-      <div class="section-header">What moved March 2027 vs the previous update</div>
-      <div class="brief-drivers" id="brief-drivers"></div>
-    </div>
+  <div class="card">
+    <div class="section-header">Key messages</div>
+    <ul class="brief-keymsg" id="brief-keymsg"></ul>
   </div>
 </div>
 
@@ -633,7 +618,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20261007a"></script>
+<script src="dashboard-data.js?v=20261007b"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1799,14 +1784,7 @@ function initBriefing(){
     setBriefChapter(chapterAt(t));
   });
   v.addEventListener('seeked',()=>setBriefChapter(chapterAt(v.currentTime)));
-  // key messages + March bridge
   document.getElementById('brief-keymsg').innerHTML=BRIEF.keyMessages.map((m,k)=>`<li data-n="${k+1}">${m}</li>`).join('');
-  const drv=BRIEF.marchDrivers, mx=Math.max(...drv.map(d=>d.v)), tot=drv.reduce((a,d)=>a+d.v,0);
-  const marNow=cfSum('Mar-2027','Closing Balance'), marPrev=BRIEF.prevMarch.base;
-  document.getElementById('brief-drivers').innerHTML=drv.map(d=>
-    `<div class="bd-row"><div class="l">${d.l}${d.d?`<small>${d.d}</small>`:''}</div><div class="bd-track"><span style="width:${d.v/mx*100}%"></span></div><div class="v">+₹${(d.v/1e5).toFixed(2)}L</div></div>`).join('')+
-    `<div class="bd-total"><span>Total improvement (base case)</span><span style="color:#34d399">+₹${(tot/1e5).toFixed(2)}L</span></div>
-     <div class="bd-foot">March 2027 base closing: ${fmt(marNow)} now vs ${fmt(marPrev)} in the previous update (live difference ${fmt(marNow-marPrev)}).</div>`;
   setBriefChapter(0,true);
   return true;
 }
