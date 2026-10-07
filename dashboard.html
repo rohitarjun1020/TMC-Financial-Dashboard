@@ -75,6 +75,80 @@ a{text-decoration:none;color:inherit}
 .tab-content{display:none;padding:24px 32px}
 .tab-content.active{display:block}
 
+/* ── CASHFLOW BRIEFING (video + live panel) ── */
+.tab-badge-new{background:linear-gradient(90deg,#ec4899,#d4a843)}
+.pulse-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ec4899;margin-right:8px;vertical-align:middle;box-shadow:0 0 0 0 rgba(236,72,153,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(236,72,153,.55)}70%{box-shadow:0 0 0 8px rgba(236,72,153,0)}100%{box-shadow:0 0 0 0 rgba(236,72,153,0)}}
+.brief-resume{margin-left:auto;display:none;background:rgba(236,72,153,.12);border:1px solid rgba(236,72,153,.45);color:#f9a8d4;border-radius:20px;padding:6px 14px;font:600 12px 'Inter',sans-serif;cursor:pointer}
+.brief-resume:hover{background:rgba(236,72,153,.2)}
+.brief-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.brief-eyebrow{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#f472b6}
+.brief-title{font-size:22px;font-weight:700;color:var(--text);margin-top:4px;line-height:1.3}
+.brief-meta{font-size:12px;color:var(--text3)}
+.brief-grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(300px,1fr);gap:20px;margin-bottom:20px;align-items:start}
+.brief-player-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.brief-player{position:relative;background:#000;aspect-ratio:16/9}
+.brief-player video{width:100%;height:100%;display:block;background:#000}
+.brief-cover{position:absolute;inset:0;border:none;cursor:pointer;color:#fff;font-family:'Inter',sans-serif;
+  background:radial-gradient(circle at 80% 20%,rgba(10,147,150,.35),transparent 45%),radial-gradient(circle at 10% 90%,rgba(236,72,153,.28),transparent 45%),#070b12;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px}
+.brief-cover .play{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#0a9396);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(236,72,153,.35);transition:transform .2s}
+.brief-cover:hover .play{transform:scale(1.07)}
+.brief-cover .play::after{content:'';border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:6px}
+.brief-cover .c-title{font-size:22px;font-weight:700}
+.brief-cover .c-sub{font-size:13px;color:#cbd5e1}
+.brief-cover.hidden{display:none}
+.brief-rail{display:flex;gap:3px;padding:12px 16px 0}
+.brief-seg{height:6px;border-radius:3px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;cursor:pointer;border:none;padding:0}
+.brief-seg span{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#0a9396,#ec4899)}
+.brief-chapters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:12px 16px 16px}
+.brief-chip{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;text-align:left;cursor:pointer;color:var(--text2);font-family:'Inter',sans-serif;transition:border-color .2s,background .2s}
+.brief-chip:hover{border-color:rgba(236,72,153,.5)}
+.brief-chip .n{font-size:10px;font-weight:700;color:#f472b6;letter-spacing:.6px}
+.brief-chip .t{font-size:12px;font-weight:600;color:var(--text);line-height:1.3;margin-top:2px}
+.brief-chip .tm{font-size:10px;color:var(--text3);margin-top:2px}
+.brief-chip.active{border-color:#ec4899;background:rgba(236,72,153,.1)}
+.brief-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:sticky;top:90px}
+.bp-eyebrow{font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:8px}
+.bp-live{display:inline-flex;align-items:center;gap:5px;color:#34d399}
+.bp-live::before{content:'';width:6px;height:6px;border-radius:50%;background:#34d399}
+.bp-title{font-size:17px;font-weight:700;color:var(--text);margin:8px 0 2px;line-height:1.35}
+.bp-sub{font-size:12px;color:var(--text2);margin-bottom:12px}
+.bp-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--border)}
+.bp-row .l{font-size:12.5px;color:var(--text2)}
+.bp-row .l small{display:block;font-size:10.5px;color:var(--text3)}
+.bp-row .v{font-size:16px;font-weight:700;color:var(--text);white-space:nowrap;text-align:right}
+.bp-row .v.neg{color:#f87171}.bp-row .v.pos{color:#34d399}.bp-row .v.hl{color:var(--gold2)}
+.bp-check{display:block;font-size:10px;font-weight:600;margin-top:1px}
+.bp-check.ok{color:#34d399}.bp-check.chg{color:var(--orange)}
+.bp-spark{margin:6px 0 4px}
+.bp-legend{display:flex;gap:12px;font-size:10.5px;color:var(--text3);margin-bottom:6px}
+.bp-legend i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.bp-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:4px 0 2px}
+.bp-explore{margin-top:14px;width:100%;background:linear-gradient(90deg,rgba(10,147,150,.18),rgba(236,72,153,.18));border:1px solid rgba(236,72,153,.4);color:var(--text);border-radius:var(--radius-sm);padding:10px 12px;font:600 12.5px 'Inter',sans-serif;cursor:pointer;text-align:left}
+.bp-explore:hover{border-color:#ec4899}
+.bp-note{font-size:10.5px;color:var(--text3);margin-top:10px;line-height:1.5}
+.bp-prio{display:grid;gap:8px}
+.bp-prio div{border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius-sm);padding:8px 10px}
+.bp-prio b{font-size:12.5px;color:var(--text)}
+.bp-prio p{font-size:11.5px;color:var(--text2);margin-top:2px}
+.bp-prio p strong{color:var(--c)}
+.brief-keymsg{list-style:none;padding:16px 20px;display:grid;gap:10px}
+.brief-keymsg li{font-size:13px;color:var(--text2);padding-left:22px;position:relative;line-height:1.55}
+.brief-keymsg li::before{content:attr(data-n);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:rgba(10,147,150,.25);color:var(--cyan);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.brief-drivers{padding:16px 20px}
+.bd-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+.bd-row .l{font-size:12.5px;color:var(--text)}
+.bd-row .l small{display:block;font-size:10.5px;color:var(--text3)}
+.bd-track{height:10px;background:rgba(255,255,255,.05);border-radius:5px;overflow:hidden}
+.bd-track span{display:block;height:100%;background:linear-gradient(90deg,#0a9396,#57cc99);border-radius:5px}
+.bd-row .v{font-size:12.5px;font-weight:700;color:#34d399;text-align:right}
+.bd-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:10px;font-size:13px;font-weight:700}
+.bd-foot{font-size:11px;color:var(--text3);margin-top:8px}
+@media(max-width:1100px){.brief-grid{grid-template-columns:1fr}.brief-panel{position:static}}
+@media(max-width:700px){.brief-chapters{grid-template-columns:repeat(2,minmax(0,1fr))}.tab-content{padding:16px}.brief-title{font-size:18px}.tab-bar{overflow-x:auto;padding:0 12px}
+  .header{padding:0 12px}.header-title{padding:0 8px}.header-title p{display:none}.header-title h1{font-size:13px}.header-logo-text{font-size:11px;white-space:normal}.tmc-logo-wrap img{height:24px}}
+
 /* ── DRILL-DOWN ROWS ── */
 .pl-drill-row:hover,.ledger-drill-row:hover{background:rgba(42,157,143,0.08);}
 .pl-row-active{background:rgba(42,157,143,0.18)!important;outline:1px solid rgba(42,157,143,0.4);}
@@ -255,21 +329,64 @@ canvas{display:block;max-width:100%}
 
 <!-- ─── TABS ─── -->
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab(0,this)">
+  <button class="tab-btn active" data-tab="brief" onclick="showTab('brief')">
+    <i class="pulse-dot"></i>Cashflow Briefing<span class="tab-badge tab-badge-new">Video</span>
+  </button>
+  <button class="tab-btn" data-tab="mis" onclick="showTab('mis')">
     MIS Summary<span class="tab-badge">Page 1</span>
   </button>
-  <button class="tab-btn" onclick="switchTab(1,this)">
+  <button class="tab-btn" data-tab="cf" onclick="showTab('cf')">
     CF Month View<span class="tab-badge">Page 2</span>
   </button>
-  <button class="tab-btn" onclick="switchTab(2,this)">
+  <button class="tab-btn" data-tab="trends" onclick="showTab('trends')">
     CF Trends<span class="tab-badge">Page 3</span>
   </button>
+  <button class="brief-resume" id="brief-resume" onclick="resumeBriefing()">▶ Resume briefing</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CASHFLOW BRIEFING — narrated video synced to live dashboard data
+     (Cashflow-sourced only: cfSummary / cfPipeline / cfBriefing)
+═══════════════════════════════════════════════════════ -->
+<div id="tab-brief" class="tab-content active">
+  <div class="brief-head">
+    <div>
+      <div class="brief-eyebrow" id="brief-eyebrow">Cashflow Forecast Update</div>
+      <h2 class="brief-title">Where we stand, what's coming, and what decides the year</h2>
+    </div>
+    <div class="brief-meta" id="brief-meta"></div>
+  </div>
+  <div class="brief-grid">
+    <div class="brief-player-card">
+      <div class="brief-player">
+        <video id="brief-video" preload="metadata" playsinline controls></video>
+        <button class="brief-cover" id="brief-cover" onclick="playBriefing()" aria-label="Play the cashflow briefing">
+          <span class="play"></span>
+          <span class="c-title">Watch the briefing</span>
+          <span class="c-sub" id="brief-cover-sub"></span>
+        </button>
+      </div>
+      <div class="brief-rail" id="brief-rail"></div>
+      <div class="brief-chapters" id="brief-chapters"></div>
+    </div>
+    <aside class="brief-panel" id="brief-panel" aria-live="polite"></aside>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="section-header">Key messages</div>
+      <ul class="brief-keymsg" id="brief-keymsg"></ul>
+    </div>
+    <div class="card">
+      <div class="section-header">What moved March 2027 vs the previous update</div>
+      <div class="brief-drivers" id="brief-drivers"></div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
      PAGE 1 — MIS SUMMARY
 ═══════════════════════════════════════════════════════ -->
-<div id="tab-0" class="tab-content active">
+<div id="tab-0" class="tab-content">
 
   <!-- Filter -->
   <div class="filter-bar">
@@ -516,7 +633,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20260925a"></script>
+<script src="dashboard-data.js?v=20261007a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -604,11 +721,20 @@ function getBudgetTotals(sel,isAll){
 }
 
 // ── TAB SWITCHING ────────────────────────────────────────────
-function switchTab(idx,btn){
-  document.querySelectorAll('.tab-content').forEach((el,i)=>el.classList.toggle('active',i===idx));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+const TAB_IDS={brief:'tab-brief',mis:'tab-0',cf:'tab-1',trends:'tab-2'};
+function showTab(key){
+  if(!TAB_IDS[key]) key='brief';
+  Object.entries(TAB_IDS).forEach(([k,id])=>document.getElementById(id).classList.toggle('active',k===key));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===key));
+  if(key!=='brief'){
+    const v=document.getElementById('brief-video');
+    if(v&&!v.paused) v.pause();
+  }
+  updateResumeButton(key);
+  if(location.hash!=='#'+key) history.replaceState(null,'','#'+key);
 }
+// kept for backwards compatibility (index = old page order)
+function switchTab(idx){ showTab(['mis','cf','trends'][idx]); }
 
 // ── MIS DETAIL DRILL-DOWN ────────────────────────────────────
 function filterDetailByDept(dept){
@@ -665,7 +791,7 @@ function filterSalByDept(dept){
     <td>${deptTag(r.d)}</td>
     <td class="num-cell">${fmt(r.a)}</td>
   </tr>`,15);
-  setTimeout(()=>{const tb=document.getElementById('salary-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(total)}</td></tr>`;},0);
+  setTimeout(()=>{const tb=document.getElementById('salary-body');if(tb){tb.querySelectorAll('.total-row').forEach(r=>r.remove());}if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(total)}</td></tr>`;},0);
 }
 
 // ── SORT TABLE ───────────────────────────────────────────────
@@ -965,6 +1091,7 @@ function renderMIS(){
   // append total
   setTimeout(()=>{
     const tb=document.getElementById('ledger-body');
+    if(tb) tb.querySelectorAll('.total-row').forEach(r=>r.remove());
     if(tb) tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(ledgerTotal)}</td></tr>`;
   },0);
 
@@ -985,6 +1112,7 @@ function renderMIS(){
   </tr>`,15);
   setTimeout(()=>{
     const tb=document.getElementById('salary-body');
+    if(tb) tb.querySelectorAll('.total-row').forEach(r=>r.remove());
     if(tb) tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(salTotal)}</td></tr>`;
   },0);
 }
@@ -1061,9 +1189,9 @@ function renderCF(){
     <td>${r.p}</td>
     <td class="num-cell neg">${fmt(r.a)}</td>
   </tr>`,10);
-  setTimeout(()=>{const tb=document.getElementById('cf-outflows-body');if(tb){
+  setTimeout(()=>{const tb=document.getElementById('cf-outflows-body');if(tb){tb.querySelectorAll('.total-row,.pipe-cost-row').forEach(r=>r.remove());
     if(pipelineCostCF>0){const lbl=scenarioState.b2b!=='none'?(scenarioState.b2b==='high'?'Highly Likely':scenarioState.b2b==='med'?'High+Medium':'All Likelihood'):(scenarioState.rtd==='high'?'Highly Likely':scenarioState.rtd==='med'?'High+Medium':'All Likelihood');
-      tb.innerHTML+=`<tr style="background:rgba(139,92,246,0.06)"><td>+</td><td colspan="2">Pipeline Delivery Cost <span style="font-size:0.75em;color:#8b5cf6;margin-left:6px">${lbl}</span></td><td class="num-cell" style="color:#8b5cf6">${fmt(pipelineCostCF)}</td></tr>`;}
+      tb.innerHTML+=`<tr class="pipe-cost-row" style="background:rgba(139,92,246,0.06)"><td>+</td><td colspan="2">Pipeline Delivery Cost <span style="font-size:0.75em;color:#8b5cf6;margin-left:6px">${lbl}</span></td><td class="num-cell" style="color:#8b5cf6">${fmt(pipelineCostCF)}</td></tr>`;}
     tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(outTotal)}</td></tr>`;
   }},0);
 
@@ -1093,7 +1221,7 @@ function renderCF(){
     <td>${deptTag(r.d)}</td>
     <td class="num-cell">${fmt(r.a)}</td>
   </tr>`,12);
-  setTimeout(()=>{const tb=document.getElementById('cf-sal-body');if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(cfSalTotal)}</td></tr>`;},0);
+  setTimeout(()=>{const tb=document.getElementById('cf-sal-body');if(tb){tb.querySelectorAll('.total-row').forEach(r=>r.remove());}if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(cfSalTotal)}</td></tr>`;},0);
 
   // ── Shared pie-slice % label plugin ──
   const pieLabelsPlugin={
@@ -1273,8 +1401,8 @@ function renderCFTrends(){
   const fi=parseInt(document.getElementById('ct-from')?.value??0);
   const ti=parseInt(document.getElementById('ct-to')?.value??(all.length-1));
 
-  // Sep-2026 onwards = forecast (actuals run through Aug-2026 in the Cashflow workbook; defined early so data filter can use it)
-  const isFc=m=>{const [mn,yr]=m.split('-');const y=parseInt(yr);return y>2026||(y===2026&&['Sep','Oct','Nov','Dec'].includes(mn));};
+  // Oct-2026 onwards = forecast (actuals run through Sep-2026 in the Cashflow workbook; defined early so data filter can use it)
+  const isFc=m=>{const [mn,yr]=m.split('-');const y=parseInt(yr);return y>2026||(y===2026&&['Oct','Nov','Dec'].includes(mn));};
 
   let data=all.slice(fi,ti+1);
   if(trendsState.forecastOnly) data=data.filter(r=>isFc(r.m));
@@ -1365,7 +1493,7 @@ function renderCFTrends(){
               if(hasB2B) items.push({text:'B2B Pipeline',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(139,92,246,0.65)',strokeStyle:'#8b5cf6',lineWidth:1,fontColor:'#ffffff'});
               if(hasRTD) items.push({text:'RTD Pipeline',datasetIndex:3,hidden:!!chart.getDatasetMeta(3).hidden,fillStyle:'rgba(236,72,153,0.65)',strokeStyle:'#ec4899',lineWidth:1,fontColor:'#ffffff'});
               items.push({text:'Outflows',datasetIndex:4,hidden:!!chart.getDatasetMeta(4).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'});
-              items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Sep-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
+              items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Oct-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
               return items;
             }
           }
@@ -1466,7 +1594,7 @@ function renderCFTrends(){
             generateLabels:chart=>[
               {text:'Net Burn',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1,fontColor:'#ffffff'},
               {text:'Closing Balance',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(147,197,253,0.35)',strokeStyle:'#93c5fd',lineWidth:2,fontColor:'#ffffff'},
-              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Sep-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
+              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Oct-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
             ]
           }
         },
@@ -1501,6 +1629,189 @@ function renderCFTrends(){
 }
 
 // ════════════════════════════════════════════════════════════
+//  CASHFLOW BRIEFING — video chapters synced to live data
+//  Every figure in the side panel is recomputed from TMC_DATA (cash flow
+//  arrays only); `narrated` holds what the video says so we can show
+//  whether the live number still matches the recording.
+// ════════════════════════════════════════════════════════════
+const BRIEF=TMC_DATA.cfBriefing||null;
+let briefChapter=-1, briefStarted=false;
+const SCEN_NAME={none:'Base (no pipeline)',high:'Scenario 1 — Highly Likely',med:'Scenario 2 — + Medium Likely',all:'Scenario 3 — All Likelihood'};
+
+const mmss=t=>Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
+const cfSum=(m,p)=>{const r=TMC_DATA.cfSummary.find(x=>x.m===m&&x.p===p);return r?r.a:NaN;};
+// Closing balance for a scenario applied to both B2B and RTD, without touching the UI state
+function scenSeries(s){
+  const saved={...scenarioState};
+  scenarioState.b2b=s; scenarioState.rtd=s;
+  const d=buildScenarioCFData();
+  scenarioState.b2b=saved.b2b; scenarioState.rtd=saved.rtd;
+  return d;
+}
+const scenClose=(s,m)=>{const r=scenSeries(s).find(x=>x.m===m);return r?r.cb:NaN;};
+// Net contribution (revenue − delivery cost) of one pipeline tier, B2B + RTD
+function tierNet(tier){
+  const P=TMC_DATA.cfPipeline||{}, sum=o=>Object.values(o||{}).reduce((a,b)=>a+b,0);
+  return sum(P['b2b'+tier])+sum(P['rtd'+tier])-sum(P['b2b'+tier+'Cost'])-sum(P['rtd'+tier+'Cost']);
+}
+function checkTag(live,said){
+  if(said==null) return '';
+  return Math.abs(live-said)<=2
+    ? '<span class="bp-check ok">✓ as narrated</span>'
+    : `<span class="bp-check chg">⟳ updated — video said ${fmt(said)}</span>`;
+}
+function bpRow(label,live,said,cls,sub){
+  const c=cls||(live<0?'neg':'');
+  return `<div class="bp-row"><div class="l">${label}${sub?`<small>${sub}</small>`:''}</div><div class="v ${c}">${fmt(live)}${checkTag(live,said)}</div></div>`;
+}
+// Small inline SVG line chart of closing balances (Sep-26 → Mar-27)
+function spark(seriesList){
+  const months=['Sep-2026','Oct-2026','Nov-2026','Dec-2026','Jan-2027','Feb-2027','Mar-2027'];
+  const W=300,H=86,P=6;
+  const vals=seriesList.flatMap(s=>s.vals);
+  const mx=Math.max(...vals,0), mn=Math.min(...vals,0);
+  const x=i=>P+i*(W-2*P)/(months.length-1), y=v=>P+(mx-v)*(H-2*P)/((mx-mn)||1);
+  const lines=seriesList.map(s=>`<polyline fill="none" stroke="${s.c}" stroke-width="2.2" stroke-linejoin="round" points="${s.vals.map((v,i)=>x(i)+','+y(v)).join(' ')}"/>`+
+    `<circle cx="${x(months.length-1)}" cy="${y(s.vals[s.vals.length-1])}" r="3" fill="${s.c}"/>`).join('');
+  return `<div class="bp-legend">${seriesList.map(s=>`<span><i style="background:${s.c}"></i>${s.n}</span>`).join('')}</div>
+    <svg class="bp-spark" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Closing balance Sep 2026 to Mar 2027">
+      <line x1="${P}" x2="${W-P}" y1="${y(0)}" y2="${y(0)}" stroke="rgba(255,255,255,.18)" stroke-dasharray="3 3"/>${lines}</svg>
+    <div class="bp-legend" style="justify-content:space-between"><span>Sep 26</span><span>Mar 27</span></div>`;
+}
+const seriesVals=s=>['Sep-2026','Oct-2026','Nov-2026','Dec-2026','Jan-2027','Feb-2027','Mar-2027'].map(m=>scenClose(s,m));
+
+function renderBriefPanel(i){
+  const ch=BRIEF.chapters[i], N=BRIEF.narrated;
+  let body='', note='';
+  switch(ch.panel){
+    case 'intro':
+      body=bpRow('September closing',cfSum('Sep-2026','Closing Balance'),N.sepClose,'','Actual')+
+           bpRow('October closing',cfSum('Oct-2026','Closing Balance'),N.octClose,'','Base forecast')+
+           bpRow('March 2027 — base',cfSum('Mar-2027','Closing Balance'),N.marBase)+
+           bpRow('March 2027 — Scenario 1',scenClose('high','Mar-2027'),N.marS1,'pos');
+      note='This panel follows the video. Each figure is recalculated from the dashboard data, so you can see it ties to what is narrated.';
+      break;
+    case 'sep':
+      body=bpRow('Opening balance',cfSum('Sep-2026','Opening balance'),N.sepOpen)+
+           bpRow('Receipts',cfSum('Sep-2026','Receipts'),N.sepRcpt,'pos')+
+           bpRow('Gross burn',cfSum('Sep-2026','Gross Burn'),N.sepOut,'','Lower than forecast — dues moved to 1st Oct')+
+           bpRow('Closing balance',cfSum('Sep-2026','Closing Balance'),N.sepClose,'hl');
+      break;
+    case 'oct':{
+      const out=cfSum('Oct-2026','Outflows');
+      const pPaid=BRIEF.octPaid/(BRIEF.octPaid+BRIEF.octOutstanding)*100;
+      body=bpRow('Payments due in October',out,N.octOut,'','September + October bills')+
+           `<div class="bp-bar"><span style="width:${pPaid}%;background:#0a9396"></span><span style="flex:1;background:#ec4899"></span></div>
+            <div class="bp-legend" style="justify-content:space-between"><span><i style="background:#0a9396"></i>Paid 1st Oct ${fmt(BRIEF.octPaid)}</span><span><i style="background:#ec4899"></i>Outstanding ${fmt(BRIEF.octOutstanding)}</span></div>`+
+           bpRow('Receipts due',cfSum('Oct-2026','Receipts'),N.octRcpt,'pos','None received as of 5 Oct')+
+           bpRow('October closing (base)',cfSum('Oct-2026','Closing Balance'),N.octClose,'hl');
+      note='Paid / outstanding split is from the 5 Oct update note.';
+      break;}
+    case 'base':{
+      const base=buildFullCFData().filter(r=>['Oct-2026','Nov-2026','Dec-2026','Jan-2027','Feb-2027'].includes(r.m));
+      const low=base.reduce((a,b)=>b.cb<a.cb?b:a);
+      body=spark([{n:'Base',c:'#57cc99',vals:seriesVals('none')}])+
+           bpRow('Pinch point — '+low.m.replace('-20',' '),low.cb,N.febClose,'hl','Lowest positive month')+
+           bpRow('March 2027 closing',cfSum('Mar-2027','Closing Balance'),N.marBase);
+      break;}
+    case 's1': case 's2': case 's3':{
+      const map={s1:['high','HighlyLikely',N.s1Net,N.marS1,'#3b82f6','Net contribution'],s2:['med','MediumLikely',N.s2Net,N.marS2,'#ec4899','Incremental contribution'],s3:['all','LowLikely',N.s3Net,N.marS3,'#d4a843','Incremental contribution']}[ch.panel];
+      body=spark([{n:'Base',c:'#64748b',vals:seriesVals('none')},{n:SCEN_NAME[map[0]].split(' — ')[0],c:map[4],vals:seriesVals(map[0])}])+
+           bpRow(map[5],tierNet(map[1]),map[2],'pos','Revenue less delivery cost, Oct 26 – Mar 27')+
+           bpRow('March 2027 closing',scenClose(map[0],'Mar-2027'),map[3],'hl');
+      break;}
+    case 'all':{
+      const P=BRIEF.prevMarch;
+      const rows=[['none','Base',P.base,N.marBase],['high','Scenario 1',P.s1,N.marS1],['med','Scenario 2',P.s2,N.marS2],['all','Scenario 3',P.s3,N.marS3]];
+      body=spark([{n:'Base',c:'#64748b',vals:seriesVals('none')},{n:'S1',c:'#3b82f6',vals:seriesVals('high')},{n:'S2',c:'#ec4899',vals:seriesVals('med')},{n:'S3',c:'#d4a843',vals:seriesVals('all')}])+
+           rows.map(([s,l,prev,said])=>{const v=scenClose(s,'Mar-2027');const d=v-prev;return bpRow(l+' — Mar 2027',v,said,'',`${d>=0?'+':''}${fmt(d)} vs previous update`);}).join('');
+      break;}
+    case 'prio':
+      body=`<div class="bp-prio">${BRIEF.priorities.map(p=>{const c={gold:'#d4a843',blue:'#3b82f6',teal:'#2a9d8f',pink:'#ec4899'}[p.c];return `<div style="--c:${c}"><b>${p.n}. ${p.title}</b><p><strong>${p.hl}</strong> ${p.d}</p></div>`;}).join('')}</div>`+
+           bpRow('October receipts still due',cfSum('Oct-2026','Receipts'),N.octRcpt,'pos');
+      break;
+  }
+  let btn='';
+  if(ch.link){
+    const lbl=ch.link.page==='cf'?`Open ${ch.link.month.replace('-20',' ')} in CF Month View`:`Open CF Trends — ${SCEN_NAME[ch.link.scen]}`;
+    btn=`<button class="bp-explore" onclick='exploreFromBrief(${JSON.stringify(ch.link)})'>${lbl} →</button>`;
+  }
+  document.getElementById('brief-panel').innerHTML=
+    `<div class="bp-eyebrow">Chapter ${ch.n} · <span class="bp-live">Live from the dashboard</span></div>
+     <div class="bp-title">${ch.title}</div><div class="bp-sub">${ch.sub}</div>${body}${btn}${note?`<div class="bp-note">${note}</div>`:''}`;
+}
+
+function setBriefChapter(i,force){
+  if(i===briefChapter&&!force) return;
+  briefChapter=i;
+  document.querySelectorAll('.brief-chip').forEach((el,k)=>el.classList.toggle('active',k===i));
+  renderBriefPanel(i);
+}
+function chapterAt(t){let i=0;BRIEF.chapters.forEach((c,k)=>{if(t>=c.t)i=k;});return i;}
+function seekBriefing(i){
+  const v=document.getElementById('brief-video');
+  v.currentTime=BRIEF.chapters[i].t+0.05;
+  setBriefChapter(i,true);
+  if(briefStarted) v.play().catch(()=>{});
+}
+function playBriefing(){
+  const v=document.getElementById('brief-video');
+  v.play().catch(()=>{});
+}
+function exploreFromBrief(link){
+  const v=document.getElementById('brief-video'); if(!v.paused) v.pause();
+  // set both scenario sides, then let a single changeScenario() call sync the pills and re-render once
+  const scen=link.page==='cf'?'none':link.scen;
+  scenarioState.b2b=scen;
+  if(link.page==='cf') document.getElementById('cf-month').value=link.month;
+  changeScenario('rtd',scen);
+  showTab(link.page);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function updateResumeButton(key){
+  const b=document.getElementById('brief-resume'), v=document.getElementById('brief-video');
+  if(!b||!v) return;
+  const show=key!=='brief'&&briefStarted&&!v.ended&&v.currentTime>1;
+  b.style.display=show?'inline-block':'none';
+  if(show) b.textContent='▶ Resume briefing at '+mmss(v.currentTime);
+}
+function resumeBriefing(){ showTab('brief'); window.scrollTo({top:0,behavior:'smooth'}); playBriefing(); }
+
+function initBriefing(){
+  const tabBtn=document.querySelector('.tab-btn[data-tab="brief"]');
+  if(!BRIEF){ if(tabBtn) tabBtn.style.display='none'; return false; }
+  const v=document.getElementById('brief-video'), D=BRIEF.duration;
+  v.src=BRIEF.video;
+  document.getElementById('brief-eyebrow').textContent=`${BRIEF.title} · as of ${BRIEF.asOf}`;
+  document.getElementById('brief-meta').textContent=`${mmss(D)} · ${BRIEF.chapters.length-1} chapters · with voiceover · Prepared by SRF Capital Studio`;
+  document.getElementById('brief-cover-sub').textContent=`${mmss(D)} narrated update · the live panel follows each chapter with figures from the dashboard`;
+  const ends=BRIEF.chapters.map((c,k)=>k+1<BRIEF.chapters.length?BRIEF.chapters[k+1].t:D);
+  document.getElementById('brief-rail').innerHTML=BRIEF.chapters.map((c,k)=>
+    `<button class="brief-seg" style="flex:${ends[k]-c.t}" onclick="seekBriefing(${k})" aria-label="Jump to ${c.title}"><span id="brief-seg-${k}"></span></button>`).join('');
+  document.getElementById('brief-chapters').innerHTML=BRIEF.chapters.slice(1).map((c,k)=>
+    `<button class="brief-chip" onclick="seekBriefing(${k+1})"><div class="n">${c.n}</div><div class="t">${c.title}</div><div class="tm">${mmss(c.t)}</div></button>`).join('');
+  // chips are chapters 1..n; keep index alignment with BRIEF.chapters by inserting a hidden chip for the intro
+  document.getElementById('brief-chapters').insertAdjacentHTML('afterbegin','<button class="brief-chip" style="display:none"></button>');
+  v.addEventListener('play',()=>{briefStarted=true;document.getElementById('brief-cover').classList.add('hidden');});
+  v.addEventListener('timeupdate',()=>{
+    const t=v.currentTime;
+    BRIEF.chapters.forEach((c,k)=>{const el=document.getElementById('brief-seg-'+k);if(el)el.style.width=Math.max(0,Math.min(1,(t-c.t)/(ends[k]-c.t)))*100+'%';});
+    setBriefChapter(chapterAt(t));
+  });
+  v.addEventListener('seeked',()=>setBriefChapter(chapterAt(v.currentTime)));
+  // key messages + March bridge
+  document.getElementById('brief-keymsg').innerHTML=BRIEF.keyMessages.map((m,k)=>`<li data-n="${k+1}">${m}</li>`).join('');
+  const drv=BRIEF.marchDrivers, mx=Math.max(...drv.map(d=>d.v)), tot=drv.reduce((a,d)=>a+d.v,0);
+  const marNow=cfSum('Mar-2027','Closing Balance'), marPrev=BRIEF.prevMarch.base;
+  document.getElementById('brief-drivers').innerHTML=drv.map(d=>
+    `<div class="bd-row"><div class="l">${d.l}${d.d?`<small>${d.d}</small>`:''}</div><div class="bd-track"><span style="width:${d.v/mx*100}%"></span></div><div class="v">+₹${(d.v/1e5).toFixed(2)}L</div></div>`).join('')+
+    `<div class="bd-total"><span>Total improvement (base case)</span><span style="color:#34d399">+₹${(tot/1e5).toFixed(2)}L</span></div>
+     <div class="bd-foot">March 2027 base closing: ${fmt(marNow)} now vs ${fmt(marPrev)} in the previous update (live difference ${fmt(marNow-marPrev)}).</div>`;
+  setBriefChapter(0,true);
+  return true;
+}
+
+// ════════════════════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
@@ -1508,6 +1819,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderMIS();
   renderCF();
   renderCFTrends();
+  const hasBrief=initBriefing();
+  const want=(location.hash||'').replace('#','');
+  showTab(TAB_IDS[want]&&(want!=='brief'||hasBrief)?want:(hasBrief?'brief':'mis'));
 });
 </script>
 </body>
