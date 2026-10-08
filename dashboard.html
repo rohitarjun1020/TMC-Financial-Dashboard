@@ -456,14 +456,14 @@ canvas{display:block;max-width:100%}
       </div>
     </div>
     <div class="card">
-      <div class="section-header" id="sal-breakup-header">Salaries Breakup</div>
+      <div class="section-header" id="sal-breakup-header">Salaries by Department</div>
       <div class="card-body">
         <table class="data-table" id="salary-table">
           <thead><tr>
             <th>#</th>
-            <th onclick="sortTable('salary-table',1)">Employee</th>
-            <th onclick="sortTable('salary-table',2)">Department</th>
-            <th onclick="sortTable('salary-table',3)">Amount</th>
+            <th id="salary-col-label">Department</th>
+            <th>Amount</th>
+            <th>% of Total</th>
           </tr></thead>
           <tbody id="salary-body"></tbody>
         </table>
@@ -549,10 +549,10 @@ canvas{display:block;max-width:100%}
       </div>
     </div>
     <div class="card">
-      <div class="section-header">Salaries Breakup</div>
+      <div class="section-header">Salaries by Department</div>
       <div class="card-body">
         <table class="data-table" id="cf-sal-table">
-          <thead><tr><th>#</th><th onclick="sortTable('cf-sal-table',1)">Employee</th><th onclick="sortTable('cf-sal-table',2)">Department</th><th onclick="sortTable('cf-sal-table',3)">Amount</th></tr></thead>
+          <thead><tr><th>#</th><th>Department</th><th>Amount</th><th>% of Total</th></tr></thead>
           <tbody id="cf-sal-body"></tbody>
         </table>
         <div class="pagination" id="cf-sal-page"></div>
@@ -618,7 +618,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20261007d"></script>
+<script src="dashboard-data.js?v=20261008a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -749,6 +749,29 @@ function filterDetailByDept(dept){
   </tr>`,15);
 }
 
+// ── SALARIES BY DEPARTMENT ───────────────────────────────────
+// Salary data holds department totals only ({d,m,a}); no employee names are published.
+const SAL_DEPT_LABELS={'COGS-Manpowers Cost':'Operations (COGS)','S&M-Manpower Costs':'Sales & Marketing (S&M)','G&A-Manpower Costs':'General & Admin (G&A)'};
+function salaryByDept(src){
+  const map={};
+  src.forEach(r=>{map[r.d]=(map[r.d]||0)+r.a;});
+  const order=Object.keys(SAL_DEPT_LABELS).concat(Object.keys(map).filter(d=>!SAL_DEPT_LABELS[d]));
+  return order.filter(d=>map[d]).map(d=>({label:deptTag(SAL_DEPT_LABELS[d]||d),a:map[d]}));
+}
+// rows: [{label (html), a}]
+function renderSalaryTable(bodyId,pageId,rows){
+  const total=rows.reduce((s,r)=>s+r.a,0);
+  pageState[bodyId]={page:0};
+  renderPaged(bodyId,pageId,rows,(r,i)=>`<tr>
+    <td>${i+1}.</td>
+    <td>${r.label}</td>
+    <td class="num-cell">${fmt(r.a)}</td>
+    <td class="num-cell">${total?(r.a/total*100).toFixed(1)+'%':'—'}</td>
+  </tr>`,15);
+  setTimeout(()=>{const tb=document.getElementById(bodyId);if(!tb)return;tb.querySelectorAll('.total-row').forEach(r=>r.remove());
+    tb.innerHTML+=`<tr class="total-row"><td colspan="2">Grand Total</td><td class="num-cell">${fmt(total)}</td><td class="num-cell">${total?'100.0%':'—'}</td></tr>`;},0);
+}
+
 // ── LEDGER → SALARY DRILL-DOWN ───────────────────────────────
 function filterSalByDept(dept){
   _misSalFilter=(_misSalFilter===dept)?null:dept;
@@ -756,27 +779,20 @@ function filterSalByDept(dept){
     tr.classList.toggle('pl-row-active', tr.dataset.dept===_misSalFilter);
   });
   const hdr=document.getElementById('sal-breakup-header');
-  if(hdr) hdr.textContent=_misSalFilter?'Salaries — '+_misSalFilter:'Salaries Breakup';
-  let rows,total;
+  const col=document.getElementById('salary-col-label');
+  let rows;
   if(_misSalFilter==='G&A-Professional Fees'){
     const map={};
     _misProfFeesData.forEach(r=>{if(!map[r.b])map[r.b]=0;map[r.b]+=r.a;});
-    rows=Object.entries(map).filter(([k,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([b,a])=>({e:b,d:'G&A-Professional Fees',a}));
+    rows=Object.entries(map).filter(([k,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([b,a])=>({label:b,a}));
+    if(hdr) hdr.textContent='Professional Fees — G&A';
+    if(col) col.textContent='Payee';
   } else {
-    const src=_misSalFilter?_misSalData.filter(r=>r.d===_misSalFilter):_misSalData;
-    const map={};
-    src.forEach(r=>{if(!map[r.e])map[r.e]={e:r.e,d:r.d,a:0};map[r.e].a+=r.a;});
-    rows=Object.values(map).filter(r=>r.a>0).sort((a,b)=>b.a-a.a);
+    rows=salaryByDept(_misSalFilter?_misSalData.filter(r=>r.d===_misSalFilter):_misSalData);
+    if(hdr) hdr.textContent=_misSalFilter?'Salaries — '+(SAL_DEPT_LABELS[_misSalFilter]||_misSalFilter):'Salaries by Department';
+    if(col) col.textContent='Department';
   }
-  total=rows.reduce((s,r)=>s+r.a,0);
-  pageState['salary-body']={page:0};
-  renderPaged('salary-body','salary-page',rows,(r,i)=>`<tr>
-    <td>${i+1}.</td>
-    <td>${r.e}</td>
-    <td>${deptTag(r.d)}</td>
-    <td class="num-cell">${fmt(r.a)}</td>
-  </tr>`,15);
-  setTimeout(()=>{const tb=document.getElementById('salary-body');if(tb){tb.querySelectorAll('.total-row').forEach(r=>r.remove());}if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(total)}</td></tr>`;},0);
+  renderSalaryTable('salary-body','salary-page',rows);
 }
 
 // ── SORT TABLE ───────────────────────────────────────────────
@@ -1080,26 +1096,10 @@ function renderMIS(){
     if(tb) tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(ledgerTotal)}</td></tr>`;
   },0);
 
-  // ── SALARIES BREAKUP ──
-  const salMap={};
-  salData.forEach(r=>{
-    if(!salMap[r.e]) salMap[r.e]={e:r.e,d:r.d,a:0};
-    salMap[r.e].a+=r.a;
-  });
-  const salRows=Object.values(salMap).filter(r=>r.a>0).sort((a,b)=>b.a-a.a);
-  pageState['salary-body']={page:0};
-  const salTotal=salRows.reduce((s,r)=>s+r.a,0);
-  renderPaged('salary-body','salary-page',salRows,(r,i)=>`<tr>
-    <td>${i+1}.</td>
-    <td>${r.e}</td>
-    <td>${deptTag(r.d)}</td>
-    <td class="num-cell">${fmt(r.a)}</td>
-  </tr>`,15);
-  setTimeout(()=>{
-    const tb=document.getElementById('salary-body');
-    if(tb) tb.querySelectorAll('.total-row').forEach(r=>r.remove());
-    if(tb) tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(salTotal)}</td></tr>`;
-  },0);
+  // ── SALARIES BY DEPARTMENT ──
+  const salHdr=document.getElementById('sal-breakup-header'); if(salHdr) salHdr.textContent='Salaries by Department';
+  const salCol=document.getElementById('salary-col-label'); if(salCol) salCol.textContent='Department';
+  renderSalaryTable('salary-body','salary-page',salaryByDept(salData));
 }
 
 // ════════════════════════════════════════════════════════════
@@ -1197,16 +1197,7 @@ function renderCF(){
   </tr>`,12);
 
   // ── CF Salaries (from cashflow Payroll sheet, filtered by month — kept separate from Page 1's misSalaries per the never-cross-populate rule) ──
-  const cfSalRows=(TMC_DATA.cfSalaries||[]).filter(r=>r.m===sel&&r.a>0).sort((a,b)=>b.a-a.a);
-  const cfSalTotal=cfSalRows.reduce((s,r)=>s+r.a,0);
-  pageState['cf-sal-body']={page:0};
-  renderPaged('cf-sal-body','cf-sal-page',cfSalRows,(r,i)=>`<tr>
-    <td>${i+1}.</td>
-    <td>${r.e}</td>
-    <td>${deptTag(r.d)}</td>
-    <td class="num-cell">${fmt(r.a)}</td>
-  </tr>`,12);
-  setTimeout(()=>{const tb=document.getElementById('cf-sal-body');if(tb){tb.querySelectorAll('.total-row').forEach(r=>r.remove());}if(tb)tb.innerHTML+=`<tr class="total-row"><td colspan="3">Grand Total</td><td class="num-cell">${fmt(cfSalTotal)}</td></tr>`;},0);
+  renderSalaryTable('cf-sal-body','cf-sal-page',salaryByDept((TMC_DATA.cfSalaries||[]).filter(r=>r.m===sel)));
 
   // ── Shared pie-slice % label plugin ──
   const pieLabelsPlugin={
