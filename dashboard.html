@@ -618,7 +618,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20261008a"></script>
+<script src="dashboard-data.js?v=20261014a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -1678,10 +1678,10 @@ function renderBriefPanel(i){
       const pPaid=BRIEF.octPaid/(BRIEF.octPaid+BRIEF.octOutstanding)*100;
       body=bpRow('Payments due in October',out,N.octOut,'','September + October bills')+
            `<div class="bp-bar"><span style="width:${pPaid}%;background:#0a9396"></span><span style="flex:1;background:#ec4899"></span></div>
-            <div class="bp-legend" style="justify-content:space-between"><span><i style="background:#0a9396"></i>Paid 1st Oct ${fmt(BRIEF.octPaid)}</span><span><i style="background:#ec4899"></i>Outstanding ${fmt(BRIEF.octOutstanding)}</span></div>`+
-           bpRow('Receipts due',cfSum('Oct-2026','Receipts'),N.octRcpt,'pos','None received as of 5 Oct')+
+            <div class="bp-legend" style="justify-content:space-between"><span><i style="background:#0a9396"></i>Paid to date ${fmt(BRIEF.octPaid)}</span><span><i style="background:#ec4899"></i>Outstanding ${fmt(BRIEF.octOutstanding)}</span></div>`+
+           bpRow('Receipts due',cfSum('Oct-2026','Receipts'),N.octRcpt,'pos','None received as of '+BRIEF.asOf.replace(/ \d{4}$/,''))+
            bpRow('October closing (base)',cfSum('Oct-2026','Closing Balance'),N.octClose,'hl');
-      note='Paid / outstanding split is from the 5 Oct update note.';
+      note=`Paid / outstanding split is from the ${BRIEF.asOf.replace(/ \d{4}$/,'')} update note.`;
       break;}
     case 'base':{
       const base=buildFullCFData().filter(r=>['Oct-2026','Nov-2026','Dec-2026','Jan-2027','Feb-2027'].includes(r.m));
