@@ -618,7 +618,7 @@ canvas{display:block;max-width:100%}
 </div>
 
 <!-- ─── DATA ─── -->
-<script src="dashboard-data.js?v=20261014a"></script>
+<script src="dashboard-data.js?v=20261117a"></script>
 
 <!-- ─── DASHBOARD LOGIC ─── -->
 <script>
@@ -718,6 +718,8 @@ function showTab(key){
   updateResumeButton(key);
   if(location.hash!=='#'+key) history.replaceState(null,'','#'+key);
 }
+const CF_MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function cfMonthIndex(m){const [mn,yr]=m.split('-');return +yr*12+CF_MON.indexOf(mn);}
 // kept for backwards compatibility (index = old page order)
 function switchTab(idx){ showTab(['mis','cf','trends'][idx]); }
 
@@ -1377,8 +1379,8 @@ function renderCFTrends(){
   const fi=parseInt(document.getElementById('ct-from')?.value??0);
   const ti=parseInt(document.getElementById('ct-to')?.value??(all.length-1));
 
-  // Oct-2026 onwards = forecast (actuals run through Sep-2026 in the Cashflow workbook; defined early so data filter can use it)
-  const isFc=m=>{const [mn,yr]=m.split('-');const y=parseInt(yr);return y>2026||(y===2026&&['Oct','Nov','Dec'].includes(mn));};
+  // Forecast boundary comes from the data file (cfForecastFrom); defined early so the data filter can use it
+  const isFc=m=>cfMonthIndex(m)>=cfMonthIndex(TMC_DATA.cfForecastFrom);
 
   let data=all.slice(fi,ti+1);
   if(trendsState.forecastOnly) data=data.filter(r=>isFc(r.m));
@@ -1469,7 +1471,7 @@ function renderCFTrends(){
               if(hasB2B) items.push({text:'B2B Pipeline',datasetIndex:2,hidden:!!chart.getDatasetMeta(2).hidden,fillStyle:'rgba(139,92,246,0.65)',strokeStyle:'#8b5cf6',lineWidth:1,fontColor:'#ffffff'});
               if(hasRTD) items.push({text:'RTD Pipeline',datasetIndex:3,hidden:!!chart.getDatasetMeta(3).hidden,fillStyle:'rgba(236,72,153,0.65)',strokeStyle:'#ec4899',lineWidth:1,fontColor:'#ffffff'});
               items.push({text:'Outflows',datasetIndex:4,hidden:!!chart.getDatasetMeta(4).hidden,fillStyle:'rgba(239,68,68,0.6)',strokeStyle:'#ef4444',lineWidth:1,fontColor:'#ffffff'});
-              items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Oct-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
+              items.push({text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = '+TMC_DATA.cfForecastFrom.replace('-20','-')+'+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'});
               return items;
             }
           }
@@ -1570,7 +1572,7 @@ function renderCFTrends(){
             generateLabels:chart=>[
               {text:'Net Burn',datasetIndex:0,hidden:!!chart.getDatasetMeta(0).hidden,fillStyle:'rgba(239,68,68,0.7)',strokeStyle:C.red,lineWidth:1,fontColor:'#ffffff'},
               {text:'Closing Balance',datasetIndex:1,hidden:!!chart.getDatasetMeta(1).hidden,fillStyle:'rgba(147,197,253,0.35)',strokeStyle:'#93c5fd',lineWidth:2,fontColor:'#ffffff'},
-              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = Oct-26+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
+              {text:(trendsState.forecastOnly?'▶ ':'░ ')+'Forecast = '+TMC_DATA.cfForecastFrom.replace('-20','-')+'+',fillStyle:trendsState.forecastOnly?'rgba(212,168,67,0.45)':'rgba(148,163,184,0.15)',strokeStyle:trendsState.forecastOnly?'#d4a843':'#64748b',lineWidth:1,hidden:false,fontColor:trendsState.forecastOnly?'#d4a843':'#94a3b8'},
             ]
           }
         },
@@ -1627,7 +1629,7 @@ function scenSeries(s){
 const scenClose=(s,m)=>{const r=scenSeries(s).find(x=>x.m===m);return r?r.cb:NaN;};
 // Net contribution (revenue − delivery cost) of one pipeline tier, B2B + RTD
 function tierNet(tier){
-  const P=TMC_DATA.cfPipeline||{}, sum=o=>Object.values(o||{}).reduce((a,b)=>a+b,0);
+  const P=TMC_DATA.cfPipeline||{}, sum=o=>BRIEF.horizon.reduce((a,m)=>a+((o||{})[m]||0),0);
   return sum(P['b2b'+tier])+sum(P['rtd'+tier])-sum(P['b2b'+tier+'Cost'])-sum(P['rtd'+tier+'Cost']);
 }
 function checkTag(live,said){
@@ -1642,7 +1644,7 @@ function bpRow(label,live,said,cls,sub){
 }
 // Small inline SVG line chart of closing balances (Sep-26 → Mar-27)
 function spark(seriesList){
-  const months=['Sep-2026','Oct-2026','Nov-2026','Dec-2026','Jan-2027','Feb-2027','Mar-2027'];
+  const months=BRIEF.horizon;
   const W=300,H=86,P=6;
   const vals=seriesList.flatMap(s=>s.vals);
   const mx=Math.max(...vals,0), mn=Math.min(...vals,0);
@@ -1652,59 +1654,51 @@ function spark(seriesList){
   return `<div class="bp-legend">${seriesList.map(s=>`<span><i style="background:${s.c}"></i>${s.n}</span>`).join('')}</div>
     <svg class="bp-spark" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Closing balance Sep 2026 to Mar 2027">
       <line x1="${P}" x2="${W-P}" y1="${y(0)}" y2="${y(0)}" stroke="rgba(255,255,255,.18)" stroke-dasharray="3 3"/>${lines}</svg>
-    <div class="bp-legend" style="justify-content:space-between"><span>Sep 26</span><span>Mar 27</span></div>`;
+    <div class="bp-legend" style="justify-content:space-between"><span>${months[0].replace('-20',' ')}</span><span>${months[months.length-1].replace('-20',' ')}</span></div>`;
 }
-const seriesVals=s=>['Sep-2026','Oct-2026','Nov-2026','Dec-2026','Jan-2027','Feb-2027','Mar-2027'].map(m=>scenClose(s,m));
+const seriesVals=s=>BRIEF.horizon.map(m=>scenClose(s,m));
 
 function renderBriefPanel(i){
   const ch=BRIEF.chapters[i], N=BRIEF.narrated;
   let body='', note='';
   switch(ch.panel){
-    case 'intro':
-      body=bpRow('September closing',cfSum('Sep-2026','Closing Balance'),N.sepClose,'','Actual')+
-           bpRow('October closing',cfSum('Oct-2026','Closing Balance'),N.octClose,'','Base forecast')+
-           bpRow('March 2027 — base',cfSum('Mar-2027','Closing Balance'),N.marBase)+
-           bpRow('March 2027 — Scenario 1',scenClose('high','Mar-2027'),N.marS1,'pos');
+    case 'intro':{
+      const M=BRIEF.monthPanel, last=BRIEF.horizon[BRIEF.horizon.length-1];
+      body=bpRow(M.prev.replace('-20',' ')+' closing',cfSum(M.prev,'Closing Balance'),N.prevClose,'','Actual')+
+           bpRow(M.m.replace('-20',' ')+' closing',cfSum(M.m,'Closing Balance'),N.monthClose,'','Base forecast')+
+           bpRow(last.replace('-20',' ')+' — base',cfSum(last,'Closing Balance'),N.marBase)+
+           bpRow(last.replace('-20',' ')+' — Scenario 1',scenClose('high',last),N.marS1,'pos');
       note='This panel follows the video. Each figure is recalculated from the dashboard data, so you can see it ties to what is narrated.';
-      break;
-    case 'sep':
-      body=bpRow('Opening balance',cfSum('Sep-2026','Opening balance'),N.sepOpen)+
-           bpRow('Receipts',cfSum('Sep-2026','Receipts'),N.sepRcpt,'pos')+
-           bpRow('Gross burn',cfSum('Sep-2026','Gross Burn'),N.sepOut,'','Lower than forecast — dues moved to 1st Oct')+
-           bpRow('Closing balance',cfSum('Sep-2026','Closing Balance'),N.sepClose,'hl');
-      break;
-    case 'oct':{
-      const out=cfSum('Oct-2026','Outflows');
-      const pPaid=BRIEF.octPaid/(BRIEF.octPaid+BRIEF.octOutstanding)*100;
-      body=bpRow('Payments due in October',out,N.octOut,'','September + October bills')+
-           `<div class="bp-bar"><span style="width:${pPaid}%;background:#0a9396"></span><span style="flex:1;background:#ec4899"></span></div>
-            <div class="bp-legend" style="justify-content:space-between"><span><i style="background:#0a9396"></i>Paid to date ${fmt(BRIEF.octPaid)}</span><span><i style="background:#ec4899"></i>Outstanding ${fmt(BRIEF.octOutstanding)}</span></div>`+
-           bpRow('Receipts due',cfSum('Oct-2026','Receipts'),N.octRcpt,'pos','None received as of '+BRIEF.asOf.replace(/ \d{4}$/,''))+
-           bpRow('October closing (base)',cfSum('Oct-2026','Closing Balance'),N.octClose,'hl');
-      note=`Paid / outstanding split is from the ${BRIEF.asOf.replace(/ \d{4}$/,'')} update note.`;
+      break;}
+    case 'month':{
+      const M=BRIEF.monthPanel, lbl=M.m.replace(/-20\d\d$/,'');
+      body=bpRow('Opening balance',cfSum(M.m,'Opening balance'),N.prevClose,'',M.prev.replace('-20',' ')+' closing, tallied to the bank')+
+           bpRow('Receipts due in '+lbl,cfSum(M.m,'Receipts'),N.monthRcpt,'pos')+
+           bpRow('Payments due in '+lbl,cfSum(M.m,'Outflows'),N.monthOut)+
+           bpRow(lbl+' closing (base)',cfSum(M.m,'Closing Balance'),N.monthClose,'hl');
       break;}
     case 'base':{
-      const base=buildFullCFData().filter(r=>['Oct-2026','Nov-2026','Dec-2026','Jan-2027','Feb-2027'].includes(r.m));
+      const base=buildFullCFData().filter(r=>BRIEF.horizon.includes(r.m)&&r.cb>0&&cfMonthIndex(r.m)>=cfMonthIndex(BRIEF.monthPanel.m));
       const low=base.reduce((a,b)=>b.cb<a.cb?b:a);
       body=spark([{n:'Base',c:'#57cc99',vals:seriesVals('none')}])+
            bpRow('Pinch point — '+low.m.replace('-20',' '),low.cb,N.febClose,'hl','Lowest positive month')+
-           bpRow('March 2027 closing',cfSum('Mar-2027','Closing Balance'),N.marBase);
+           bpRow(BRIEF.horizon[BRIEF.horizon.length-1].replace('-20',' ')+' closing',cfSum(BRIEF.horizon[BRIEF.horizon.length-1],'Closing Balance'),N.marBase);
       break;}
     case 's1': case 's2': case 's3':{
       const map={s1:['high','HighlyLikely',N.s1Net,N.marS1,'#3b82f6','Net contribution'],s2:['med','MediumLikely',N.s2Net,N.marS2,'#ec4899','Incremental contribution'],s3:['all','LowLikely',N.s3Net,N.marS3,'#d4a843','Incremental contribution']}[ch.panel];
       body=spark([{n:'Base',c:'#64748b',vals:seriesVals('none')},{n:SCEN_NAME[map[0]].split(' — ')[0],c:map[4],vals:seriesVals(map[0])}])+
-           bpRow(map[5],tierNet(map[1]),map[2],'pos','Revenue less delivery cost, Oct 26 – Mar 27')+
-           bpRow('March 2027 closing',scenClose(map[0],'Mar-2027'),map[3],'hl');
+           bpRow(map[5],tierNet(map[1]),map[2],'pos',`Revenue less delivery cost, ${BRIEF.horizon[0].replace('-20',' ')} – ${BRIEF.horizon[BRIEF.horizon.length-1].replace('-20',' ')}`)+
+           bpRow(BRIEF.horizon[BRIEF.horizon.length-1].replace('-20',' ')+' closing',scenClose(map[0],BRIEF.horizon[BRIEF.horizon.length-1]),map[3],'hl');
       break;}
     case 'all':{
       const P=BRIEF.prevMarch;
       const rows=[['none','Base',P.base,N.marBase],['high','Scenario 1',P.s1,N.marS1],['med','Scenario 2',P.s2,N.marS2],['all','Scenario 3',P.s3,N.marS3]];
       body=spark([{n:'Base',c:'#64748b',vals:seriesVals('none')},{n:'S1',c:'#3b82f6',vals:seriesVals('high')},{n:'S2',c:'#ec4899',vals:seriesVals('med')},{n:'S3',c:'#d4a843',vals:seriesVals('all')}])+
-           rows.map(([s,l,prev,said])=>{const v=scenClose(s,'Mar-2027');const d=v-prev;return bpRow(l+' — Mar 2027',v,said,'',`${d>=0?'+':''}${fmt(d)} vs previous update`);}).join('');
+           rows.map(([s,l,prev,said])=>{const v=scenClose(s,BRIEF.horizon[BRIEF.horizon.length-1]);const d=v-prev;return bpRow(l+' — Mar 2027',v,said,'',`${d>=0?'+':''}${fmt(d)} vs ${BRIEF.prevLabel}`);}).join('');
       break;}
     case 'prio':
       body=`<div class="bp-prio">${BRIEF.priorities.map(p=>{const c={gold:'#d4a843',blue:'#3b82f6',teal:'#2a9d8f',pink:'#ec4899'}[p.c];return `<div style="--c:${c}"><b>${p.n}. ${p.title}</b><p><strong>${p.hl}</strong> ${p.d}</p></div>`;}).join('')}</div>`+
-           bpRow('October receipts still due',cfSum('Oct-2026','Receipts'),N.octRcpt,'pos');
+           bpRow(BRIEF.monthPanel.m.replace(/-20\d\d$/,'')+' receipts due',cfSum(BRIEF.monthPanel.m,'Receipts'),N.monthRcpt,'pos');
       break;
   }
   let btn='';
