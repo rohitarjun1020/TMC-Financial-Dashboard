@@ -33,7 +33,7 @@
     check: '<path d="M4 12.5l5 5L20 6.5"/>', sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>', lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
     ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>', arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
-    chev: '<path d="M9 6l6 6-6 6"/>', send: '<path d="M4 12l16-8-6 16-2-7z"/>', refresh: '<path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/>', table: '<rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 10h17M9.5 10v9"/>'
+    chev: '<path d="M9 6l6 6-6 6"/>', eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', eyeOff: '<path d="M3 3l18 18M10.6 5.1A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6C3.9 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/>', send: '<path d="M4 12l16-8-6 16-2-7z"/>', refresh: '<path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/>', table: '<rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 10h17M9.5 10v9"/>'
   };
   const icon = (k, cls) => `<svg class="i ${cls || ''}" viewBox="0 0 24 24" aria-hidden="true">${ICON[k]}</svg>`;
 
@@ -546,12 +546,18 @@
     if (unlocked()) { g.hidden = true; onOpen(); return; }
     g.hidden = false;
     g.innerHTML = `<form autocomplete="off"><img src="tmc-logo.png" alt="The Migration Company"><h1>${esc(t('gateTitle'))}</h1><p>${esc(t('gateBody'))}</p>
-      <label class="sr" for="pc">${esc(t('passcode'))}</label><input id="pc" type="password" placeholder="${esc(t('passcode'))}" autocomplete="current-password" required>
+      <label class="sr" for="pc">${esc(t('passcode'))}</label><span class="pc-wrap"><input id="pc" type="password" placeholder="${esc(t('passcode'))}" autocomplete="current-password" required><button type="button" class="pc-eye" id="pc-eye" aria-label="Show passcode" aria-pressed="false">${icon('eye')}</button></span>
       <label class="rem"><input type="checkbox" id="rem">${esc(t('remember'))}</label><p class="err" id="pc-err" role="alert"></p><button class="btn primary" type="submit">${esc(t('open'))} ${icon('arrow')}</button></form>`;
     const WORDS = ['WILLKOMMEN', 'BIENVENUE', 'ZUKUNFT', 'AVENIR', 'REISE', 'VOYAGE', 'ARBEIT', 'TRAVAIL', 'SPRACHE', 'LANGUE', 'NEUANFANG', 'NOUVEAU DÉPART', 'ANKUNFT', 'ARRIVÉE', 'BERUF', 'MÉTIER', 'GUTEN TAG', 'BONJOUR', 'HORIZON', 'EN ROUTE'];
     let k = 0, rows = '';
     for (let r = 0; r < 14; r++) { let line = ''; for (let c = 0; c < 9; c++) { line += `<span>${WORDS[k % WORDS.length]}</span>`; k += 3; } rows += `<div>${line}</div>`; }
     g.insertAdjacentHTML('afterbegin', `<div class="g-words" aria-hidden="true">${rows}</div>`);
+    $('#pc-eye').addEventListener('click', () => {
+      const inp = $('#pc'), b = $('#pc-eye'), show = inp.type === 'password';
+      inp.type = show ? 'text' : 'password';
+      b.setAttribute('aria-pressed', String(show)); b.setAttribute('aria-label', show ? 'Hide passcode' : 'Show passcode');
+      b.innerHTML = icon(show ? 'eyeOff' : 'eye'); inp.focus();
+    });
     $('#pc').focus();
     $('form', g).addEventListener('submit', async e => {
       e.preventDefault();

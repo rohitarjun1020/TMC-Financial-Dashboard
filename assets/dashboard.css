@@ -319,6 +319,12 @@ table.t tr.batch td:first-child{padding-left:26px}
 .gate input{width:100%;text-align:center;font-size:var(--t-lg);letter-spacing:.3em;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff}
 .gate input::placeholder{letter-spacing:.05em;color:var(--navy-mute)}
 .gate .err{color:#FFB4A8;font-size:var(--t-sm);min-height:20px}
+.gate .pc-wrap{position:relative;width:100%;display:block}
+.gate .pc-wrap input{padding-left:48px;padding-right:48px}
+.gate .pc-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:var(--navy-mute);cursor:pointer}
+.gate .pc-eye:hover{color:#fff;background:rgba(255,255,255,.08)}
+.gate .pc-eye:focus-visible{outline:2px solid var(--magenta);outline-offset:1px}
+.gate .pc-eye svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .gate label.rem{display:flex;gap:8px;align-items:center;font-size:var(--t-sm);color:var(--navy-mute);cursor:pointer;white-space:nowrap}
 .gate label.rem input{width:16px;height:16px;padding:0;margin:0;letter-spacing:0;accent-color:var(--magenta)}
 .gate .btn.primary{width:100%;justify-content:center}
