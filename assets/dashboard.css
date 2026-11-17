@@ -303,7 +303,11 @@ table.t tr.batch td:first-child{padding-left:26px}
 /* ---------- gate ---------- */
 .gate{position:fixed;inset:0;z-index:100;background:var(--navy);display:grid;place-items:center;padding:24px;overflow:hidden}
 .gate[hidden]{display:none}
-.gate .g-guil{position:absolute;inset:-20%;opacity:.5;pointer-events:none}
+.gate .g-words{position:absolute;inset:-60px;overflow:hidden;pointer-events:none;transform:rotate(-8deg);display:grid;gap:30px;align-content:center;font:400 44px/1 var(--serif);letter-spacing:.12em;color:rgba(255,255,255,.055);user-select:none;-webkit-mask-image:radial-gradient(ellipse 42% 38% at 50% 50%,transparent 40%,#000 100%);mask-image:radial-gradient(ellipse 42% 38% at 50% 50%,transparent 40%,#000 100%)}
+.gate .g-words div{white-space:nowrap}
+.gate .g-words div:nth-child(even){margin-left:-140px}
+.gate .g-words span{margin-right:56px}
+.gate .g-words span:nth-child(5n+2){color:rgba(197,72,158,.16)}
 .gate form{position:relative;width:min(420px,100%);display:grid;gap:16px;justify-items:center;text-align:center;color:var(--navy-ink)}
 .gate img{height:34px}
 .gate h1{font:400 30px/1.1 var(--serif);text-transform:uppercase;color:#fff;letter-spacing:.04em}
@@ -311,7 +315,8 @@ table.t tr.batch td:first-child{padding-left:26px}
 .gate input{width:100%;text-align:center;font-size:var(--t-lg);letter-spacing:.3em;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff}
 .gate input::placeholder{letter-spacing:.05em;color:var(--navy-mute)}
 .gate .err{color:#FFB4A8;font-size:var(--t-sm);min-height:20px}
-.gate label.rem{display:flex;gap:8px;align-items:center;font-size:var(--t-sm);color:var(--navy-mute);cursor:pointer}
+.gate label.rem{display:flex;gap:8px;align-items:center;font-size:var(--t-sm);color:var(--navy-mute);cursor:pointer;white-space:nowrap}
+.gate label.rem input{width:16px;height:16px;padding:0;margin:0;letter-spacing:0;accent-color:var(--magenta)}
 .gate .btn.primary{width:100%;justify-content:center}
 
 footer.foot{max-width:1440px;margin:0 auto;padding:0 32px 32px;font-size:var(--t-xs);color:var(--ink-3);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}

@@ -544,7 +544,10 @@
     g.innerHTML = `<form autocomplete="off"><img src="tmc-logo.png" alt="The Migration Company"><h1>${esc(t('gateTitle'))}</h1><p>${esc(t('gateBody'))}</p>
       <label class="sr" for="pc">${esc(t('passcode'))}</label><input id="pc" type="password" placeholder="${esc(t('passcode'))}" autocomplete="current-password" required>
       <label class="rem"><input type="checkbox" id="rem">${esc(t('remember'))}</label><p class="err" id="pc-err" role="alert"></p><button class="btn primary" type="submit">${esc(t('open'))} ${icon('arrow')}</button></form>`;
-    CH.guilloche(g, { cls: 'g-guil', w: 1200, h: 800, cx: 0.5, cy: 0.5, scale: 2.2 });
+    const WORDS = ['WILLKOMMEN', 'BIENVENUE', 'ZUKUNFT', 'AVENIR', 'REISE', 'VOYAGE', 'ARBEIT', 'TRAVAIL', 'SPRACHE', 'LANGUE', 'NEUANFANG', 'NOUVEAU DÉPART', 'ANKUNFT', 'ARRIVÉE', 'BERUF', 'MÉTIER', 'GUTEN TAG', 'BONJOUR', 'HORIZON', 'EN ROUTE'];
+    let k = 0, rows = '';
+    for (let r = 0; r < 14; r++) { let line = ''; for (let c = 0; c < 9; c++) { line += `<span>${WORDS[k % WORDS.length]}</span>`; k += 3; } rows += `<div>${line}</div>`; }
+    g.insertAdjacentHTML('afterbegin', `<div class="g-words" aria-hidden="true">${rows}</div>`);
     $('#pc').focus();
     $('form', g).addEventListener('submit', async e => {
       e.preventDefault();
