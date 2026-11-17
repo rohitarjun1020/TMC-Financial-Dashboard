@@ -20,7 +20,7 @@ window.TMC_I18N = {
     batches: 'batches', pipeAdd: 'Pipeline · {t}', pipeCost: 'Pipeline delivery cost', none: 'None', b2b: 'B2B', rtd: 'RTD',
     trends: 'Trends', from: 'From', to: 'To', cashPath: 'Where cash is heading', cashPathSub: 'Closing balance by scenario. Shaded months are not yet closed.',
     inOutTitle: 'Money in and out', inOutSub: 'Receipts above the line, payments below, for the selected scenario', pipelineTitle: 'What each pipeline tier adds', pipelineSub: 'Net contribution (revenue less delivery cost) by month',
-    monthTable: 'Month by month', ladder: 'Receipts by language level', ladderSub: 'B2B batch receipts, grouped by the level in the batch code', other: 'Other programmes',
+    monthTable: 'Month by month', ladder: 'Receipts by language level', ladderSub: 'Confirmed business only (no pipeline deals, whichever scenario is picked). B2B batch receipts grouped by the level in the batch code', other: 'Other programmes',
     showTable: 'Show as table', hideTable: 'Hide table', askTitle: 'Ask Ami', askSub: 'Your finance assistant for TMC’s cash flow and P&L. Answers come straight from this dashboard; nothing leaves this page.',
     askPh: 'Ask about cash, receipts, payments, salaries, revenue, EBITDA…', ask: 'Ask', tryAsk: 'Try one of these', source: 'Source', months: 'Months',
     askClaude: 'Ami on claude.ai', askClaudeBody: 'For open questions, Ami on claude.ai reads the same figures and answers in plain English. It needs you to be signed in to a Claude account.',
