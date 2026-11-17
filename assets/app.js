@@ -139,7 +139,7 @@
   let chapter = -1, started = false;
   function greeting() {
     const h = new Date().getHours();
-    return h < 12 ? ['Guten Morgen', 'Bonjour'] : h < 18 ? ['Guten Tag', 'Bonjour'] : ['Guten Abend', 'Bonsoir'];
+    return h < 18 ? 'Bonjour' : 'Bonsoir';
   }
   function briefFields() {
     const N = (B && B.narrated) || {}, mp = B && B.monthPanel, end = M.horizonEnd, tb = M.turns('none');
@@ -179,7 +179,7 @@
     const ends = B.chapters.map((c, k) => k + 1 < B.chapters.length ? B.chapters[k + 1].t : dur);
     p.innerHTML = `
       <section class="dp" aria-labelledby="h-brief">
-        <div class="dp-head"><h1 class="title" id="h-brief">${esc(t('cashPosition'))}</h1><span style="display:grid;gap:6px;justify-items:end"><span class="greet" lang="de">${esc(greeting()[0])} <i aria-hidden="true">·</i> <span lang="fr">${esc(greeting()[1])}</span></span><span class="dp-meta">${esc(t('basis'))} · ${esc(M.asOfText)}</span>${briefProof()}</span></div>
+        <div class="dp-head"><h1 class="title" id="h-brief">${esc(t('cashPosition'))}</h1><span style="display:grid;gap:6px;justify-items:end"><span class="greet" lang="fr">${esc(greeting())}</span><span class="dp-meta">${esc(t('basis'))} · ${esc(M.asOfText)}</span>${briefProof()}</span></div>
         <p class="verdict">${verdictHTML()}</p>
         ${briefFields()}
       </section>
