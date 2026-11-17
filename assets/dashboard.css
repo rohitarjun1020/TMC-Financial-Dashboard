@@ -13,9 +13,9 @@
   --guil-1:#D3DCE8; --guil-2:#EBD7E5; --guil-3:#DDD5EE;
   --shadow:0 1px 2px rgba(19,37,74,.06),0 8px 24px -12px rgba(19,37,74,.18);
   --radius:14px; --radius-s:9px;
-  --t-xs:12px; --t-sm:14px; --t-md:16px; --t-lg:20px; --t-h2:24px; --t-h1:32px; --t-fig:30px; --t-fig-l:46px;
-  --font:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --serif:'DM Serif Display',Georgia,serif;
+  --t-xs:13px; --t-sm:15px; --t-md:17px; --t-lg:21px; --t-h2:30px; --t-h1:44px; --t-fig:30px; --t-fig-l:46px;
+  --font:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;
   --ease:cubic-bezier(.16,1,.3,1);
   color-scheme:light;
 }
@@ -71,12 +71,12 @@ main{max-width:1440px;margin:0 auto;padding:28px 32px 64px}
 .page>*,.grid>*{min-width:0}
 .toolbar>*{max-width:100%}
 h1,h2,h3{margin:0;font-weight:400}
-.title{font:400 var(--t-h1)/1.1 var(--serif);text-transform:uppercase;letter-spacing:.015em;text-wrap:balance}
+.title{font:400 var(--t-h1)/1 var(--serif);letter-spacing:-.005em;text-wrap:balance}
 .title::after{content:"";display:block;width:140px;height:16px;margin-top:10px;background:var(--magenta);opacity:.7;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 16'%3E%3Ccircle cx='3' cy='12' r='2.6'/%3E%3Cpath d='M10 11.5 Q62 -1 118 8' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-dasharray='0.5 6'/%3E%3Cpath d='M139 9.6 l-11.5 -1.2 -5.3 -6.4 -2.4 0.4 3.2 6.2 -5.6 -0.4 -2 -2.4 -1.6 0.2 1.4 3.4 -1.4 3.2 1.6 0.3 2.1 -2.3 5.6 -0.1 -3.4 6.1 2.4 0.5 5.4 -6.2 11.6 -0.8 z'/%3E%3C/svg%3E") no-repeat left center/contain;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 16'%3E%3Ccircle cx='3' cy='12' r='2.6'/%3E%3Cpath d='M10 11.5 Q62 -1 118 8' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-dasharray='0.5 6'/%3E%3Cpath d='M139 9.6 l-11.5 -1.2 -5.3 -6.4 -2.4 0.4 3.2 6.2 -5.6 -0.4 -2 -2.4 -1.6 0.2 1.4 3.4 -1.4 3.2 1.6 0.3 2.1 -2.3 5.6 -0.1 -3.4 6.1 2.4 0.5 5.4 -6.2 11.6 -0.8 z'/%3E%3C/svg%3E") no-repeat left center/contain}
-.greet{font:400 var(--t-md)/1.2 var(--serif);color:var(--ink-3);letter-spacing:.02em}
+.greet{font:italic 400 19px/1.2 var(--serif);color:var(--ink-3);letter-spacing:.01em}
 .greet i{font-style:normal;color:var(--magenta);opacity:.8;padding:0 2px}
 .field small .chip-stamp{display:flex;width:fit-content;margin:8px 0 6px;font-size:var(--t-xs);padding:1px 8px 1px 6px}
-.h2{font:400 var(--t-h2)/1.15 var(--serif);text-transform:uppercase;letter-spacing:.02em;text-wrap:balance}
+.h2{font:400 var(--t-h2)/1.1 var(--serif);letter-spacing:-.005em;text-wrap:balance}
 .lede{color:var(--ink-3);font-size:var(--t-sm);margin-top:4px}
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
 .toolbar label{font-size:var(--t-xs);color:var(--ink-3);display:flex;align-items:center;gap:8px}
@@ -116,7 +116,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .field{padding:6px 20px 0 0;min-width:0}
 .field+.field{padding-left:20px;border-left:1px solid var(--rule-2)}
 .field label{display:block;font-size:var(--t-xs);font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
-.field .v{display:block;font-size:var(--t-fig);font-weight:600;letter-spacing:-.015em;line-height:1.15;margin:6px 0 4px;white-space:nowrap}
+.field .v{display:block;font-size:var(--t-fig);font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.15;margin:6px 0 4px;white-space:nowrap}
 .field.lead .v{font-size:var(--t-fig-l)}
 .field .v.txt{font-size:var(--t-lg);white-space:normal;line-height:1.25;margin-top:10px}
 .field small{display:block;font-size:var(--t-xs);color:var(--ink-3);line-height:1.4}
@@ -161,7 +161,7 @@ input[type=range]{width:100%;accent-color:var(--magenta);height:24px;cursor:poin
 .wi-out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--rule-2);border-radius:12px}
 .wi-out>div{padding:12px 16px}.wi-out>div+div{border-left:1px solid var(--rule-2)}
 .wi-out label{display:block;font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
-.wi-out .v{display:block;font-size:var(--t-fig);font-weight:600;margin:4px 0 2px}
+.wi-out .v{display:block;font-size:var(--t-fig);font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin:4px 0 2px}
 .wi-out small{font-size:var(--t-xs);color:var(--ink-3)}
 .btn[disabled]{opacity:.45;cursor:default}
 @media (max-width:1100px){.wi-grid{grid-template-columns:1fr}}
@@ -222,7 +222,7 @@ table.t td{padding:10px 10px;border-bottom:1px solid var(--rule-2);vertical-alig
 table.t td.n,table.t th.n{text-align:right;white-space:nowrap}
 table.t tr.sub td{color:var(--ink-2)}
 table.t tr.tot td{font-weight:600;border-top:1px solid var(--ink-3);border-bottom:0}
-table.t tr.hd td{font-family:var(--serif);font-size:var(--t-sm);text-transform:uppercase;letter-spacing:.03em;padding-top:16px;color:var(--ink)}
+table.t tr.hd td{font-family:var(--serif);font-size:var(--t-lg);letter-spacing:0;padding-top:16px;color:var(--ink)}
 table.t tr.click{cursor:pointer}
 table.t tr.click:hover td{background:var(--paper-2)}
 table.t tr.on td{background:var(--stamp-soft)}
@@ -255,7 +255,7 @@ table.t tr.batch td:first-child{padding-left:26px}
 .cover .play{width:72px;height:72px;border-radius:50%;background:var(--brand);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .25s var(--ease)}
 .cover:hover .play{transform:scale(1.06)}
 .cover .play svg{width:28px;height:28px;fill:#fff;stroke:none;margin-left:4px}
-.cover strong{font:400 var(--t-h2)/1.1 var(--serif);text-transform:uppercase;letter-spacing:.03em}
+.cover strong{font:400 34px/1.1 var(--serif);letter-spacing:0}
 .cover span{font-size:var(--t-sm);color:var(--navy-mute)}
 .rail{display:flex;gap:3px;padding:12px 16px 0}
 .rail button{flex:var(--w) 1 0;height:6px;border:0;padding:0;border-radius:3px;background:var(--rule-2);cursor:pointer;position:relative;overflow:hidden}
@@ -269,12 +269,12 @@ table.t tr.batch td:first-child{padding-left:26px}
 .live{position:sticky;top:88px;background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius);padding:18px 20px}
 .live-k{display:flex;align-items:center;gap:8px;font-size:var(--t-xs);color:var(--ink-3);font-weight:500}
 .live-k i{width:7px;height:7px;border-radius:50%;background:var(--pos);display:inline-block}
-.live h3{font:400 19px/1.2 var(--serif);text-transform:uppercase;margin:8px 0 2px;letter-spacing:.02em}
+.live h3{font:400 26px/1.15 var(--serif);margin:8px 0 2px;letter-spacing:0}
 .live .sub{font-size:var(--t-sm);color:var(--ink-3);margin-bottom:8px}
 .lrow{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--rule-2);align-items:baseline}
 .lrow .l{font-size:var(--t-sm);color:var(--ink-2)}
 .lrow .l small{display:block;font-size:var(--t-xs);color:var(--ink-3)}
-.lrow .v{font-weight:600;font-size:var(--t-md);text-align:right;white-space:nowrap}
+.lrow .v{font-weight:600;font-size:var(--t-md);letter-spacing:-.01em;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 .lrow .v .proof{display:flex;justify-content:flex-end;margin-top:2px}
 .live .note{font-size:var(--t-xs);color:var(--ink-3);margin-top:10px}
 .msgs{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:k}
@@ -314,7 +314,7 @@ table.t tr.batch td:first-child{padding-left:26px}
 .gate .g-words span:nth-child(5n+2){color:rgba(197,72,158,.16)}
 .gate form{position:relative;width:min(420px,100%);display:grid;gap:16px;justify-items:center;text-align:center;color:var(--navy-ink)}
 .gate img{height:34px}
-.gate h1{font:400 30px/1.1 var(--serif);text-transform:uppercase;color:#fff;letter-spacing:.04em}
+.gate h1{font:400 46px/1 var(--serif);color:#fff;letter-spacing:0}
 .gate p{margin:0;color:var(--navy-mute);font-size:var(--t-sm)}
 .gate input{width:100%;text-align:center;font-size:var(--t-lg);letter-spacing:.3em;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff}
 .gate input::placeholder{letter-spacing:.05em;color:var(--navy-mute)}
