@@ -137,15 +137,19 @@
   /* ================= BRIEFING ================= */
   const B = M.brief;
   let chapter = -1, started = false;
+  function greeting() {
+    const h = new Date().getHours();
+    return h < 12 ? ['Guten Morgen', 'Bonjour'] : h < 18 ? ['Guten Tag', 'Bonjour'] : ['Guten Abend', 'Bonsoir'];
+  }
   function briefFields() {
     const N = (B && B.narrated) || {}, mp = B && B.monthPanel, end = M.horizonEnd, tb = M.turns('none');
     const cur = mp ? mp.m : M.asOfMonth, prev = mp ? mp.prev : M.lastActual, b = M.scen('none').find(r => r.m === cur);
     return `<div class="fields" style="--cols:5">
-      ${field(t('cashToday'), M.closing('none', prev), esc(mLong(prev) + ', bank-tallied'), { lead: true })}
-      ${field(mLong(cur) + ' ' + t('closeOf'), b.cb, esc(t('inOut', { in: L(b.rc), out: L(b.out) })))}
-      ${tb.pinch ? field(t('pinch'), tb.pinch.cb, esc(mLong(tb.pinch.m))) : ''}
-      ${field(mLong(end) + ' · ' + t('baseCase'), M.closing('none', end), esc(t('noPipeline')))}
-      ${field(mLong(end) + ' · ' + t('scen1'), M.closing('high', end), esc('Highly Likely deals'))}
+      ${field(t('cashToday'), M.closing('none', prev), stampChip(M.status(prev)) + ' ' + esc(mLong(prev) + ', bank-tallied'), { lead: true })}
+      ${field(mLong(cur) + ' ' + t('closeOf'), b.cb, stampChip(M.status(cur)) + ' ' + esc(t('inOut', { in: L(b.rc), out: L(b.out) })))}
+      ${tb.pinch ? field(t('pinch'), tb.pinch.cb, stampChip(M.status(tb.pinch.m)) + ' ' + esc(mLong(tb.pinch.m))) : ''}
+      ${field(mLong(end) + ' · ' + t('baseCase'), M.closing('none', end), stampChip(M.status(end)) + ' ' + esc(t('noPipeline')))}
+      ${field(mLong(end) + ' · ' + t('scen1'), M.closing('high', end), stampChip(M.status(end)) + ' ' + esc('Highly Likely deals'))}
     </div>`;
   }
   function briefProof() {
@@ -175,7 +179,7 @@
     const ends = B.chapters.map((c, k) => k + 1 < B.chapters.length ? B.chapters[k + 1].t : dur);
     p.innerHTML = `
       <section class="dp" aria-labelledby="h-brief">
-        <div class="dp-head"><h1 class="title" id="h-brief">${esc(t('cashPosition'))}</h1><span style="display:grid;gap:6px;justify-items:end"><span class="dp-meta">${esc(t('basis'))} · ${esc(M.asOfText)}</span>${briefProof()}</span></div>
+        <div class="dp-head"><h1 class="title" id="h-brief">${esc(t('cashPosition'))}</h1><span style="display:grid;gap:6px;justify-items:end"><span class="greet" lang="de">${esc(greeting()[0])} <i aria-hidden="true">·</i> <span lang="fr">${esc(greeting()[1])}</span></span><span class="dp-meta">${esc(t('basis'))} · ${esc(M.asOfText)}</span>${briefProof()}</span></div>
         <p class="verdict">${verdictHTML()}</p>
         ${briefFields()}
       </section>
@@ -205,7 +209,7 @@
   }
   const chapterAt = s => { let i = 0; B.chapters.forEach((c, k) => { if (s >= c.t) i = k; }); return i; };
   function lrow(label, live, said, sub) {
-    return `<div class="lrow"><div class="l">${esc(label)}${sub ? `<small>${esc(sub)}</small>` : ''}</div><div class="v ${live < 0 ? 'neg' : ''}">${esc(L(live))}${proof(live, said)}</div></div>`;
+    return `<div class="lrow"><div class="l">${esc(label)}${sub ? `<small>${sub.html || esc(sub)}</small>` : ''}</div><div class="v ${live < 0 ? 'neg' : ''}">${esc(L(live))}${proof(live, said)}</div></div>`;
   }
   function setChapter(k, force) {
     if (k === chapter && !force) return;
@@ -216,7 +220,7 @@
     let body = '', note = '';
     const prevSc = B.prevMarch || {};
     switch (c.panel) {
-      case 'intro': body = lrow(mLong(mp.prev), M.closing('none', mp.prev), N.prevClose, statusName('actual')) + lrow(mLong(mp.m), M.closing('none', mp.m), N.monthClose, statusName(M.status(mp.m))) + lrow(endL + ' · ' + scenName('none'), M.closing('none', end), N.marBase) + lrow(endL + ' · ' + scenName('high'), M.closing('high', end), N.marS1);
+      case 'intro': body = lrow(mLong(mp.prev), M.closing('none', mp.prev), N.prevClose, { html: stampChip('actual') }) + lrow(mLong(mp.m), M.closing('none', mp.m), N.monthClose, { html: stampChip(M.status(mp.m)) }) + lrow(endL + ' · ' + scenName('none'), M.closing('none', end), N.marBase) + lrow(endL + ' · ' + scenName('high'), M.closing('high', end), N.marS1);
         note = 'Each figure is recalculated from the dashboard data, so you can see it ties to the video.'; break;
       case 'month': { const r = M.scen('none').find(x => x.m === mp.m); body = lrow(t('opening'), r.ob, N.prevClose) + lrow(t('receipts'), r.rc, N.monthRcpt) + lrow(t('payments'), r.out, N.monthOut) + lrow(t('closing'), r.cb, N.monthClose); break; }
       case 'base': { const tb = M.turns('none'); body = (tb.pinch ? lrow(t('pinch') + ' · ' + mShort(tb.pinch.m), tb.pinch.cb, N.febClose, t('lowestPositive')) : '') + lrow(endL + ' · ' + scenName('none'), M.closing('none', end), N.marBase); break; }
