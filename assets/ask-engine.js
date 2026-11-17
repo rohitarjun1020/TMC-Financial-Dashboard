@@ -183,7 +183,16 @@
     }
 
     /* ---- router ---- */
+    function scenarioWhatAns(q) {
+      const s = findScenario(q);
+      const ks = s ? [s] : ['none', 'high', 'med', 'all'];
+      const rows = ks.map(k => { const sk = M.scenarioKey(k); return [M.SCEN[k].name, sk.adds, sk.text]; });
+      const text = s ? M.scenarioKey(s).text
+        : 'Each scenario adds one more group of pipeline deals on top of the one before. The base case counts confirmed business only; ' + ['high', 'med', 'all'].map(k => `${M.SCEN[k].name} adds the ${M.TIER_NAME[M.scenarioKey(k).tier]} deals (${M.PROB[M.scenarioKey(k).tier]} chance of closing)`).join('; ') + '.';
+      return ans({ text, source: 'Cash flow', months: [], table: { cols: ['Scenario', 'Adds', 'Includes'], rows }, followups: ['What is the March 2027 closing by scenario?', 'What does Scenario 1 add?'] });
+    }
     const INTENTS = [
+      { test: q => (/scenario|base case|\bs[123]\b/.test(q) && has(q, 'what is in', 'whats in', 'which deal', 'which client', 'include', 'mean', 'what is scenario', 'what are the scenario', 'explain', 'difference', 'stand for')) || has(q, 'which deals', 'which clients are in'), run: scenarioWhatAns },
       { test: q => has(q, 'runway', 'pinch', 'go negative', 'goes negative', 'below zero', 'run out', 'turn negative', 'turns negative', 'shortfall', 'deficit'), run: runwayAns },
       { test: q => has(q, 'pipeline', 'contribution', 'deal', 'w&b', 'invita', 'zenufa', ' tier', 'likely') || (/scenario/.test(q) && has(q, 'add', 'adds', 'worth')), run: pipelineAns },
       { test: q => has(q, 'salar', 'payroll', 'manpower', 'staff cost'), run: salaryAns },
@@ -196,7 +205,7 @@
       { test: q => has(q, 'payment', 'outflow', 'expense', 'spend', 'paying', 'pay out', 'paid', 'burn', 'costs'), run: paymentsAns },
       { test: q => has(q, 'closing', 'balance', 'cash', 'bank', 'end of', 'year end', 'scenario', 'march 2027', 'how much money'), run: closingAns }
     ];
-    const SUGGEST = ['What is the March 2027 closing by scenario?', 'When does the base case go negative?', 'What are the receipts this month?', 'What are the payments this month?',
+    const SUGGEST = ['What does each scenario include?', 'What is the March 2027 closing by scenario?', 'When does the base case go negative?', 'What are the receipts this month?', 'What are the payments this month?',
       'Salaries by department this month?', 'What does Scenario 1 add?', 'Revenue by customer this year?', 'What is EBITDA year to date?', 'Budget vs actual this year?', 'Travel cost in the P&L year to date?'];
 
     function answer(raw) {

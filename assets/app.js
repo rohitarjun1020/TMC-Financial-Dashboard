@@ -74,7 +74,7 @@
     host.appendChild(wrap);
   }
   function scenControl(st, onChange, idp) {
-    const segs = SC.map(k => `<button type="button" data-s="${k}" aria-pressed="${!st.split && st.b2b === k && st.rtd === k}"><i class="key" style="background:var(${SCOL[k]})"></i>${esc(scenName(k))}</button>`).join('');
+    const segs = SC.map(k => { const sk = M.scenarioKey(k); return `<button type="button" class="two" data-s="${k}" aria-pressed="${!st.split && st.b2b === k && st.rtd === k}" title="${esc(sk.text)}"><i class="key" style="background:var(${SCOL[k]})"></i><span>${esc(scenName(k))}<small>${esc(sk.adds)}</small></span></button>`; }).join('');
     const opt = v => SC.map(k => `<option value="${k}" ${v === k ? 'selected' : ''}>${esc({ none: t('none'), high: 'Highly Likely', med: '+ Medium Likely', all: '+ Low Likely' }[k])}</option>`).join('');
     const html = `<div class="seg" role="group" aria-label="${esc(t('scenario'))}">${segs}</div>
       <button type="button" class="switch" role="switch" aria-checked="${st.split}" id="${idp}-split"><i></i>${esc(t('separately'))}</button>
@@ -85,6 +85,10 @@
       $('#' + idp + '-split', root).addEventListener('click', () => { st.split = !st.split; onChange(); });
       $$('#' + idp + '-sel select', root).forEach(s => s.addEventListener('change', () => { st[s.dataset.k] = s.value; onChange(); }));
     } };
+  }
+  function scenKey(st) {
+    return `<div class="scen-key" role="list" aria-label="What each scenario includes">${SC.map(k => { const sk = M.scenarioKey(k), on = !st.split && st.b2b === k && st.rtd === k;
+      return `<div role="listitem" class="${on ? 'on' : ''}"><b><i style="background:var(${SCOL[k]})"></i>${esc(scenName(k))}</b><em>${esc(sk.adds)}</em>${esc(sk.text)}</div>`; }).join('')}</div>`;
   }
   const scenLabel = st => st.b2b === st.rtd ? scenName(st.b2b) : `B2B ${({ none: t('none'), high: 'HL', med: 'HL+ML', all: 'All' })[st.b2b]} · RTD ${({ none: t('none'), high: 'HL', med: 'HL+ML', all: 'All' })[st.rtd]}`;
 
@@ -137,10 +141,6 @@
       ${field(mLong(end) + ' · ' + t('scen1'), M.closing('high', end), esc(t('s1note', { v: L(M.tierNet('HighlyLikely', M.horizon.filter(m => M.idx(m) >= M.idx(cur)))) })), { proof: proof(M.closing('high', end), N.marS1) })}
     </div>`;
   }
-  function mrz() {
-    const z = m => m.slice(0, 3).toUpperCase() + m.slice(-2), v = n => (n < 0 ? 'N' : '') + Math.abs(Math.round(n)), end = M.horizonEnd, cur = (B && B.monthPanel.m) || M.asOfMonth;
-    return `P&lt;TMC&lt;CASH&lt;&lt;${z(M.lastActual)}&lt;${v(M.closing('none', M.lastActual))}&lt;&lt;${z(cur)}&lt;${v(M.closing('none', cur))}&lt;&lt;${z(end)}&lt;BASE&lt;${v(M.closing('none', end))}&lt;&lt;S1&lt;${v(M.closing('high', end))}&lt;&lt;S2&lt;${v(M.closing('med', end))}&lt;&lt;S3&lt;${v(M.closing('all', end))}&lt;&lt;&lt;&lt;`;
-  }
   function renderBrief() {
     const p = $('#page-brief');
     if (!B) { p.innerHTML = `<section class="dp"><div class="dp-head"><h1 class="title">${esc(t('cashPosition'))}</h1></div>${briefFields()}</section>`; return; }
@@ -150,7 +150,6 @@
       <section class="dp" aria-labelledby="h-brief">
         <div class="dp-head"><h1 class="title" id="h-brief">${esc(t('cashPosition'))}</h1><span class="dp-meta">${esc(t('basis'))} · ${esc(M.asOfText)}</span></div>
         ${briefFields()}
-        <p class="mrz" aria-hidden="true">${mrz()}</p>
       </section>
       <div class="brief">
         <section class="player" aria-label="${esc(t('briefingVideo'))}">
@@ -311,6 +310,7 @@
     const fmtAx = v => (Math.abs(v) / 1e5 % 1 ? (v / 1e5).toFixed(1) : (v / 1e5).toFixed(0)) + 'L';
     p.innerHTML = `
       <div class="toolbar"><label>${esc(t('month'))}<select id="cf-month">${[...M.cfMonths].reverse().map(x => `<option value="${x}" ${x === m ? 'selected' : ''}>${esc(mLong(x))} · ${esc(statusName(M.status(x)))}</option>`).join('')}</select></label>${sc.html}</div>
+      ${scenKey(S.cf)}
       <section class="dp" aria-labelledby="h-cf">
         <div class="dp-head"><div><h1 class="title" id="h-cf">${esc(mLong(m))}</h1><span class="dp-meta">${esc(t('monthTitle'))} · ${esc(scenLabel(S.cf))}</span></div>${bigStamp(st, m, null, 'landing')}</div>
         <div class="fields" style="--cols:5">
@@ -362,6 +362,7 @@
     const opt = sel => M.cfMonths.map(x => `<option value="${x}" ${x === sel ? 'selected' : ''}>${esc(mLong(x))}</option>`).join('');
     p.innerHTML = `
       <div class="toolbar"><label>${esc(t('from'))}<select id="tr-from">${opt(S.tr.from)}</select></label><label>${esc(t('to'))}<select id="tr-to">${opt(S.tr.to)}</select></label>${sc.html}</div>
+      ${scenKey(S.tr)}
       <section class="panel"><div class="panel-h"><div><h1 class="title" style="font-size:24px">${esc(t('cashPath'))}</h1><p>${esc(t('cashPathSub'))}</p></div>
         <div class="legend">${SC.map(k => `<span><i style="background:var(${SCOL[k]})"></i>${esc(scenName(k))}</span>`).join('')}</div></div><div id="tr-path"></div><div id="tr-stamps" class="legend" style="margin-top:10px"></div></section>
       <section class="panel"><div class="panel-h"><div><h2 class="h2">${esc(t('inOutTitle'))}</h2><p>${esc(t('inOutSub'))} · ${esc(scenLabel(S.tr))}</p></div>

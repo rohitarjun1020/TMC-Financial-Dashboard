@@ -82,6 +82,18 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .seg button:hover{background:var(--paper-2)}
 .seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
 .seg .key{width:14px;height:3px;border-radius:2px;display:inline-block}
+.seg button.two{padding:5px 12px 6px;text-align:left}
+.seg button.two span{display:grid;line-height:1.2}
+.seg button.two small{font-size:11px;font-weight:500;opacity:.78}
+.scen-key{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper);overflow:hidden}
+.scen-key div{padding:12px 16px;border-left:1px solid var(--rule-2);font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.scen-key div:first-child{border-left:0}
+.scen-key div.on{background:color-mix(in srgb,var(--magenta) 7%,var(--paper))}
+.scen-key b{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);margin-bottom:2px}
+.scen-key b i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.scen-key em{font-style:normal;font-weight:600;color:var(--ink-2);display:block;margin-bottom:3px}
+@media (max-width:980px){.scen-key{grid-template-columns:repeat(2,minmax(0,1fr))}.scen-key div:nth-child(3){border-left:0}.scen-key div:nth-child(n+3){border-top:1px solid var(--rule-2)}}
+@media (max-width:640px){.scen-key{grid-template-columns:1fr}.scen-key div{border:0!important}.scen-key div:not(.on){display:none}.seg{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.seg button.two{width:100%}}
 .switch{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:13.5px;color:var(--ink-2);background:none;border:0;padding:4px 0}
 .switch i{width:36px;height:20px;border-radius:20px;background:var(--rule);position:relative;transition:background .2s}
 .switch i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .25s var(--ease)}
@@ -113,7 +125,6 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .proof{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:11.5px;color:var(--pos);font-weight:500}
 .proof svg{width:13px;height:13px;stroke-width:2.4}
 .proof.chg{color:var(--warn)}
-.mrz{position:relative;margin:0;padding:10px 28px;background:var(--paper-2);border-top:1px solid var(--rule-2);font:500 13px/1.4 'Overpass Mono',ui-monospace,monospace;letter-spacing:.16em;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:clip}
 
 /* ---------- stamps (the signature move) ---------- */
 .stamp{--c:var(--stamp);display:inline-grid;place-items:center;text-align:center;border:2px solid var(--c);color:var(--c);border-radius:50%;width:var(--d,74px);height:var(--d,74px);font-size:10.5px;font-weight:600;letter-spacing:.08em;line-height:1.15;text-transform:uppercase;transform:rotate(var(--r,-10deg));background:radial-gradient(circle,transparent 62%,color-mix(in srgb,var(--c) 6%,transparent) 63%);box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4px color-mix(in srgb,var(--c) 55%,transparent);flex:none}
@@ -290,7 +301,6 @@ footer.foot{max-width:1440px;margin:0 auto;padding:0 32px 32px;font-size:12px;co
   .field.lead{grid-column:1/-1}
   .dp-head{padding:18px 18px 0}
   .title{font-size:24px}
-  .mrz{display:none}
   .tab{padding:0 10px;font-size:14px}
   .toolbar label{flex-wrap:wrap}
   .prios{grid-template-columns:1fr}

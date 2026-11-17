@@ -98,6 +98,19 @@
       return { rev: pv('b2b' + tier, m) + pv('rtd' + tier, m), cost: pv('b2b' + tier + 'Cost', m) + pv('rtd' + tier + 'Cost', m),
         b2bRev: pv('b2b' + tier, m), rtdRev: pv('rtd' + tier, m), b2bCost: pv('b2b' + tier + 'Cost', m), rtdCost: pv('rtd' + tier + 'Cost', m) };
     }
+    const DEALS = D.cfPipelineDeals || {};
+    const dealNames = (tier, kind) => ((DEALS[tier] || {})[kind] || []).map(d => d.c);
+    const PROB = { HighlyLikely: '90%', MediumLikely: '60%', LowLikely: '30%' };
+    const ADDS = { high: 'HighlyLikely', med: 'MediumLikely', all: 'LowLikely' };
+    /* what a scenario adds on top of the one before it, in plain English */
+    function scenarioKey(k) {
+      if (k === 'none') return { title: 'Base case', adds: 'Confirmed business only', text: 'Only invoiced and confirmed batches. No pipeline deals are counted.' };
+      const tier = ADDS[k], prev = { high: 'The base case', med: 'Scenario 1', all: 'Scenario 2' }[k];
+      const b = dealNames(tier, 'b2b'), r = dealNames(tier, 'rtd');
+      const parts = [b.length ? 'B2B: ' + b.join(', ') : '', r.length ? 'RTD: ' + r.join(', ') : ''].filter(Boolean).join(' · ');
+      return { title: SCEN[k].name, adds: '+ ' + TIER_NAME[tier] + ' · ' + PROB[tier], tier,
+        text: `${prev} plus the ${TIER_NAME[tier]} deals (${PROB[tier]} chance of closing)${parts ? ' — ' + parts : ''}.` };
+    }
     const brief = D.cfBriefing || null;
     const horizon = (brief && brief.horizon) || cfMonths.filter(m => idx(m) >= idx(lastActual));
     const horizonEnd = horizon[horizon.length - 1];
@@ -201,7 +214,7 @@
     return {
       D, MON, MON_LONG, idx, fromIdx, shortM, longM, sortM, fyOf, fyMonths, inr, lakh, pct,
       cfMonths, base, status, forecastFrom, asOfMonth, asOfText, lastActual, SCEN, TIERS, TIER_NAME,
-      addon, scen, closing, tierNet, tierMonth, turns, brief, horizon, horizonEnd,
+      addon, scen, closing, tierNet, tierMonth, turns, brief, horizon, horizonEnd, scenarioKey, dealNames, PROB,
       receipts, payments, salaries, level, levels, SAL_LABEL, EXP_LABEL,
       misMonths, pl, budget, customers, ledgers, misSalaries, profFees, lastMis, curFY, ytd, DEPTS
     };
