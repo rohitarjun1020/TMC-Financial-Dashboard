@@ -2,7 +2,7 @@
    appear in the source workbooks; the briefing narration is English only. */
 window.TMC_I18N = {
   en: {
-    sub: 'Finance · FY 2026-27', tabBrief: 'Briefing', tabMis: 'P&L', tabCf: 'Month', tabTrends: 'Trends', tabWhatIf: 'What if?', tabAsk: 'Ask the data',
+    sub: 'Finance · FY 2026-27', tabBrief: 'Briefing', tabMis: 'P&L', tabCf: 'Month', tabTrends: 'Trends', tabWhatIf: 'What if?', tabAsk: 'Ask Ami',
     asofCf: 'Cash flow', asofMis: 'P&L', theme: 'Switch light or dark', lock: 'Lock the dashboard',
     cashPosition: 'Cash position', basis: 'Base case · confirmed business only', cashToday: 'Cash today', closedTallied: 'closed · tallied to the bank',
     closeOf: 'close', inOut: '{in} in · {out} out', pinch: 'Pinch point', lowestPositive: 'Lowest positive month', baseCase: 'base case',
@@ -21,9 +21,9 @@ window.TMC_I18N = {
     trends: 'Trends', from: 'From', to: 'To', cashPath: 'Where cash is heading', cashPathSub: 'Closing balance by scenario. Shaded months are not yet closed.',
     inOutTitle: 'Money in and out', inOutSub: 'Receipts above the line, payments below, for the selected scenario', pipelineTitle: 'What each pipeline tier adds', pipelineSub: 'Net contribution (revenue less delivery cost) by month',
     monthTable: 'Month by month', ladder: 'Receipts by language level', ladderSub: 'B2B batch receipts, grouped by the level in the batch code', other: 'Other programmes',
-    showTable: 'Show as table', hideTable: 'Hide table', askTitle: 'Ask the data', askSub: 'Built-in answers from this dashboard. No AI, nothing leaves this page.',
+    showTable: 'Show as table', hideTable: 'Hide table', askTitle: 'Ask Ami', askSub: 'Your finance assistant for TMC’s cash flow and P&L. Answers come straight from this dashboard; nothing leaves this page.',
     askPh: 'Ask about cash, receipts, payments, salaries, revenue, EBITDA…', ask: 'Ask', tryAsk: 'Try one of these', source: 'Source', months: 'Months',
-    askClaude: 'Ask Claude instead', askClaudeBody: 'For open questions, the TMC chatbot on claude.ai reads the same figures. It needs you to be signed in to a Claude account.',
+    askClaude: 'Ami on claude.ai', askClaudeBody: 'For open questions, Ami on claude.ai reads the same figures and answers in plain English. It needs you to be signed in to a Claude account.',
     canAnswer: 'What these answers cover', closestQ: 'Closest questions', gateTitle: 'TMC Finance', gateBody: 'Enter the passcode to open the dashboard.', passcode: 'Passcode',
     open: 'Open', remember: 'Remember on this device', wrong: 'That passcode is not right. Try again.', preparedBy: 'Prepared by SRF Capital Studio for The Migration Company',
     figuresNote: 'Figures in ₹ lakh (L) unless shown in full. Brackets mean negative.', lgActual: 'closed and tallied to the bank', lgForecast: 'workbook forecast', goesBelow: '{s} goes below zero in {m}: {v}', pipeLegend: 'Pipeline, not yet confirmed (revenue above, delivery cost below)', scenFull: { none: 'Base', high: 'Scenario 1', med: 'Scenario 2', all: 'Scenario 3' }

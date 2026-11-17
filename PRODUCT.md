@@ -25,7 +25,7 @@ A CFO's monthly update, not a BI export. Every figure ties to the rupee to the s
 - Refreshed monthly (and sometimes mid-month) from two Excel workbooks: the MIS report (accrual P&L, Page 1) and the Cashflow forecast (cash, Pages 2–3). Each page uses only its own workbook; the two are never mixed.
 - A narrated update video (MP4) and its chapter figures accompany each cashflow refresh.
 - Published as a static site on GitHub Pages (`rohitarjun1020/TMC-Financial-Dashboard`); the client opens the live link. Changes go to a branch and are previewed before publishing.
-- A companion "Ask the data" chatbot runs as a private claude.ai artifact (source outside this repo, in `C:\Users\Rohit SRF\TMC Ask the Data`).
+- A companion chatbot, "Ami" (French for friend; renamed from "Ask the data" on 17 Nov 2026), runs as a private claude.ai artifact (source outside this repo, in `C:\Users\Rohit SRF\TMC Ask the Data`).
 
 ## Capabilities and Constraints
 
