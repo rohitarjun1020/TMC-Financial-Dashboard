@@ -2,7 +2,7 @@
    appear in the source workbooks; the briefing narration is English only. */
 window.TMC_I18N = {
   en: {
-    sub: 'Finance · FY 2026-27', tabBrief: 'Briefing', tabMis: 'P&L', tabCf: 'Month', tabTrends: 'Trends', tabWhatIf: 'What if?', tabAsk: 'Ask Ami',
+    sub: 'Finance · FY 2026-27', tabBrief: 'Briefing', tabMis: 'P&L', tabCf: 'Cash flow', tabTrends: 'Trends', tabWhatIf: 'What if?', tabAsk: 'Ask Ami',
     asofCf: 'Cash flow', asofMis: 'P&L', theme: 'Switch light or dark', lock: 'Lock the dashboard',
     cashPosition: 'Cash position', basis: 'Base case · confirmed business only', cashToday: 'Cash today', closedTallied: 'closed · tallied to the bank',
     closeOf: 'close', inOut: '{in} in · {out} out', pinch: 'Pinch point', lowestPositive: 'Lowest positive month', baseCase: 'base case',
@@ -14,7 +14,7 @@ window.TMC_I18N = {
     statement: 'Statement', actual: 'Actual', budget: 'Budget', variance: 'Variance', pctRev: '% of rev', revByMonth: 'Revenue and EBITDA by month', revByMonthSub: 'Click a month to open it',
     costsByDept: 'Costs by department', customers: 'Revenue by customer', salariesDept: 'Salaries by department', ledger: 'Ledger detail', ledgerAll: 'All cost lines',
     ledgerFor: 'Showing {x}', clear: 'Show all', vendors: 'Professional fees by firm', otherIncome: 'Other income (below EBITDA)', noBudget: 'No budget for this period',
-    month: 'Month', monthTitle: 'Month in cash', scenario: 'Scenario', separately: 'Set B2B and RTD separately', b2bTier: 'B2B pipeline', rtdTier: 'RTD pipeline',
+    month: 'Month', monthTitle: 'Monthly cash flow', scenario: 'Scenario', separately: 'Set B2B and RTD separately', b2bTier: 'B2B pipeline', rtdTier: 'RTD pipeline',
     opening: 'Opening', receipts: 'Receipts', payments: 'Payments', closing: 'Closing', runway: 'Runway', cashRising: 'Cash rising this month', monthsAtBurn: '{n} months at this burn', belowZero: 'Below zero',
     statusActual: 'Actual', statusProgress: 'In progress', statusForecast: 'Forecast', bankOk: 'Bank ✓', moneyIn: 'Money in', moneyOut: 'Money out',
     batches: 'batches', pipeAdd: 'Pipeline · {t}', pipeCost: 'Pipeline delivery cost', none: 'None', b2b: 'B2B', rtd: 'RTD',
