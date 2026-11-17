@@ -15,7 +15,7 @@
   /* ---------------- state ---------------- */
   const SC = ['none', 'high', 'med', 'all'];
   const S = {
-    tab: 'brief', lang: store.get('lang', 'en'),
+    tab: 'brief', lang: 'en',
     mis: { period: 'ytd', budget: store.get('misBudget', false), line: null },
     cf: { month: store.get('cfMonth', M.asOfMonth || M.lastActual), b2b: 'none', rtd: 'none', split: false },
     tr: { from: M.cfMonths[Math.max(0, M.cfMonths.indexOf(M.lastActual) - 12)], to: M.cfMonths[M.cfMonths.length - 1], b2b: store.get('scen', 'high'), rtd: store.get('scen', 'high'), split: false }
