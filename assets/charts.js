@@ -99,8 +99,8 @@
         labs.forEach(l => {
           const g = el('g', {}, svg);
           el('line', { x1: X(n - 1) + 7, x2: X(n - 1) + 16, y1: Y(l.v), y2: l.y, stroke: css('--rule'), 'stroke-width': 1 }, g);
-          const t1 = el('text', { x: X(n - 1) + 20, y: l.y - 2, style: `font:600 12.5px var(--font);fill:${css('--ink')}` }, g); t1.textContent = o.fmtEnd ? o.fmtEnd(l.v) : l.v;
-          const t2 = el('text', { x: X(n - 1) + 20, y: l.y + 13, style: `font:500 11px var(--font);fill:${css('--ink-3')}` }, g); t2.textContent = l.s.label;
+          const t1 = el('text', { x: X(n - 1) + 20, y: l.y - 2, style: `font:600 14px var(--font);fill:${css('--ink')}` }, g); t1.textContent = o.fmtEnd ? o.fmtEnd(l.v) : l.v;
+          const t2 = el('text', { x: X(n - 1) + 20, y: l.y + 13, style: `font:500 12px var(--font);fill:${css('--ink-3')}` }, g); t2.textContent = l.s.label;
         });
       }
       // crosshair + tooltip

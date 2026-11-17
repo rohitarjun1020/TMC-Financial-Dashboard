@@ -186,7 +186,7 @@
         kind: r.p === 'Investment (initate Request)' ? 'investment' : r.p.startsWith('Collection from Recruitment') ? 'rtd' : r.p === 'Collections from B2B Invoices' ? 'b2b' : 'other',
         batches: r.p === 'Collections from B2B Invoices' ? (det[m] || []).filter(d => d.c === r.c) : [] }));
       items.forEach(i => { if (i.kind === 'investment') i.label = 'Investment'; else if (i.kind === 'rtd') i.label = 'RTD & recruitment'; });
-      const CLIENT_NAME = { 'B2C for Booby': 'Booby Salwan', 'Nitin': 'Nitin Malik', 'VMF India': 'Vinmart (VMF India)', 'VMF-DRC': 'Vinmart (VMF DRC)' };
+      const CLIENT_NAME = { 'Not Language Training': 'CCT videos project (VIN TECH)', 'B2C for Booby': 'Booby Salwan', 'Nitin': 'Nitin Malik', 'VMF India': 'Vinmart (VMF India)', 'VMF-DRC': 'Vinmart (VMF DRC)' };
       items.forEach(i => { if (CLIENT_NAME[i.label]) i.label = CLIENT_NAME[i.label]; });
       return items.sort((a, b) => b.a - a.a);
     }

@@ -2,7 +2,7 @@
    appear in the source workbooks; the briefing narration is English only. */
 window.TMC_I18N = {
   en: {
-    sub: 'Finance · FY 2026-27', tabBrief: 'Briefing', tabMis: 'P&L', tabCf: 'Month', tabTrends: 'Trends', tabAsk: 'Ask the data',
+    sub: 'Finance · FY 2026-27', tabBrief: 'Briefing', tabMis: 'P&L', tabCf: 'Month', tabTrends: 'Trends', tabWhatIf: 'What if', tabAsk: 'Ask the data',
     asofCf: 'Cash flow', asofMis: 'P&L', theme: 'Switch light or dark', lock: 'Lock the dashboard',
     cashPosition: 'Cash position', basis: 'Base case · confirmed business only', cashToday: 'Cash today', closedTallied: 'closed · tallied to the bank',
     closeOf: 'close', inOut: '{in} in · {out} out', pinch: 'Pinch point', lowestPositive: 'Lowest positive month', baseCase: 'base case',
