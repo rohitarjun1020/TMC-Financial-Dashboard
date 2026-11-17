@@ -111,6 +111,58 @@
       return { title: SCEN[k].name, adds: '+ ' + TIER_NAME[tier] + ' · ' + PROB[tier], tier,
         text: `${prev} plus the ${TIER_NAME[tier]} deals (${PROB[tier]} chance of closing)${parts ? ' — ' + parts : ''}.` };
     }
+    /* ---------- what-if: adjust the forecast months of a scenario ----------
+       p = { scen, b2b, rtd, delay (months), delayWho ('all'|'Somika'), shortfall (% of confirmed receipts not collected),
+             travel (% change), salaries (% change), pipeConv (% of pipeline net that converts), oneOff (₹, +in/-out), oneOffMonth } */
+    function whatIf(p) {
+      const b2b = p.b2b || p.scen || 'none', rtd = p.rtd || p.scen || 'none';
+      const plan = scen(b2b, rtd);
+      const first = plan.findIndex(r => r.status !== 'actual');
+      const confirmed = m => { const it = receipts(m).filter(r => r.kind !== 'investment'); return it.reduce((a, r) => a + r.a, 0); };
+      const who = m => p.delayWho === 'all' ? confirmed(m) : receipts(m).filter(r => r.label === p.delayWho).reduce((a, r) => a + r.a, 0);
+      const line = (m, ln) => (exps[m] || []).filter(r => r.p === ln).reduce((a, r) => a + r.a, 0);
+      const sal = m => (sals[m] || []).reduce((a, r) => a + r.a, 0);
+      let cb = first > 0 ? plan[first - 1].cb : plan[0].ob;
+      return plan.map((r, i) => {
+        if (i < first) return Object.assign({}, r, { plan: r.cb });
+        const m = r.m, d = p.delay || 0;
+        const moved = who(m), arriving = d && i - d >= first ? who(cfMonths[i - d]) : 0;
+        let rc = r.baseRc - (d ? moved : 0) + arriving;
+        rc -= (p.shortfall || 0) / 100 * (confirmed(m) - (d ? moved : 0) + arriving);
+        let out = r.baseOut + (p.travel || 0) / 100 * line(m, 'Travel Costs') + (p.salaries || 0) / 100 * sal(m);
+        const net = (r.pipeRev - r.pipeCost) * (p.pipeConv == null ? 100 : p.pipeConv) / 100;
+        if (p.oneOff && p.oneOffMonth === m) { if (p.oneOff > 0) rc += p.oneOff; else out -= p.oneOff; }
+        const ob = cb;
+        cb = ob + rc - out + r.adj + net;
+        return { m, status: r.status, ob, rc, out, net, cb, plan: r.cb };
+      });
+    }
+    /* the one-line verdict: when confirmed business runs out, and the smallest scenario that keeps cash positive */
+    function verdict() {
+      const fromM = asOfMonth || lastActual, hz = horizon.filter(m => idx(m) >= idx(fromM));
+      const pos = k => hz.every(m => closing(k, m) >= 0);
+      const t = turns('none', hz);
+      const save = ['high', 'med', 'all'].find(pos);
+      return { negative: t.firstNegative, pinch: t.pinch, save, end: horizonEnd, positiveBase: pos('none') };
+    }
+    /* things to watch, computed from the data */
+    function watch() {
+      const out = [], fromM = asOfMonth || lastActual, fut = cfMonths.filter(m => idx(m) >= idx(fromM));
+      const b = scen('none');
+      const t = turns('none', horizon.filter(m => idx(m) >= idx(fromM)));
+      if (t.firstNegative) out.push({ level: 'critical', title: `Cash goes below zero in ${longM(t.firstNegative.m)}`, text: `On confirmed business alone, ${longM(t.firstNegative.m)} closes at ${lakh(t.firstNegative.cb)}.` });
+      fut.forEach((m, i) => { const r = b.find(x => x.m === m), nx = b.find(x => x.m === fut[i + 1]);
+        if (r && nx && r.cb > 0 && r.cb < nx.out && !(t.firstNegative && t.firstNegative.m === nx.m) && !out.some(o => o.kind === 'buffer')) out.push({ level: 'warning', kind: 'buffer', title: `Thin buffer going into ${longM(nx.m)}`, text: `${longM(m)} closes at ${lakh(r.cb)}, less than ${longM(nx.m)}'s payments of ${lakh(nx.out)}.` }); });
+      const next3 = fut.slice(0, 3), tot = {}; let all = 0;
+      next3.forEach(m => receipts(m).filter(r => r.kind !== 'investment').forEach(r => { tot[r.label] = (tot[r.label] || 0) + r.a; all += r.a; }));
+      const top = Object.entries(tot).sort((a, c) => c[1] - a[1])[0];
+      if (top && all && top[1] / all > 0.6) out.push({ level: 'warning', title: `${top[0]} is ${Math.round(top[1] / all * 100)}% of receipts`, text: `${lakh(top[1])} of the ${lakh(all)} expected from ${shortM(next3[0])} to ${shortM(next3[next3.length - 1])}. A late payment moves every month after it.` });
+      const big = fut.filter(m => idx(m) <= idx(horizonEnd)).map(m => b.find(x => x.m === m)).reduce((a, r) => (!a || r.out > a.out ? r : a), null);
+      if (big) out.push({ level: 'info', title: `Largest payment month: ${longM(big.m)}`, text: `${lakh(big.out)} goes out against ${lakh(big.rc)} coming in.` });
+      const hl = (DEALS.HighlyLikely || {}), deals = [].concat(hl.b2b || [], hl.rtd || []).sort((a, c) => c.a - a.a);
+      if (deals[0]) out.push({ level: 'info', title: `Scenario 1 leans on ${deals[0].c}`, text: `${deals[0].c} is the largest Highly Likely deal: ${lakh(deals[0].a)} of revenue in the forecast.` });
+      return out;
+    }
     const brief = D.cfBriefing || null;
     const horizon = (brief && brief.horizon) || cfMonths.filter(m => idx(m) >= idx(lastActual));
     const horizonEnd = horizon[horizon.length - 1];
@@ -214,7 +266,7 @@
     return {
       D, MON, MON_LONG, idx, fromIdx, shortM, longM, sortM, fyOf, fyMonths, inr, lakh, pct,
       cfMonths, base, status, forecastFrom, asOfMonth, asOfText, lastActual, SCEN, TIERS, TIER_NAME,
-      addon, scen, closing, tierNet, tierMonth, turns, brief, horizon, horizonEnd, scenarioKey, dealNames, PROB,
+      addon, scen, closing, tierNet, tierMonth, turns, brief, horizon, horizonEnd, scenarioKey, dealNames, PROB, whatIf, verdict, watch,
       receipts, payments, salaries, level, levels, SAL_LABEL, EXP_LABEL,
       misMonths, pl, budget, customers, ledgers, misSalaries, profFees, lastMis, curFY, ytd, DEPTS
     };

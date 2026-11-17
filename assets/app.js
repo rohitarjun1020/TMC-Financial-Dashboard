@@ -141,6 +141,18 @@
       ${field(mLong(end) + ' · ' + t('scen1'), M.closing('high', end), esc(t('s1note', { v: L(M.tierNet('HighlyLikely', M.horizon.filter(m => M.idx(m) >= M.idx(cur)))) })), { proof: proof(M.closing('high', end), N.marS1) })}
     </div>`;
   }
+  function verdictHTML() {
+    const v = M.verdict(), prevM = m => mLong(M.fromIdx(M.idx(m) - 1));
+    if (v.positiveBase) return `Cash stays positive through ${esc(mLong(v.end))} on confirmed business alone.`;
+    const n = v.negative;
+    const save = v.save ? `<strong>${esc(mLong(n.m))} needs the ${esc(scenName(v.save))} deals</strong> to stay above zero.` : `<strong>${esc(mLong(n.m))} goes below zero even with every pipeline deal.</strong>`;
+    return `Cash holds until ${esc(prevM(n.m))} on confirmed business. ${save} <button class="linkish" id="go-whatif">Try a what-if ${icon('arrow')}</button>`;
+  }
+  function watchHTML() {
+    const w = M.watch().slice(0, 4);
+    if (!w.length) return '';
+    return `<section class="watch" aria-labelledby="h-watch"><h2 class="h2" id="h-watch">Watch</h2><ul>${w.map(x => `<li class="${x.level}"><span class="dot" aria-hidden="true"></span><div><b>${esc(x.title)}</b><p>${esc(x.text)}</p></div></li>`).join('')}</ul></section>`;
+  }
   function renderBrief() {
     const p = $('#page-brief');
     if (!B) { p.innerHTML = `<section class="dp"><div class="dp-head"><h1 class="title">${esc(t('cashPosition'))}</h1></div>${briefFields()}</section>`; return; }
@@ -149,8 +161,10 @@
     p.innerHTML = `
       <section class="dp" aria-labelledby="h-brief">
         <div class="dp-head"><h1 class="title" id="h-brief">${esc(t('cashPosition'))}</h1><span class="dp-meta">${esc(t('basis'))} · ${esc(M.asOfText)}</span></div>
+        <p class="verdict">${verdictHTML()}</p>
         ${briefFields()}
       </section>
+      ${watchHTML()}
       <div class="brief">
         <section class="player" aria-label="${esc(t('briefingVideo'))}">
           <div class="player-v"><video id="bvideo" preload="metadata" playsinline controls src="${esc(B.video)}"></video>
@@ -165,6 +179,7 @@
         <section class="panel"><div class="panel-h"><h2 class="h2">${esc(t('priorities'))}</h2></div><div class="prios">${B.priorities.map(x => `<div class="prio"><b>${esc(x.title)}</b><p><strong>${esc(x.hl)}</strong> ${esc(x.d)}</p></div>`).join('')}</div></section>
       </div>`;
     CH.guilloche($('.dp', p));
+    if ($('#go-whatif')) $('#go-whatif').addEventListener('click', () => { go('trends'); setTimeout(() => { const w = $('#whatif'); if (w) w.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); });
     const v = $('#bvideo');
     $('#bcover').addEventListener('click', () => { v.play().catch(() => {}); });
     v.addEventListener('play', () => { started = true; $('#bcover').hidden = true; });
@@ -365,6 +380,7 @@
       ${scenKey(S.tr)}
       <section class="panel"><div class="panel-h"><div><h1 class="title" style="font-size:24px">${esc(t('cashPath'))}</h1><p>${esc(t('cashPathSub'))}</p></div>
         <div class="legend">${SC.map(k => `<span><i style="background:var(${SCOL[k]})"></i>${esc(scenName(k))}</span>`).join('')}</div></div><div id="tr-path"></div><div id="tr-stamps" class="legend" style="margin-top:10px"></div></section>
+      <section class="panel" id="whatif" aria-labelledby="h-wi"></section>
       <section class="panel"><div class="panel-h"><div><h2 class="h2">${esc(t('inOutTitle'))}</h2><p>${esc(t('inOutSub'))} · ${esc(scenLabel(S.tr))}</p></div>
         <div class="legend"><span><i class="box" style="background:var(--s-high)"></i>${esc(t('receipts'))}</span><span><i class="box" style="background:var(--s-all)"></i>Investment</span><span><i class="box" style="background:var(--ink-3)"></i>${esc(t('pipeLegend'))}</span><span><i class="box" style="background:var(--s-med)"></i>${esc(t('payments'))}</span></div></div><div id="tr-io"></div></section>
       <div class="grid g-2e">
@@ -385,6 +401,7 @@
     // stamps: where each scenario ends, and when the base case goes below zero
     const tb = M.turns('none', ms);
     $('#tr-stamps').innerHTML = `<span>${stampChip('actual')}&nbsp;${esc(t('lgActual'))}</span><span>${stampChip('progress')}&nbsp;${esc(M.asOfText)}</span><span>${stampChip('forecast')}&nbsp;${esc(t('lgForecast'))}</span>` + (tb.firstNegative ? `<span style="color:var(--neg);font-weight:600">${esc(t('goesBelow', { s: scenName('none'), m: mLong(tb.firstNegative.m), v: L(tb.firstNegative.cb) }))}</span>` : '');
+    renderWhatIf();
     // money in and out
     const rows = (custom || M.scen(sel || 'none')).filter(r => ms.includes(r.m));
     const inv = ms.map(m => M.receipts(m).filter(r => r.kind === 'investment').reduce((a, r) => a + r.a, 0));
@@ -409,6 +426,54 @@
     $('#tr-table').innerHTML = tableHTML([t('month'), '', t('opening'), t('receipts'), t('payments'), t('closing'), t('runway')], rows.map(r => ({
       cells: [esc(mLong(r.m)), stampChip(r.status), esc(INR(r.ob)), esc(INR(r.rc)), esc(INR(r.out)), `<span class="${r.cb < 0 ? 'neg' : ''}">${esc(INR(r.cb))}</span>`,
         esc(r.cb < 0 ? t('belowZero') : r.out <= r.rc ? (S.lang === 'de' ? 'steigt' : 'rising') : (r.cb / (r.out - r.rc)).toFixed(1) + (S.lang === 'de' ? ' Mon.' : ' mo'))] })), { num: [0, 0, 1, 1, 1, 1, 1] });
+  }
+
+  /* ================= WHAT IF ================= */
+  const WI0 = { delay: 0, delayWho: 'Somika', shortfall: 0, pipeConv: 100, travel: 0, salaries: 0, oneOff: 0, oneOffMonth: null };
+  const WI = Object.assign({}, WI0);
+  function renderWhatIf() {
+    const box = $('#whatif'); if (!box) return;
+    const fc = M.cfMonths.filter(m => M.status(m) !== 'actual');
+    if (!WI.oneOffMonth) WI.oneOffMonth = fc[1] || fc[0];
+    const p = Object.assign({}, WI, { b2b: S.tr.b2b, rtd: S.tr.rtd });
+    const res = M.whatIf(p), end = M.horizonEnd, last = M.cfMonths[M.cfMonths.length - 1];
+    const get = (m, k) => (res.find(r => r.m === m) || {})[k];
+    const firstNeg = arr => arr.find(r => r.status !== 'actual' && r[0] === undefined && r.cb < 0);
+    const nNew = res.find(r => r.status !== 'actual' && r.cb < 0), nOld = res.find(r => r.status !== 'actual' && r.plan < 0);
+    const low = res.filter(r => r.status !== 'actual').reduce((a, r) => (!a || r.cb < a.cb ? r : a), null);
+    const changed = JSON.stringify(Object.assign({}, WI, { oneOffMonth: null })) !== JSON.stringify(Object.assign({}, WI0, { oneOffMonth: null }));
+    const delta = get(end, 'cb') - get(end, 'plan');
+    const clients = [...new Set(fc.flatMap(m => M.receipts(m).filter(r => r.kind === 'b2b').map(r => r.label)))];
+    const rng = (id, label, val, min, max, step, fmtv) => `<label class="wi-c"><span>${esc(label)}<b id="${id}-v">${esc(fmtv(val))}</b></span><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}"></label>`;
+    box.innerHTML = `
+      <div class="panel-h"><div><h2 class="h2" id="h-wi">What if?</h2><p>Change one thing and see where ${esc(scenLabel(S.tr))} lands. Only forecast months move; nothing here changes the workbook figures.</p></div>
+        <button class="btn" id="wi-reset" ${changed ? '' : 'disabled'}>${icon('refresh')}Reset</button></div>
+      <div class="wi-grid">
+        <div class="wi-controls">
+          <label class="wi-c"><span>Who pays late</span><select id="wi-who"><option value="all" ${WI.delayWho === 'all' ? 'selected' : ''}>Every client</option>${clients.map(c => `<option ${WI.delayWho === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select></label>
+          ${rng('wi-delay', 'Months late', WI.delay, 0, 3, 1, v => v === 0 || v === '0' ? 'On time' : v + (+v === 1 ? ' month' : ' months'))}
+          ${rng('wi-short', 'Receipts never collected', WI.shortfall, 0, 50, 5, v => v + '%')}
+          ${rng('wi-pipe', 'Pipeline that converts', WI.pipeConv, 0, 100, 10, v => v + '%')}
+          ${rng('wi-travel', 'Travel spend', WI.travel, -50, 50, 10, v => (v > 0 ? '+' : '') + v + '%')}
+          ${rng('wi-sal', 'Salary bill', WI.salaries, -20, 30, 5, v => (v > 0 ? '+' : '') + v + '%')}
+          <label class="wi-c"><span>One-off amount <small>(+ money in, − money out)</small></span><span class="wi-row"><input class="input" id="wi-amt" type="number" step="50000" value="${WI.oneOff}" aria-label="One-off amount in rupees"><select id="wi-m" aria-label="Month of the one-off">${fc.map(m => `<option value="${m}" ${m === WI.oneOffMonth ? 'selected' : ''}>${esc(mShort(m))}</option>`).join('')}</select></span></label>
+        </div>
+        <div>
+          <div class="wi-out">
+            <div><label>${esc(mLong(end))} closing</label><span class="v ${get(end, 'cb') < 0 ? 'neg' : ''}">${esc(L(get(end, 'cb')))}</span><small>Plan ${esc(L(get(end, 'plan')))}${changed ? ` · <b class="${delta < 0 ? 'neg' : 'var-pos'}">${delta >= 0 ? '+' : '−'}${esc(L(Math.abs(delta)))}</b>` : ''}</small></div>
+            <div><label>First month below zero</label><span class="v ${nNew ? 'neg' : ''}">${esc(nNew ? mShort(nNew.m) : 'None')}</span><small>Plan ${esc(nOld ? mShort(nOld.m) : 'none')} · to ${esc(mShort(last))}</small></div>
+            <div><label>Lowest point</label><span class="v ${low && low.cb < 0 ? 'neg' : ''}">${esc(low ? L(low.cb) : '—')}</span><small>${esc(low ? mLong(low.m) : '')}</small></div>
+          </div>
+          <div class="legend" style="margin-top:12px"><span><i style="background:var(--ink-3)"></i>Plan</span><span><i style="background:var(--magenta)"></i>What if</span></div>
+          <div id="wi-chart"></div>
+        </div>
+      </div>`;
+    const months = M.cfMonths.filter(m => M.idx(m) >= M.idx(M.lastActual));
+    CH.line($('#wi-chart'), { months, height: 260, statusOf: M.status, statusName, label: 'What-if closing cash against plan', fmtAxis: v => (v / 1e5).toFixed(0) + 'L', fmtTip: v => L(v), fmtEnd: v => L(v), fmtMonth: mShort, fmtTipHead: mLong,
+      series: [{ key: 'plan', label: 'Plan', color: '--ink-3', values: months.map(m => get(m, 'plan')), dash: true }, { key: 'wi', label: 'What if', color: '--magenta', values: months.map(m => get(m, 'cb')), emph: true }] });
+    const bind = (id, key, num) => { const el = $('#' + id, box); el.addEventListener(el.type === 'range' ? 'input' : 'change', () => { WI[key] = num ? +el.value : el.value; renderWhatIf(); const n = $('#' + id); if (n && el.type === 'range') n.focus(); }); };
+    bind('wi-who', 'delayWho'); bind('wi-delay', 'delay', true); bind('wi-short', 'shortfall', true); bind('wi-pipe', 'pipeConv', true); bind('wi-travel', 'travel', true); bind('wi-sal', 'salaries', true); bind('wi-amt', 'oneOff', true); bind('wi-m', 'oneOffMonth');
+    $('#wi-reset', box).addEventListener('click', () => { Object.assign(WI, WI0); renderWhatIf(); });
   }
 
   /* ================= ASK ================= */
